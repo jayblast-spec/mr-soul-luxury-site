@@ -27,6 +27,22 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const logoStyle: React.CSSProperties = {
+    height: "40px",
+    width: "auto",
+    background: "rgba(255,255,255,0.95)",
+    borderRadius: "8px",
+    padding: "4px 8px",
+  };
+
+  const logoStyleMobile: React.CSSProperties = {
+    height: "34px",
+    width: "auto",
+    background: "rgba(255,255,255,0.95)",
+    borderRadius: "6px",
+    padding: "3px 6px",
+  };
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 sm:px-5 md:pt-5">
       <nav
@@ -51,29 +67,19 @@ export function Navbar() {
           onClick={() => setOpen(false)}
           aria-label="Mr Soul home"
         >
-          {/* Mobile: logo smaller */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/mr-soul-logo.png"
             alt="Mr Soul"
             className="block md:hidden"
-            style={{
-              height: "38px",
-              width: "auto",
-              filter: "drop-shadow(0 0 1px rgba(255,255,255,0.85))",
-            }}
+            style={logoStyleMobile}
           />
-          {/* Desktop: full logo */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/mr-soul-logo.png"
             alt="Mr Soul Bistro &amp; Cafe"
             className="hidden md:block"
-            style={{
-              height: "46px",
-              width: "auto",
-              filter: "drop-shadow(0 0 1px rgba(255,255,255,0.85))",
-            }}
+            style={logoStyle}
           />
         </Link>
 
