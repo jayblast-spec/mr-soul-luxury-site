@@ -21,7 +21,7 @@ export function MenuExplorer() {
             type="button"
             onClick={() => setCategory(item)}
             className={`min-h-11 rounded-full px-5 text-xs font-black uppercase tracking-[0.16em] transition ${
-              category === item ? "bg-[#C8102E] text-white" : "border border-black/10 bg-white text-black hover:border-[#C8102E]"
+              category === item ? "bg-[#C8102E] text-white" : "border border-white/10 bg-white/10 text-white hover:border-[#D4AF37]"
             }`}
           >
             {item}
@@ -34,7 +34,7 @@ export function MenuExplorer() {
             <button
               type="button"
               onClick={() => setSelected(item)}
-              className="group h-full overflow-hidden rounded-[8px] bg-white text-left shadow-xl shadow-black/5 ring-1 ring-black/5"
+              className="group h-full overflow-hidden rounded-[8px] bg-white/10 text-left text-white shadow-xl shadow-black/10 ring-1 ring-white/10"
             >
               <div className="relative aspect-[1.15] overflow-hidden">
                 <Image src={item.image} alt={item.name} fill sizes="(min-width:1024px) 33vw, 50vw" className="object-cover transition duration-700 group-hover:scale-110" />
@@ -48,7 +48,7 @@ export function MenuExplorer() {
                   <h2 className="text-xl font-black uppercase">{item.name}</h2>
                   <p className="font-black text-[#C8102E]">${item.price}</p>
                 </div>
-                <p className="mt-2 text-sm leading-6 text-black/60">{item.description}</p>
+                  <p className="mt-2 text-sm leading-6 text-white/60">{item.description}</p>
               </div>
             </button>
           </TiltCard>
