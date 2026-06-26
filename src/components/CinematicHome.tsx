@@ -138,36 +138,31 @@ export function CinematicHome() {
   return (
     <>
       <section className="relative isolate grid min-h-screen place-items-center overflow-hidden bg-bg px-5 text-center">
-        <HlsBackground source="/videos/mr-soul-landing-hero.mp4" />
-        <div className="absolute inset-0 bg-[#170207]/58" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_22%,rgba(200,16,46,0.22),transparent_34%),linear-gradient(180deg,rgba(23,2,7,0.28),rgba(23,2,7,0.9))]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(200,16,46,0.28),transparent_30rem),radial-gradient(circle_at_18%_72%,rgba(212,175,55,0.12),transparent_24rem),linear-gradient(180deg,#210309,#090103_78%)]" />
         <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-bg to-transparent" />
-        <div className="relative z-10 mx-auto max-w-5xl pt-16">
-          <div className="blur-in mx-auto mb-7 h-24 w-[min(78vw,430px)] rounded-full border border-white/10 bg-black/24 p-3 shadow-2xl shadow-[#C8102E]/18 backdrop-blur-sm">
+        <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-7 pt-24 md:pt-28">
+          <h1 className="sr-only">Mr Soul Bistro & Cafe</h1>
+          <div className="blur-in mx-auto h-24 w-[min(82vw,430px)] rounded-full border border-white/15 bg-white/95 p-3 shadow-2xl shadow-[#C8102E]/22">
             <Image src="/images/mr-soul-logo.png" alt="Mr Soul Bistro & Cafe logo" width={720} height={300} priority className="h-full w-full object-contain" />
           </div>
-          <p className="blur-in mb-8 text-xs uppercase tracking-[0.3em] text-[#D4AF37]">Where Atlanta Meets Lagos</p>
-          <div className="name-reveal relative mx-auto max-w-6xl">
-            <div className="absolute -inset-x-8 top-1/2 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/45 to-transparent" />
-            <div className="absolute left-1/2 top-1/2 h-40 w-[min(92vw,760px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#C8102E]/18 blur-3xl" />
-            <h1 className="soul-title-wrap soul-title text-balance text-5xl font-black uppercase leading-[0.86] tracking-normal md:text-8xl lg:text-9xl">
-              Mr Soul Bistro & Cafe
-            </h1>
-            <div className="mx-auto mt-5 flex max-w-lg items-center justify-center gap-3 text-[10px] font-black uppercase tracking-[0.24em] text-[#D4AF37]/85 sm:text-xs">
-              <span className="h-px flex-1 bg-gradient-to-r from-transparent to-[#D4AF37]/45" />
-              Lagos Flavor
-              <span className="size-1.5 rounded-full bg-[#C8102E]" />
-              Atlanta Nights
-              <span className="h-px flex-1 bg-gradient-to-l from-transparent to-[#D4AF37]/45" />
-            </div>
+          <div className="name-reveal relative w-full max-w-5xl overflow-hidden rounded-[8px] border border-[#D4AF37]/28 bg-black shadow-2xl shadow-[#C8102E]/28">
+            <video
+              className="block aspect-[2.1] w-full object-cover"
+              src="/videos/mr-soul-landing-hero-compressed.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label="Mr Soul Bistro & Cafe cinematic preview"
+            />
+            <div className="pointer-events-none absolute inset-0 border border-white/10" />
           </div>
-          <p className="blur-in mx-auto mt-6 max-w-3xl text-lg font-semibold leading-8 text-text-primary/85 md:text-2xl">
-            Authentic Nigerian cuisine and Atlanta&apos;s ultimate celebrity playground.
+          <p className="blur-in text-xs font-black uppercase tracking-[0.32em] text-[#D4AF37]">Where Atlanta Meets Lagos</p>
+          <p className="blur-in mx-auto max-w-3xl text-lg font-semibold leading-8 text-text-primary/85 md:text-2xl">
+            Authentic Nigerian cuisine, RedRoom nightlife, Afrobeats, hookah, bottle service, and late-night Atlanta energy.
           </p>
-          <p className="blur-in mx-auto mt-5 max-w-md text-sm leading-7 text-muted md:text-base">
-            Legendary jollof, peppered goat stew, hookah, bottle service, Afrobeats, and the RedRoom VIP experience.
-          </p>
-          <div className="blur-in mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="blur-in flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link href="/menu" className="luxury-border relative rounded-full bg-text-primary text-sm font-semibold text-bg transition hover:scale-105">
               <span className="block rounded-full bg-text-primary px-7 py-3.5">View Our Menu</span>
             </Link>

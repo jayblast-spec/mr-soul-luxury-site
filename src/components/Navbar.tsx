@@ -38,7 +38,7 @@ export function Navbar() {
       >
         <Link
           href="/"
-          className="group relative h-12 w-36 shrink-0 overflow-hidden rounded-full border border-white/12 bg-black/45 px-3 shadow-lg shadow-[#C8102E]/20 transition hover:scale-[1.02] md:h-12 md:w-40"
+          className="group relative h-12 w-36 shrink-0 overflow-hidden rounded-full border border-[#D4AF37]/30 bg-white/95 px-3 shadow-lg shadow-[#D4AF37]/18 transition hover:scale-[1.02] md:h-12 md:w-40"
           onClick={() => setOpen(false)}
           aria-label="Mr Soul home"
         >
