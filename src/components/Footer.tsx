@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Camera, Globe2, Hash, Music2, Send } from "lucide-react";
+import { FaFacebookF, FaInstagram, FaSnapchat, FaXTwitter } from "react-icons/fa6";
+import { MdMusicNote } from "react-icons/md";
 import { brand } from "@/lib/content";
 
 const links = [
@@ -13,12 +14,12 @@ const links = [
 ];
 
 const socialLinks = [
-  { label: "@mrsoulbistro", href: "https://www.instagram.com/mrsoulbistro/", icon: Camera },
-  { label: "@redroom_atl", href: "https://www.instagram.com/redroom_atl/", icon: Camera },
-  { label: "@djtipex", href: "https://www.instagram.com/djtipex/", icon: Music2 },
-  { label: "Facebook", href: "https://www.facebook.com/", icon: Globe2 },
-  { label: "X / Twitter", href: "https://twitter.com/", icon: Hash },
-  { label: "Snapchat", href: "https://www.snapchat.com/", icon: Send },
+  { label: "@mrsoulbistro", href: "https://www.instagram.com/mrsoulbistro/", icon: FaInstagram, color: "text-[#E4405F]" },
+  { label: "@redroom_atl", href: "https://www.instagram.com/redroom_atl/", icon: FaInstagram, color: "text-[#E4405F]" },
+  { label: "@djtipex", href: "https://www.instagram.com/djtipex/", icon: MdMusicNote, color: "text-[#D4AF37]" },
+  { label: "Facebook", href: "https://www.facebook.com/", icon: FaFacebookF, color: "text-[#1877F2]" },
+  { label: "X / Twitter", href: "https://twitter.com/", icon: FaXTwitter, color: "text-white" },
+  { label: "Snapchat", href: "https://www.snapchat.com/", icon: FaSnapchat, color: "text-[#FFFC00]" },
 ];
 
 export function Footer() {
@@ -72,7 +73,9 @@ export function Footer() {
                   rel="noreferrer"
                   className="inline-flex min-h-10 items-center gap-3 rounded-full border border-white/10 bg-white/5 px-3 text-sm font-semibold text-white/78 transition hover:border-[#D4AF37]/45 hover:text-white"
                 >
-                  <Icon size={16} className="text-[#D4AF37]" />
+                  <span className="grid size-7 place-items-center rounded-full bg-black/35">
+                    <Icon size={16} className={item.color} />
+                  </span>
                   {item.label}
                 </a>
               );

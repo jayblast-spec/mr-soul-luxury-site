@@ -6,7 +6,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import { HlsBackground } from "./HlsBackground";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -137,38 +136,46 @@ export function CinematicHome() {
 
   return (
     <>
-      <section className="relative isolate grid min-h-screen place-items-center overflow-hidden bg-bg px-5 text-center">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(200,16,46,0.28),transparent_30rem),radial-gradient(circle_at_18%_72%,rgba(212,175,55,0.12),transparent_24rem),linear-gradient(180deg,#210309,#090103_78%)]" />
+      <section className="relative isolate min-h-screen overflow-hidden bg-bg px-5 pt-28 sm:px-8 md:pt-32">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_22%,rgba(200,16,46,0.24),transparent_28rem),radial-gradient(circle_at_16%_70%,rgba(212,175,55,0.12),transparent_24rem),linear-gradient(135deg,#220309,#090103_72%)]" />
         <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-bg to-transparent" />
-        <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-7 pt-24 md:pt-28">
+        <div className="relative z-10 mx-auto grid min-h-[calc(100svh-8rem)] w-full max-w-7xl items-center gap-8 lg:grid-cols-[0.86fr_1.14fr]">
           <h1 className="sr-only">Mr Soul Bistro & Cafe</h1>
-          <div className="blur-in mx-auto h-24 w-[min(82vw,430px)] rounded-full border border-white/15 bg-white/95 p-3 shadow-2xl shadow-[#C8102E]/22">
-            <Image src="/images/mr-soul-logo.png" alt="Mr Soul Bistro & Cafe logo" width={720} height={300} priority className="h-full w-full object-contain" />
+          <div className="relative z-10 text-left">
+            <div className="blur-in mb-8 h-24 w-[min(82vw,430px)] rounded-full border border-[#D4AF37]/25 bg-white/95 p-3 shadow-2xl shadow-[#C8102E]/20">
+              <Image src="/images/mr-soul-logo.png" alt="Mr Soul Bistro & Cafe logo" width={720} height={300} priority className="h-full w-full object-contain" />
+            </div>
+            <p className="blur-in text-xs font-black uppercase tracking-[0.32em] text-[#D4AF37]">Where Atlanta Meets Lagos</p>
+            <p className="blur-in mt-5 max-w-xl text-balance text-4xl font-semibold leading-none text-white sm:text-5xl md:text-6xl">
+              Nigerian flavor, late-night soul, and RedRoom energy.
+            </p>
+            <p className="blur-in mt-6 max-w-lg text-base leading-8 text-white/70 md:text-lg">
+              Authentic Nigerian cuisine, Afrobeats, hookah, bottle service, and a room built for unforgettable Atlanta nights.
+            </p>
+            <div className="blur-in mt-8 flex flex-col gap-4 sm:flex-row">
+              <Link href="/menu" className="luxury-border relative rounded-full bg-text-primary text-sm font-semibold text-bg transition hover:scale-105">
+                <span className="block rounded-full bg-text-primary px-7 py-3.5">View Our Menu</span>
+              </Link>
+              <Link href="/redroom" className="rounded-full border border-[#D4AF37]/35 bg-[#D4AF37] px-7 py-3.5 text-sm font-black uppercase tracking-[0.12em] text-[#170207] transition hover:scale-105 hover:bg-white">
+                Book RedRoom VIP
+              </Link>
+            </div>
           </div>
-          <div className="name-reveal relative w-full max-w-5xl overflow-hidden rounded-[8px] border border-[#D4AF37]/28 bg-black shadow-2xl shadow-[#C8102E]/28">
-            <video
-              className="block aspect-[2.1] w-full object-cover"
-              src="/videos/mr-soul-landing-hero-compressed.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-label="Mr Soul Bistro & Cafe cinematic preview"
-            />
-            <div className="pointer-events-none absolute inset-0 border border-white/10" />
-          </div>
-          <p className="blur-in text-xs font-black uppercase tracking-[0.32em] text-[#D4AF37]">Where Atlanta Meets Lagos</p>
-          <p className="blur-in mx-auto max-w-3xl text-lg font-semibold leading-8 text-text-primary/85 md:text-2xl">
-            Authentic Nigerian cuisine, RedRoom nightlife, Afrobeats, hookah, bottle service, and late-night Atlanta energy.
-          </p>
-          <div className="blur-in flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link href="/menu" className="luxury-border relative rounded-full bg-text-primary text-sm font-semibold text-bg transition hover:scale-105">
-              <span className="block rounded-full bg-text-primary px-7 py-3.5">View Our Menu</span>
-            </Link>
-            <Link href="/redroom" className="luxury-border relative rounded-full border border-stroke bg-bg text-sm font-semibold text-text-primary transition hover:scale-105">
-              <span className="block rounded-full bg-bg px-7 py-3.5">Book RedRoom VIP</span>
-            </Link>
+          <div className="name-reveal relative">
+            <div className="absolute -inset-6 rounded-[8px] bg-[#C8102E]/18 blur-3xl" />
+            <div className="relative overflow-hidden rounded-[8px] border border-[#D4AF37]/30 bg-black shadow-2xl shadow-black/45">
+              <video
+                className="block aspect-[1.35] w-full object-cover sm:aspect-[1.65] lg:aspect-[1.25]"
+                src="/videos/mr-soul-landing-hero-compressed.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-label="Mr Soul Bistro & Cafe cinematic preview"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/28 via-transparent to-white/5" />
+            </div>
           </div>
         </div>
         <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2">
@@ -339,8 +346,7 @@ export function CinematicHome() {
       </section>
 
       <section className="relative isolate overflow-hidden bg-bg px-6 pb-10 pt-20 text-center md:pt-28">
-        <HlsBackground flipped />
-        <div className="absolute inset-0 bg-[#170207]/78" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_5%,rgba(200,16,46,0.2),transparent_30rem),linear-gradient(180deg,#210309,#100104)]" />
         <div className="relative z-10">
           <div className="flex whitespace-nowrap text-[18vw] font-semibold leading-none text-white/10" ref={marqueeRef}>
             <span>WHERE ATLANTA MEETS LAGOS - REDROOM VIP - </span>
