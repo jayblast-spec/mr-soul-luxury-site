@@ -143,9 +143,20 @@ export function CinematicHome() {
         <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-bg to-transparent" />
         <div className="relative z-10 mx-auto max-w-5xl pt-16">
           <p className="blur-in mb-8 text-xs uppercase tracking-[0.3em] text-[#D4AF37]">Where Atlanta Meets Lagos</p>
-          <h1 className="name-reveal text-balance text-5xl font-black uppercase leading-[0.86] tracking-normal text-text-primary md:text-8xl lg:text-9xl">
-            Mr Soul Bistro & Cafe
-          </h1>
+          <div className="name-reveal relative mx-auto max-w-6xl">
+            <div className="absolute -inset-x-8 top-1/2 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/45 to-transparent" />
+            <div className="absolute left-1/2 top-1/2 h-40 w-[min(92vw,760px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#C8102E]/18 blur-3xl" />
+            <h1 className="soul-title-wrap soul-title text-balance text-5xl font-black uppercase leading-[0.86] tracking-normal md:text-8xl lg:text-9xl">
+              Mr Soul Bistro & Cafe
+            </h1>
+            <div className="mx-auto mt-5 flex max-w-lg items-center justify-center gap-3 text-[10px] font-black uppercase tracking-[0.24em] text-[#D4AF37]/85 sm:text-xs">
+              <span className="h-px flex-1 bg-gradient-to-r from-transparent to-[#D4AF37]/45" />
+              Lagos Flavor
+              <span className="size-1.5 rounded-full bg-[#C8102E]" />
+              Atlanta Nights
+              <span className="h-px flex-1 bg-gradient-to-l from-transparent to-[#D4AF37]/45" />
+            </div>
+          </div>
           <p className="blur-in mx-auto mt-6 max-w-3xl text-lg font-semibold leading-8 text-text-primary/85 md:text-2xl">
             Authentic Nigerian cuisine and Atlanta&apos;s ultimate celebrity playground.
           </p>

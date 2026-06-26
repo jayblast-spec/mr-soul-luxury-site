@@ -121,6 +121,28 @@ body::before {
   }
 }
 
+@keyframes soul-title-shimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+    filter: drop-shadow(0 0 12px rgba(200, 16, 46, 0.35));
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: drop-shadow(0 0 26px rgba(212, 175, 55, 0.38));
+  }
+}
+
+@keyframes soul-title-breathe {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.62;
+  }
+  50% {
+    transform: translate3d(0, -6px, 0) scale(1.025);
+    opacity: 0.95;
+  }
+}
+
 @keyframes float-media {
   0%, 100% {
     transform: translate3d(0, 0, 0) rotate(0deg);
@@ -139,6 +161,24 @@ body::before {
   }
 }
 
+@keyframes redroom-slide-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes redroom-slide-right {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 .animate-scroll-down {
   animation: scroll-down 1.5s ease-in-out infinite;
 }
@@ -153,6 +193,44 @@ body::before {
 
 .neon-flicker {
   animation: neon-flicker 3.8s infinite alternate;
+}
+
+.soul-title {
+  background: linear-gradient(92deg, #fff7e1 0%, #ffffff 24%, #d4af37 45%, #c8102e 66%, #fff2c1 100%);
+  background-size: 260% 260%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: soul-title-shimmer 7s ease-in-out infinite;
+  text-shadow:
+    0 2px 0 rgba(80, 0, 15, 0.7),
+    0 18px 45px rgba(0, 0, 0, 0.65);
+}
+
+.soul-title-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.soul-title-wrap::before,
+.soul-title-wrap::after {
+  content: "Mr Soul Bistro & Cafe";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.soul-title-wrap::before {
+  color: rgba(200, 16, 46, 0.34);
+  transform: translate3d(5px, 7px, 0);
+  filter: blur(1px);
+}
+
+.soul-title-wrap::after {
+  color: rgba(212, 175, 55, 0.2);
+  filter: blur(18px);
+  animation: soul-title-breathe 5.8s ease-in-out infinite;
 }
 
 .float-frame {
@@ -177,9 +255,26 @@ body::before {
   will-change: transform;
 }
 
+.redroom-slide-left,
+.redroom-slide-right {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.redroom-slide-left {
+  animation: redroom-slide-left 48s linear infinite;
+}
+
+.redroom-slide-right {
+  animation: redroom-slide-right 56s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .float-frame,
-  .float-image-bg {
+  .float-image-bg,
+  .redroom-slide-left,
+  .redroom-slide-right {
     animation: none;
     transform: none;
   }
