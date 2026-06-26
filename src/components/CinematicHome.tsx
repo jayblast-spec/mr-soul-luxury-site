@@ -48,6 +48,13 @@ const reviews = [
   ["Great vibes", "Authentic food and amazing staff. 10/10.", "5 stars", "Guest"],
 ];
 
+const flavorPillars = [
+  ["Irresistible Flavors", "Embark on a journey through Nigeria with authentic dishes, rich stews, mouthwatering grills, and soulful sides."],
+  ["Vibrant Atmosphere", "More than a meal, cold drinks, and good music - enjoy the lively vibe that creates special memories."],
+  ["Community Celebration", "Join a community passionate about food, Afrobeats, cultural connection, and togetherness."],
+  ["Afrobeats Bliss", "Feel the rhythm of Afrobeats and sounds from the motherland, from curated playlists to live performances."],
+];
+
 const gallery = [
   "https://picsum.photos/seed/soul-gallery-1/700/700",
   "https://picsum.photos/seed/soul-gallery-2/700/700",
@@ -163,6 +170,42 @@ export function CinematicHome() {
       </section>
 
       <section className="bg-bg px-6 py-16 md:px-10 lg:px-16">
+        <div className="mx-auto mb-16 grid max-w-[1200px] gap-8 rounded-3xl border border-stroke bg-surface/35 p-6 md:grid-cols-[1fr_0.75fr] md:p-10">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-[#D4AF37]">About Mr Soul Bistro & Cafe</p>
+            <h2 className="mt-5 text-balance text-4xl font-semibold leading-none text-text-primary md:text-6xl">
+              Journey Into Nigerian Flavor Wonderland
+            </h2>
+            <p className="mt-6 max-w-2xl text-base leading-8 text-muted">
+              At Mr Soul Bistro & Cafe, we&apos;re not just serving food; we&apos;re crafting experiences.
+              Step into a world where every bite tells a story of flavor and tradition.
+            </p>
+            <p className="mt-5 max-w-2xl text-base leading-8 text-muted">
+              We&apos;re more than a restaurant; we&apos;re a celebration of taste, tradition, and community.
+              Join us for an experience that goes beyond the plate.
+            </p>
+          </div>
+          <div className="rounded-3xl border border-white/10 bg-[#170207]/70 p-6">
+            <p className="text-xs uppercase tracking-[0.3em] text-[#D4AF37]">Hours of Operation</p>
+            <div className="mt-6 space-y-5 text-sm leading-7 text-white/75">
+              <p><span className="font-bold text-white">Monday - Saturday</span><br />4:30 PM - 2:30 AM</p>
+              <p><span className="font-bold text-white">Tuesday and Sunday</span><br />Closed</p>
+            </div>
+            <Link href="/menu" className="mt-8 inline-flex rounded-full bg-white px-6 py-3 text-sm font-bold text-[#170207]">
+              Explore Our Flavor-Packed Menu
+            </Link>
+          </div>
+        </div>
+
+        <div className="mx-auto mb-20 grid max-w-[1200px] gap-5 md:grid-cols-4">
+          {flavorPillars.map(([title, text]) => (
+            <div key={title} className="rounded-3xl border border-stroke bg-surface/40 p-6">
+              <p className="text-xl font-semibold text-text-primary">{title}</p>
+              <p className="mt-4 text-sm leading-7 text-muted">{text}</p>
+            </div>
+          ))}
+        </div>
+
         <div className="mx-auto max-w-[1200px]">
           <SectionHeader
             eyebrow="Signature Experiences"
@@ -294,10 +337,13 @@ export function CinematicHome() {
           <div className="mx-auto -mt-8 max-w-3xl md:-mt-16">
             <p className="text-xs uppercase tracking-[0.3em] text-muted">Ready for the room?</p>
             <h2 className="mt-5 text-balance text-5xl font-semibold leading-none md:text-7xl">
-              Book the <span className="font-display italic">night</span>.
+              Discover the <span className="font-display italic">Soulful Experience</span>.
             </h2>
-            <Link href="/contact" className="luxury-border relative mt-8 inline-flex rounded-full bg-text-primary text-sm font-semibold text-bg">
-              <span className="block rounded-full bg-text-primary px-8 py-4">Reserve a Table</span>
+            <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-muted">
+              Immerse yourself in a world of exquisite flavors, rhythmic beats, and shared joy. Mr Soul Bistro & Cafe is not just a dining experience; it&apos;s a celebration of authentic tastes and vibrant togetherness.
+            </p>
+            <Link href="/menu" className="luxury-border relative mt-8 inline-flex rounded-full bg-text-primary text-sm font-semibold text-bg">
+              <span className="block rounded-full bg-text-primary px-8 py-4">Explore Our Menu</span>
             </Link>
           </div>
           <div className="mx-auto mt-16 flex max-w-[1200px] flex-col items-center justify-between gap-4 border-t border-stroke pt-6 text-xs uppercase tracking-[0.18em] text-muted md:flex-row">
