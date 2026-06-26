@@ -6,6 +6,7 @@ import { CursorGlow } from "@/components/CursorGlow";
 import { Footer } from "@/components/Footer";
 import { LenisProvider } from "@/components/LenisProvider";
 import { Navbar } from "@/components/Navbar";
+import { NavigationControls } from "@/components/NavigationControls";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
     title: "Mr Soul Bistro & Cafe",
     description:
       "Where Atlanta Meets Lagos — authentic Nigerian cuisine and Atlanta's RedRoom VIP experience.",
-    images: ["https://picsum.photos/1200/630?random=16"],
+    images: ["/images/hero-restaurant.webp"],
   },
 };
 
@@ -60,6 +61,7 @@ export default function RootLayout({
         <Navbar />
         <main id="content">{children}</main>
         <Footer />
+        <NavigationControls />
         <AIBubble />
       </body>
     </html>
