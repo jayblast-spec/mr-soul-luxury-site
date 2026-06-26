@@ -29,160 +29,59 @@ export function CinematicHome() {
         ref={heroRef}
         className="relative isolate flex h-screen min-h-[600px] items-center justify-center overflow-hidden text-center"
       >
-        {/* Real DJ photo background */}
-        <Image
-          src="/images/hero-dj.jpg"
-          alt=""
-          aria-hidden="true"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
-
-        {/* Overlay: darkens photo so GIF and text pop */}
-        <div className="pointer-events-none absolute inset-0" style={{
-          background: "linear-gradient(to bottom, rgba(30,0,0,0.55) 0%, rgba(20,0,0,0.72) 100%)",
-        }} />
-
-        {/* Decorative outer ring */}
+        <Image src="/images/hero-dj.jpg" alt="" aria-hidden="true" fill priority sizes="100vw" className="object-cover object-center" />
+        <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(30,0,0,0.55) 0%, rgba(20,0,0,0.72) 100%)" }} />
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div style={{
-            width: "clamp(340px, 86vw, 680px)",
-            height: "clamp(340px, 86vw, 680px)",
-            borderRadius: "50%",
-            border: "1px solid rgba(212,175,55,0.12)",
-          }} />
+          <div style={{ width: "clamp(340px, 86vw, 680px)", height: "clamp(340px, 86vw, 680px)", borderRadius: "50%", border: "1px solid rgba(212,175,55,0.12)" }} />
         </div>
-        {/* Decorative inner ring */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div style={{
-            width: "clamp(290px, 74vw, 580px)",
-            height: "clamp(290px, 74vw, 580px)",
-            borderRadius: "50%",
-            border: "1px solid rgba(212,175,55,0.18)",
-          }} />
+          <div style={{ width: "clamp(290px, 74vw, 580px)", height: "clamp(290px, 74vw, 580px)", borderRadius: "50%", border: "1px solid rgba(212,175,55,0.18)" }} />
         </div>
 
-        <motion.div
-          className="relative z-10 flex w-full flex-col items-center px-5"
-          style={{ opacity: heroOpacity }}
-        >
-          {/* Tagline */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.7 }}
-            className="mb-5 text-xs font-bold uppercase tracking-[0.52em]"
-            style={{ color: "#F2C85A" }}
-          >
+        <motion.div className="relative z-10 flex w-full flex-col items-center px-5" style={{ opacity: heroOpacity }}>
+          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.7 }} className="mb-5 text-xs font-bold uppercase tracking-[0.52em]" style={{ color: "#F2C85A" }}>
             Atlanta · Lagos · RedRoom
           </motion.p>
-
-          {/* GIF — centered on photo background */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5, duration: 0.9, ease: "easeOut" }}
-            style={{
-              width: "clamp(260px, 66vw, 480px)",
-              borderRadius: "14px",
-              overflow: "hidden",
-              border: "1.5px solid rgba(212,175,55,0.65)",
-              boxShadow: [
-                "0 0 0 1px rgba(212,175,55,0.12)",
-                "0 0 40px rgba(212,175,55,0.22)",
-                "0 0 90px rgba(0,0,0,0.5)",
-                "0 24px 70px rgba(0,0,0,0.7)",
-              ].join(", "),
-              willChange: "transform",
-              transform: "translateZ(0)",
-            }}
+            initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, duration: 0.9, ease: "easeOut" }}
+            style={{ width: "clamp(260px, 66vw, 480px)", borderRadius: "14px", overflow: "hidden", border: "1.5px solid rgba(212,175,55,0.65)", boxShadow: "0 0 0 1px rgba(212,175,55,0.12), 0 0 40px rgba(212,175,55,0.22), 0 0 90px rgba(0,0,0,0.5), 0 24px 70px rgba(0,0,0,0.7)", willChange: "transform", transform: "translateZ(0)" }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/hero-bg.gif"
-              alt="Mr Soul Bistro & Cafe"
-              decoding="async"
-              style={{ width: "100%", display: "block", transform: "translateZ(0)" }}
-            />
+            <img src="/images/hero-bg.gif" alt="Mr Soul Bistro & Cafe" decoding="async" style={{ width: "100%", display: "block", transform: "translateZ(0)" }} />
           </motion.div>
-
-          {/* Gold divider */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
-            style={{
-              height: 1,
-              width: 110,
-              margin: "1.4rem auto",
-              background: "linear-gradient(to right, transparent, rgba(212,175,55,0.8), transparent)",
-              transformOrigin: "center",
-            }}
-          />
-
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.05, duration: 0.7 }}
-            className="flex flex-col items-center gap-3 sm:flex-row"
-          >
+          <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.9, duration: 0.8 }} style={{ height: 1, width: 110, margin: "1.4rem auto", background: "linear-gradient(to right, transparent, rgba(212,175,55,0.8), transparent)", transformOrigin: "center" }} />
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.05, duration: 0.7 }} className="flex flex-col items-center gap-3 sm:flex-row">
             <Link href="/menu" className="btn-gold">View Our Menu</Link>
             <Link href="/redroom" className="btn-glass-red">Book RedRoom VIP</Link>
           </motion.div>
         </motion.div>
 
-        {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2">
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
-          >
-            <div style={{
-              width: 1, height: 48, margin: "0 auto",
-              background: "linear-gradient(to bottom, rgba(212,175,55,0.85), rgba(212,175,55,0))",
-            }} />
+          <motion.div animate={{ y: [0, 12, 0] }} transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}>
+            <div style={{ width: 1, height: 48, margin: "0 auto", background: "linear-gradient(to bottom, rgba(212,175,55,0.85), rgba(212,175,55,0))" }} />
           </motion.div>
         </div>
       </section>
 
       {/* ─── EDITORIAL QUOTE ──────────────────────────── */}
       <section className="px-6 py-20 text-center md:py-28" style={{ background: "#8B0000" }}>
-        <motion.blockquote
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={spring}
-          className="mx-auto max-w-3xl"
-        >
+        <motion.blockquote initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={spring} className="mx-auto max-w-3xl">
           <p className="font-display font-bold italic leading-[1.12] text-white" style={{ fontSize: "clamp(20px, 2.6vw, 38px)" }}>
             Where Nigerian flavor meets Atlanta energy.
             <em className="text-gold-metallic not-italic">{" "}Where tradition becomes unforgettable.</em>
           </p>
-          <footer className="mt-8 text-xs font-bold uppercase tracking-[0.42em]" style={{ color: "rgba(255,220,200,0.45)" }}>
-            Est. Atlanta, GA
-          </footer>
+          <footer className="mt-8 text-xs font-bold uppercase tracking-[0.42em]" style={{ color: "rgba(255,220,200,0.45)" }}>Est. Atlanta, GA</footer>
         </motion.blockquote>
       </section>
 
       {/* ─── THE FOOD ─────────────────────────────────── */}
       <section className="relative overflow-hidden" style={{ background: "#700000", minHeight: "80vh" }}>
         <div className="grid min-h-[80vh] grid-cols-1 md:grid-cols-2">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-60px" }} transition={{ ...spring, delay: 0 }}
-            className="relative" style={{ minHeight: "60vw" }}
-          >
+          <motion.div initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, margin: "-60px" }} transition={{ ...spring, delay: 0 }} className="relative" style={{ minHeight: "60vw" }}>
             <Image src="/images/food-jollof.webp" alt="Nigerian fine dining" fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover" />
             <div className="absolute inset-0 hidden md:block" style={{ background: "linear-gradient(to right, transparent 65%, #700000 100%)" }} />
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 60 }} whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-60px" }} transition={{ ...spring, delay: 0.12 }}
-            className="flex flex-col justify-center px-8 py-14 md:px-12 lg:px-16"
-          >
+          <motion.div initial={{ opacity: 0, x: 60 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-60px" }} transition={{ ...spring, delay: 0.12 }} className="flex flex-col justify-center px-8 py-14 md:px-12 lg:px-16">
             <span className="mb-4 text-xs font-bold uppercase tracking-[0.44em]" style={{ color: "#F2C85A" }}>The Food</span>
             <h2 className="font-display font-bold italic leading-[1.06] text-white" style={{ fontSize: "clamp(24px, 2.8vw, 44px)" }}>Flavors that carry a whole culture.</h2>
             <p className="mt-5 max-w-sm text-sm leading-7" style={{ color: "rgba(255,220,200,0.82)" }}>Legendary jollof, peppered goat stew, suya, egusi soup, and platter spreads that turn a table into a ceremony. Every dish is handcrafted from scratch.</p>
@@ -195,10 +94,7 @@ export function CinematicHome() {
       <section className="relative h-[85vh] overflow-hidden">
         <Image src="/images/vip-lounge.webp" alt="RedRoom VIP lounge" fill sizes="100vw" className="object-cover" />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(50,0,0,0.92) 0%, rgba(50,0,0,0.22) 55%, transparent 100%)" }} />
-        <motion.div
-          initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={spring}
-          className="absolute bottom-0 left-0 right-0 z-10 flex flex-col gap-6 px-8 pb-12 md:flex-row md:items-end md:justify-between md:px-16 md:pb-16"
-        >
+        <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={spring} className="absolute bottom-0 left-0 right-0 z-10 flex flex-col gap-6 px-8 pb-12 md:flex-row md:items-end md:justify-between md:px-16 md:pb-16">
           <div>
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.44em]" style={{ color: "#F2C85A" }}>The Room</p>
             <h2 className="font-display font-bold italic leading-[0.95] text-white" style={{ fontSize: "clamp(30px, 3.8vw, 60px)" }}>RedRoom.<br />Atlanta&apos;s finest<br />VIP experience.</h2>
@@ -212,9 +108,10 @@ export function CinematicHome() {
 
       {/* ─── THE NIGHT ───────────────────────────────────── */}
       <section className="grid grid-cols-1 md:grid-cols-2" style={{ minHeight: "60vh" }}>
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.9 }} className="relative" style={{ minHeight: "50vw", background: "#5A0000" }}>
-          <Image src="/images/afrobeats-crowd.webp" alt="Afrobeats nightlife" fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover" />
-          <div className="absolute inset-0" style={{ background: "rgba(50,0,0,0.38)" }} />
+        {/* Real fire performer photo */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.9 }} className="relative" style={{ minHeight: "50vw", background: "#0a0020" }}>
+          <Image src="/images/afrobeats-night.jpg" alt="RedRoom fire performer" fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover object-center" />
+          <div className="absolute inset-0" style={{ background: "rgba(10,0,30,0.25)" }} />
           <div className="absolute bottom-0 left-0 right-0 z-10 p-7 md:p-9">
             <p className="mb-2 text-xs font-bold uppercase tracking-[0.38em]" style={{ color: "#F2C85A" }}>The Night</p>
             <h3 className="font-display font-bold italic text-white" style={{ fontSize: "clamp(18px, 2vw, 30px)" }}>Afrobeats. Every weekend.</h3>
