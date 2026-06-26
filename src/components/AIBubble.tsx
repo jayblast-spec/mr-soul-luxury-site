@@ -25,8 +25,8 @@ export function AIBubble() {
   return (
     <div className="fixed bottom-5 right-5 z-50">
       {open ? (
-        <div className="mb-3 w-[min(calc(100vw-2.5rem),380px)] overflow-hidden rounded-3xl border border-[#D4AF37]/30 bg-black text-white shadow-2xl shadow-[#C8102E]/30">
-          <div className="flex items-center justify-between border-b border-white/10 bg-[#C8102E] px-4 py-3">
+        <div className="mb-3 w-[min(calc(100vw-2.5rem),390px)] overflow-hidden rounded-3xl border border-[#D4AF37]/35 bg-[#170207]/95 text-white shadow-2xl shadow-[#C8102E]/35 backdrop-blur-xl">
+          <div className="flex items-center justify-between border-b border-white/10 bg-gradient-to-r from-[#C8102E] via-[#7a0618] to-[#D4AF37] px-4 py-3">
             <div>
               <p className="text-sm font-black uppercase tracking-[0.2em]">SoulBot</p>
               <p className="text-xs text-white/75">sassy host mode</p>
@@ -37,7 +37,7 @@ export function AIBubble() {
           </div>
           <div className="max-h-80 space-y-3 overflow-y-auto p-4">
             {messages.map((message, index) => (
-              <div key={`${message.role}-${index}`} className="rounded-2xl bg-white/10 p-3 text-sm text-white/85">
+              <div key={`${message.role}-${index}`} className="rounded-2xl border border-white/10 bg-white/10 p-3 text-sm text-white/85">
                 <span className="font-black text-[#D4AF37]">{message.role}: </span>
                 {message.text}
               </div>
@@ -68,10 +68,11 @@ export function AIBubble() {
       ) : null}
       <button
         type="button"
-        className="inline-flex size-16 items-center justify-center rounded-full bg-[#C8102E] text-white shadow-2xl shadow-[#C8102E]/40"
+        className="relative inline-flex size-16 items-center justify-center rounded-full border border-[#D4AF37]/40 bg-[#C8102E] text-white shadow-2xl shadow-[#C8102E]/45 transition hover:scale-105"
         onClick={() => setOpen((value) => !value)}
         aria-label="Open SoulBot"
       >
+        <span className="absolute -top-1 right-0 rounded-full bg-[#D4AF37] px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.12em] text-black">AI</span>
         <Bot size={28} />
       </button>
     </div>
