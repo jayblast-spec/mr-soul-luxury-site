@@ -30,18 +30,47 @@ export function CinematicHome() {
         className="relative isolate flex h-screen min-h-[600px] items-center justify-center overflow-hidden text-center"
         style={{ background: "#6B0000" }}
       >
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse at 50% 40%, rgba(160,0,0,0.55) 0%, rgba(40,0,0,0.85) 100%)",
-          }}
-        />
+        {/* Base depth gradient */}
+        <div className="pointer-events-none absolute inset-0" style={{
+          background: "radial-gradient(ellipse at 50% 50%, rgba(180,0,0,0.6) 0%, rgba(30,0,0,0.95) 100%)",
+        }} />
+
+        {/* Central glow behind GIF */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div style={{
+            width: "clamp(280px, 72vw, 560px)",
+            height: "clamp(280px, 72vw, 560px)",
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(180,0,0,0.55) 0%, transparent 70%)",
+            filter: "blur(40px)",
+          }} />
+        </div>
+
+        {/* Outer decorative ring */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div style={{
+            width: "clamp(340px, 86vw, 680px)",
+            height: "clamp(340px, 86vw, 680px)",
+            borderRadius: "50%",
+            border: "1px solid rgba(212,175,55,0.09)",
+          }} />
+        </div>
+
+        {/* Inner decorative ring */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div style={{
+            width: "clamp(290px, 74vw, 580px)",
+            height: "clamp(290px, 74vw, 580px)",
+            borderRadius: "50%",
+            border: "1px solid rgba(212,175,55,0.14)",
+          }} />
+        </div>
 
         <motion.div
           className="relative z-10 flex w-full flex-col items-center px-5"
           style={{ opacity: heroOpacity }}
         >
+          {/* Tagline */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -52,18 +81,22 @@ export function CinematicHome() {
             Atlanta · Lagos · RedRoom
           </motion.p>
 
-          {/* GIF frame — clamp enforces size at every screen width */}
+          {/* GIF — balanced size with gold frame */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.94 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.9, ease: "easeOut" }}
             style={{
-              width: "clamp(200px, 52vw, 480px)",
-              borderRadius: "12px",
+              width: "clamp(260px, 66vw, 480px)",
+              borderRadius: "14px",
               overflow: "hidden",
-              border: "1.5px solid rgba(212,175,55,0.55)",
-              boxShadow:
-                "0 0 0 1px rgba(212,175,55,0.12), 0 0 48px rgba(212,175,55,0.10), 0 16px 60px rgba(0,0,0,0.7)",
+              border: "1.5px solid rgba(212,175,55,0.6)",
+              boxShadow: [
+                "0 0 0 1px rgba(212,175,55,0.1)",
+                "0 0 40px rgba(212,175,55,0.18)",
+                "0 0 80px rgba(180,0,0,0.4)",
+                "0 20px 60px rgba(0,0,0,0.7)",
+              ].join(", "),
               willChange: "transform",
               transform: "translateZ(0)",
             }}
@@ -73,28 +106,25 @@ export function CinematicHome() {
               src="/images/hero-bg.gif"
               alt="Mr Soul Bistro & Cafe"
               decoding="async"
-              style={{
-                width: "100%",
-                display: "block",
-                transform: "translateZ(0)",
-              }}
+              style={{ width: "100%", display: "block", transform: "translateZ(0)" }}
             />
           </motion.div>
 
+          {/* Gold divider */}
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ delay: 0.9, duration: 0.8 }}
             style={{
               height: 1,
-              width: 100,
-              margin: "1.25rem auto",
-              background:
-                "linear-gradient(to right, transparent, rgba(212,175,55,0.7), transparent)",
+              width: 110,
+              margin: "1.4rem auto",
+              background: "linear-gradient(to right, transparent, rgba(212,175,55,0.75), transparent)",
               transformOrigin: "center",
             }}
           />
 
+          {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -106,19 +136,16 @@ export function CinematicHome() {
           </motion.div>
         </motion.div>
 
+        {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2">
           <motion.div
             animate={{ y: [0, 12, 0] }}
             transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
           >
-            <div
-              style={{
-                width: 1,
-                height: 48,
-                margin: "0 auto",
-                background: "linear-gradient(to bottom, rgba(212,175,55,0.85), rgba(212,175,55,0))",
-              }}
-            />
+            <div style={{
+              width: 1, height: 48, margin: "0 auto",
+              background: "linear-gradient(to bottom, rgba(212,175,55,0.85), rgba(212,175,55,0))",
+            }} />
           </motion.div>
         </div>
       </section>
@@ -132,46 +159,30 @@ export function CinematicHome() {
           transition={spring}
           className="mx-auto max-w-3xl"
         >
-          <p
-            className="font-display font-bold italic leading-[1.12] text-white"
-            style={{ fontSize: "clamp(20px, 2.6vw, 38px)" }}
-          >
+          <p className="font-display font-bold italic leading-[1.12] text-white" style={{ fontSize: "clamp(20px, 2.6vw, 38px)" }}>
             Where Nigerian flavor meets Atlanta energy.
-            <em className="text-gold-metallic not-italic">
-              {" "}Where tradition becomes unforgettable.
-            </em>
+            <em className="text-gold-metallic not-italic">{" "}Where tradition becomes unforgettable.</em>
           </p>
-          <footer
-            className="mt-8 text-xs font-bold uppercase tracking-[0.42em]"
-            style={{ color: "rgba(255,220,200,0.45)" }}
-          >
+          <footer className="mt-8 text-xs font-bold uppercase tracking-[0.42em]" style={{ color: "rgba(255,220,200,0.45)" }}>
             Est. Atlanta, GA
           </footer>
         </motion.blockquote>
       </section>
 
       {/* ─── THE FOOD ─────────────────────────────────── */}
-      <section
-        className="relative overflow-hidden"
-        style={{ background: "#700000", minHeight: "80vh" }}
-      >
+      <section className="relative overflow-hidden" style={{ background: "#700000", minHeight: "80vh" }}>
         <div className="grid min-h-[80vh] grid-cols-1 md:grid-cols-2">
           <motion.div
-            initial={{ opacity: 0, scale: 0.97 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ ...spring, delay: 0 }}
-            className="relative"
-            style={{ minHeight: "60vw" }}
+            initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-60px" }} transition={{ ...spring, delay: 0 }}
+            className="relative" style={{ minHeight: "60vw" }}
           >
             <Image src="/images/food-jollof.webp" alt="Nigerian fine dining" fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover" />
             <div className="absolute inset-0 hidden md:block" style={{ background: "linear-gradient(to right, transparent 65%, #700000 100%)" }} />
           </motion.div>
           <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ ...spring, delay: 0.12 }}
+            initial={{ opacity: 0, x: 60 }} whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }} transition={{ ...spring, delay: 0.12 }}
             className="flex flex-col justify-center px-8 py-14 md:px-12 lg:px-16"
           >
             <span className="mb-4 text-xs font-bold uppercase tracking-[0.44em]" style={{ color: "#F2C85A" }}>The Food</span>
