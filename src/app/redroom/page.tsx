@@ -64,7 +64,6 @@ export default function RedRoomPage() {
         <div className="absolute inset-0" style={{ background: "radial-gradient(circle at 60% 20%, rgba(180,0,30,0.45), transparent 40%)" }} />
 
         <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-5 pb-20 pt-32 sm:px-8">
-          {/* Real RedRoom logo */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/redroom-logo.png"
@@ -86,7 +85,7 @@ export default function RedRoomPage() {
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
             <a
               href="tel:+14044585714"
-              className="inline-flex min-h-12 items-center justify-center rounded-full px-6 text-sm font-black uppercase tracking-[0.18em] transition bg-[#C8102E] text-white shadow-[0_20px_60px_rgba(200,16,46,0.35)] hover:bg-[#a80d27]"
+              className="inline-flex min-h-12 items-center justify-center rounded-full px-6 text-sm font-black uppercase tracking-[0.18em] transition bg-[#C8102E] text-white hover:bg-[#a80d27]"
             >
               Order Online
             </a>
@@ -139,7 +138,7 @@ export default function RedRoomPage() {
         </div>
       </section>
 
-      {/* SPLIT — VIP image + hookah image */}
+      {/* SPLIT */}
       <section className="grid grid-cols-1 md:grid-cols-2" style={{ minHeight: "70vh" }}>
         <div className="relative" style={{ minHeight: "50vw" }}>
           <Image src="/images/vip-lounge.webp" alt="VIP lounge" fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover" />
@@ -254,10 +253,7 @@ export default function RedRoomPage() {
             </p>
             <a
               href="tel:+14044585714"
-              className="mt-6 inline-flex min-h-12 items-center rounded-full px-6 text-sm font-bold uppercase tracking-[0.16em] text-white transition"
-              style={{ border: "1px solid rgba(255,255,255,0.15)", background: "transparent" }}
-              onMouseOver={(e) => (e.currentTarget.style.borderColor = "rgba(212,175,55,0.5)")}
-              onMouseOut={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)")}
+              className="mt-6 inline-flex min-h-12 items-center rounded-full border border-white/15 px-6 text-sm font-bold uppercase tracking-[0.16em] text-white transition hover:border-yellow-500/50"
             >
               Call to Reserve
             </a>
