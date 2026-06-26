@@ -25,6 +25,14 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const handleLogoClick = (e: React.MouseEvent) => {
+    setOpen(false);
+    if (pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
     onScroll();
@@ -69,7 +77,7 @@ export function Navbar() {
         <Link
           href="/"
           className="shrink-0 transition-opacity hover:opacity-85"
-          onClick={() => setOpen(false)}
+          onClick={handleLogoClick}
           aria-label="Mr Soul home"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
