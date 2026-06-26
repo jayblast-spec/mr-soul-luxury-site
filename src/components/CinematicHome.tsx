@@ -48,10 +48,10 @@ export function CinematicHome() {
 
         <motion.div className="relative z-10 flex w-full flex-col items-center px-5" style={{ opacity: heroOpacity }}>
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.7 }} className="mb-6 flex flex-col items-center text-center">
-            <span className="font-black uppercase" style={{ fontSize: "clamp(13px, 2vw, 20px)", letterSpacing: "0.32em", color: "#F2C85A", textShadow: "0 1px 14px rgba(0,0,0,0.95), 0 0 28px rgba(0,0,0,0.8)" }}>
+            <span className="font-black uppercase" style={{ fontSize: "clamp(13px, 2vw, 20px)", letterSpacing: "0.32em", color: "#ffffff", textShadow: "0 1px 14px rgba(0,0,0,0.95), 0 0 28px rgba(0,0,0,0.8)" }}>
               Mr Soul Bistro &amp; Cafe
             </span>
-            <span className="font-black uppercase mt-1" style={{ fontSize: "clamp(13px, 2vw, 20px)", letterSpacing: "0.32em", color: "#F2C85A", textShadow: "0 1px 14px rgba(0,0,0,0.95), 0 0 28px rgba(0,0,0,0.8)" }}>
+            <span className="font-black uppercase mt-1" style={{ fontSize: "clamp(13px, 2vw, 20px)", letterSpacing: "0.32em", color: "#ffffff", textShadow: "0 1px 14px rgba(0,0,0,0.95), 0 0 28px rgba(0,0,0,0.8)" }}>
               Atlanta, GA
             </span>
           </motion.div>
