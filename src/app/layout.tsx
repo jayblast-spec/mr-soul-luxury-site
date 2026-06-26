@@ -31,13 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Mr Soul Bistro & Cafe",
     description: "Where Atlanta Meets Lagos - authentic Nigerian cuisine and Atlanta's RedRoom VIP experience.",
-    images: ["/images/mr-soul-logo.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Mr Soul Bistro & Cafe",
-    description: "Authentic Nigerian cuisine, RedRoom VIP nightlife, hookah, bottle service, and Afrobeats in Atlanta.",
-    images: ["/images/mr-soul-logo.png"],
+    images: ["https://picsum.photos/1200/630?random=16"],
   },
 };
 

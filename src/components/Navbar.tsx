@@ -1,7 +1,6 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -38,11 +37,13 @@ export function Navbar() {
       >
         <Link
           href="/"
-          className="group relative h-12 w-36 shrink-0 overflow-hidden rounded-full border border-[#D4AF37]/30 bg-white/95 px-3 shadow-lg shadow-[#D4AF37]/18 transition hover:scale-[1.02] md:h-12 md:w-40"
+          className="accent-gradient group grid size-12 shrink-0 place-items-center rounded-full p-[1px] shadow-lg shadow-[#C8102E]/25 transition hover:scale-105 md:size-11"
           onClick={() => setOpen(false)}
           aria-label="Mr Soul home"
         >
-          <Image src="/images/mr-soul-logo.png" alt="Mr Soul Bistro & Cafe" fill priority sizes="160px" className="object-contain p-1.5" />
+          <span className="grid size-full place-items-center rounded-full bg-[#170207] text-[11px] font-black tracking-[0.12em] text-white md:text-[10px]">
+            SOUL
+          </span>
         </Link>
         <div className="ml-3 min-w-0 flex-1 md:hidden">
           <p className="truncate text-sm font-black uppercase tracking-[0.12em] text-white">Mr Soul</p>

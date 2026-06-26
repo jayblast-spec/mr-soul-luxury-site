@@ -65,82 +65,43 @@ export function AIBubble() {
   return (
     <div className="fixed bottom-4 right-4 z-50 sm:bottom-5 sm:right-5">
       {open ? (
-        <div
-          className="mb-3 w-[min(calc(100vw-2rem),410px)] overflow-hidden rounded-3xl"
-          style={{
-            background: "rgba(28, 6, 14, 0.97)",
-            backdropFilter: "blur(32px) saturate(180%)",
-            WebkitBackdropFilter: "blur(32px) saturate(180%)",
-            border: "1px solid rgba(212, 175, 55, 0.32)",
-            boxShadow: "inset 0 0 0 0.5px rgba(255, 77, 109, 0.3), 0 8px 48px rgba(0,0,0,0.75)",
-          }}
-        >
-          {/* Header */}
-          <div
-            className="flex items-center justify-between px-4 py-3"
-            style={{
-              background: "linear-gradient(135deg, #5C0E1A 0%, #8A1C2C 50%, #3E0A15 100%)",
-              borderBottom: "1px solid rgba(212,175,55,0.2)",
-            }}
-          >
+        <div className="mb-3 w-[min(calc(100vw-2rem),410px)] overflow-hidden rounded-3xl border border-[#D4AF37]/35 bg-[#170207]/95 text-white shadow-2xl shadow-[#C8102E]/35 backdrop-blur-xl">
+          <div className="flex items-center justify-between border-b border-white/10 bg-gradient-to-r from-[#C8102E] via-[#7a0618] to-[#D4AF37] px-4 py-3">
             <div>
-              <p className="text-sm font-black uppercase tracking-[0.2em] text-white">SoulBot</p>
-              <p className="text-xs" style={{ color: "rgba(255,255,255,0.75)" }}>Mr Soul smart host</p>
+              <p className="text-sm font-black uppercase tracking-[0.2em]">SoulBot</p>
+              <p className="text-xs text-white/80">Mr Soul smart host</p>
             </div>
-            <button
-              type="button"
-              aria-label="Close SoulBot"
-              onClick={() => setOpen(false)}
-              className="text-white/70 transition hover:text-white"
-            >
+            <button type="button" aria-label="Close SoulBot" onClick={() => setOpen(false)}>
               <X size={18} />
             </button>
           </div>
-
-          {/* Messages */}
           <div ref={listRef} className="max-h-[52vh] space-y-3 overflow-y-auto p-4">
             {messages.map((message, index) => (
               <div
                 key={`${message.role}-${index}`}
-                className={`rounded-2xl p-3 text-sm leading-6 ${
-                  message.role === "You" ? "ml-8 text-white" : "mr-5 text-white/85"
-                }`}
-                style={
+                className={`rounded-2xl border p-3 text-sm leading-6 ${
                   message.role === "You"
-                    ? { background: "rgba(212,175,55,0.18)", border: "1px solid rgba(212,175,55,0.28)" }
-                    : { background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)" }
-                }
+                    ? "ml-8 border-[#D4AF37]/25 bg-[#D4AF37]/15 text-white"
+                    : "mr-5 border-white/10 bg-white/10 text-white/85"
+                }`}
               >
-                <span className="font-black" style={{ color: "#D4AF37" }}>{message.role}: </span>
+                <span className="font-black text-[#D4AF37]">{message.role}: </span>
                 {message.text}
               </div>
             ))}
             {loading ? (
-              <div
-                className="mr-10 rounded-2xl p-3 text-sm text-white/70"
-                style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)" }}
-              >
-                <span className="font-black" style={{ color: "#D4AF37" }}>SoulBot: </span>
+              <div className="mr-10 rounded-2xl border border-white/10 bg-white/10 p-3 text-sm text-white/70">
+                <span className="font-black text-[#D4AF37]">SoulBot: </span>
                 cooking up the answer...
               </div>
             ) : null}
           </div>
-
-          {/* Quick prompts */}
-          <div
-            className="flex flex-wrap gap-2 px-3 pt-3"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
-          >
+          <div className="flex flex-wrap gap-2 border-t border-white/10 px-3 pt-3">
             {starterPrompts.map((prompt) => (
               <button
                 key={prompt}
                 type="button"
-                className="rounded-full px-3 py-1.5 text-xs font-bold transition hover:border-[rgba(212,175,55,0.4)] hover:text-white"
-                style={{
-                  background: "rgba(255,255,255,0.07)",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  color: "rgba(255,255,255,0.7)",
-                }}
+                className="rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-bold text-white/75 transition hover:border-[#D4AF37]/50 hover:text-white"
                 onClick={() => sendMessage(prompt)}
                 disabled={loading}
               >
@@ -148,22 +109,15 @@ export function AIBubble() {
               </button>
             ))}
           </div>
-
-          {/* Input */}
           <form
-            className="flex gap-2 p-3"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
+            className="flex gap-2 border-t border-white/10 p-3"
             onSubmit={(event) => {
               event.preventDefault();
               sendMessage();
             }}
           >
             <input
-              className="min-w-0 flex-1 rounded-full px-4 py-3 text-sm text-white outline-none"
-              style={{
-                background: "rgba(255,255,255,0.08)",
-                border: "1px solid rgba(255,255,255,0.12)",
-              }}
+              className="min-w-0 flex-1 rounded-full border border-white/10 bg-white/10 px-4 py-3 text-sm outline-none focus:border-[#D4AF37]"
               value={input}
               onChange={(event) => setInput(event.target.value)}
               placeholder="Ask about menu, hours, VIP..."
@@ -171,8 +125,7 @@ export function AIBubble() {
               disabled={loading}
             />
             <button
-              className="inline-flex size-11 shrink-0 items-center justify-center rounded-full disabled:opacity-60"
-              style={{ background: "linear-gradient(160deg, #F2C85A 0%, #D4AF37 100%)", color: "#120308" }}
+              className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-[#D4AF37] text-black disabled:opacity-60"
               type="submit"
               aria-label="Send message"
               disabled={loading}
@@ -182,25 +135,13 @@ export function AIBubble() {
           </form>
         </div>
       ) : null}
-
-      {/* Trigger */}
       <button
         type="button"
-        className="relative inline-flex size-16 items-center justify-center rounded-full text-white transition hover:scale-105"
-        style={{
-          background: "linear-gradient(160deg, #8A1C2C, #C41E3A)",
-          border: "1px solid rgba(212,175,55,0.4)",
-          boxShadow: "0 4px 24px rgba(196,30,58,0.55)",
-        }}
-        onClick={() => setOpen((v) => !v)}
+        className="relative inline-flex size-16 items-center justify-center rounded-full border border-[#D4AF37]/40 bg-[#C8102E] text-white shadow-2xl shadow-[#C8102E]/45 transition hover:scale-105"
+        onClick={() => setOpen((value) => !value)}
         aria-label="Open SoulBot"
       >
-        <span
-          className="absolute -top-1 right-0 rounded-full px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.12em]"
-          style={{ background: "#D4AF37", color: "#120308" }}
-        >
-          AI
-        </span>
+        <span className="absolute -top-1 right-0 rounded-full bg-[#D4AF37] px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.12em] text-black">AI</span>
         <Bot size={28} />
       </button>
     </div>
