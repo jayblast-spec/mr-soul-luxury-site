@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
+import { AIBubble } from "@/components/AIBubble";
 import { CursorGlow } from "@/components/CursorGlow";
+import { Footer } from "@/components/Footer";
 import { LenisProvider } from "@/components/LenisProvider";
 import { Navbar } from "@/components/Navbar";
 
@@ -37,10 +39,18 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${inter.variable} ${instrumentSerif.variable}`}>
       <body>
+        <a href="#primary-navigation" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-black">
+          Skip to primary navigation
+        </a>
+        <a href="#content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-16 focus:z-[100] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-black">
+          Skip to content
+        </a>
         <LenisProvider />
         <CursorGlow />
         <Navbar />
-        <main>{children}</main>
+        <main id="content">{children}</main>
+        <Footer />
+        <AIBubble />
       </body>
     </html>
   );
