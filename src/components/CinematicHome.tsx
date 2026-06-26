@@ -6,10 +6,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 const reviews = [
-  { text: "Best Nigerian vibe in Atlanta.", author: "Dining Guest", stars: 5 },
-  { text: "The jollof is unmatched. Period.", author: "Menu Review", stars: 5 },
-  { text: "RedRoom had the whole place moving.", author: "VIP Night", stars: 5 },
-  { text: "Authentic. Elevated. Unforgettable.", author: "Event Guest", stars: 5 },
+  { text: "The best relaxing spot in Atl.", author: "Med Elba", source: "Google", stars: 5 },
+  { text: "Suya is always my go to and it never disappoints at all!", author: "Yelp Reviewer", source: "Yelp", stars: 5 },
+  { text: "The egusi tastes just like homemade egusi.", author: "Google Reviewer", source: "Google", stars: 5 },
+  { text: "I can't wait to go back to red room. Sweet!!!", author: "Aaron Tucker", source: "Google", stars: 5 },
 ];
 
 const spring = { type: "spring" as const, stiffness: 80, damping: 20 };
@@ -217,7 +217,10 @@ export function CinematicHome() {
       <section className="px-6 py-16 md:px-16 md:py-24" style={{ background: "#8B0000" }}>
         <div className="mx-auto max-w-[1100px]">
           <motion.div initial={{ opacity: 0, y: 36 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={spring} className="mb-10 flex items-end justify-between gap-8">
-            <h2 className="font-display font-bold italic leading-none text-white" style={{ fontSize: "clamp(26px, 3vw, 44px)" }}>Real <em className="text-gold-metallic not-italic">vibes.</em></h2>
+            <div>
+              <h2 className="font-display font-bold italic leading-none text-white" style={{ fontSize: "clamp(26px, 3vw, 44px)" }}>Real <em className="text-gold-metallic not-italic">vibes.</em></h2>
+              <p className="mt-2 text-xs" style={{ color: "rgba(255,220,200,0.5)" }}>4.2★ on Google · 327 reviews</p>
+            </div>
             <p className="hidden text-xs font-bold uppercase tracking-[0.3em] md:block" style={{ color: "rgba(255,220,200,0.4)", paddingBottom: "0.25rem" }}>Guest Reviews</p>
           </motion.div>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-40px" }} variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.09 } } }} className="grid gap-4 sm:grid-cols-2">
@@ -225,7 +228,10 @@ export function CinematicHome() {
               <motion.div key={r.author} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: spring } }} className="glass-card rounded-2xl p-6">
                 <p className="text-[#D4AF37] text-base mb-3">{"★".repeat(r.stars)}</p>
                 <p className="font-display italic text-white font-semibold leading-snug" style={{ fontSize: "clamp(15px, 1.4vw, 19px)" }}>&ldquo;{r.text}&rdquo;</p>
-                <p className="mt-3 text-xs font-bold uppercase tracking-[0.25em]" style={{ color: "rgba(255,220,200,0.5)" }}>— {r.author}</p>
+                <div className="mt-3 flex items-center justify-between">
+                  <p className="text-xs font-bold uppercase tracking-[0.25em]" style={{ color: "rgba(255,220,200,0.5)" }}>— {r.author}</p>
+                  <p className="text-xs" style={{ color: "rgba(255,220,200,0.3)" }}>{r.source}</p>
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -235,7 +241,7 @@ export function CinematicHome() {
       {/* ─── STATS ─────────────────────────────────────────── */}
       <section className="px-6 py-16 md:px-16 md:py-20" style={{ background: "#750000" }}>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.15 } } }} className="mx-auto grid max-w-[1100px] grid-cols-3 overflow-hidden rounded-2xl" style={{ border: "1px solid rgba(212,175,55,0.18)" }}>
-          {[["15+", "Years of Flavor"], ["500+", "Dishes Daily"], ["4.8★", "Average Rating"]].map(([value, label], i) => (
+          {[["15+", "Years of Flavor"], ["327", "Google Reviews"], ["4.2★", "Google Rating"]].map(([value, label], i) => (
             <motion.div key={label} variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: spring } }} className="glass-card border-0 px-4 py-8 text-center md:px-8 md:py-10" style={{ borderRadius: 0, borderRight: i < 2 ? "1px solid rgba(212,175,55,0.14)" : "none" }}>
               <p className="font-display font-bold italic text-gold-metallic" style={{ fontSize: "clamp(22px, 2.8vw, 40px)" }}>{value}</p>
               <p className="mt-2 text-xs font-bold uppercase tracking-[0.28em]" style={{ color: "rgba(255,220,200,0.65)" }}>{label}</p>
