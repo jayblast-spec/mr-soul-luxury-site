@@ -10,13 +10,18 @@ export const metadata: Metadata = {
 export default function MenuPage() {
   return (
     <>
-      <ParallaxSection image="https://picsum.photos/seed/mr-soul-menu/1600/900" eyebrow="Food Menu" title="Delight Your Taste Buds with a World of Flavors">
-        <p className="text-xl leading-8 text-white/75">
-          At Mr Soul Bistro & Cafe, our menu is filled with delicious dishes that promise to take your taste buds on a journey.
-          From authentic Nigerian flavors to global favorites, each dish is prepared with care and quality ingredients.
+      <ParallaxSection
+        image="/images/food-jollof.webp"
+        eyebrow="Food Menu"
+        title="Delight Your Taste Buds with a World of Flavors"
+        priority
+      >
+        <p className="text-xl leading-8" style={{ color: "rgba(255,220,200,0.82)" }}>
+          Authentic Nigerian flavors, prepared with care and quality ingredients — from
+          classic jollof to premium hookah and late-night bites.
         </p>
       </ParallaxSection>
-      <section className="bg-bg px-5 py-20 sm:px-8">
+      <section className="px-5 py-20 sm:px-8" style={{ background: "#8B0000" }}>
         <div className="mx-auto max-w-7xl">
           <MenuExplorer />
         </div>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 200">
+  <!-- Mr — large white bold serif, left side -->
+  <text x="4" y="162"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="148"
+    font-weight="900"
+    fill="#FFFFFF">Mr</text>
+
+  <!-- Red circle -->
+  <circle cx="268" cy="104" r="90" fill="#C41E3A"/>
+
+  <!-- Dark circle overlapping right (with subtle border so it shows on dark bg) -->
+  <circle cx="360" cy="104" r="90" fill="#0A0208"/>
+  <circle cx="360" cy="104" r="90" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+
+  <!-- SOUL spanning both circles -->
+  <text x="305" y="121"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="82"
+    font-weight="700"
+    fill="#FFFFFF"
+    text-anchor="middle">SOUL</text>
+
+  <!-- Bistro &amp; cafe — italic on dark circle -->
+  <text x="378" y="166"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="21"
+    font-weight="400"
+    font-style="italic"
+    fill="rgba(255,255,255,0.88)"
+    text-anchor="middle">Bistro &amp; cafe</text>
+</svg>

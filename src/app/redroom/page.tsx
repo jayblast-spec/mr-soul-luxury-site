@@ -10,15 +10,6 @@ export const metadata: Metadata = {
   description: "RedRoom by Mr Soul is an Atlanta Afrobeats nightlife, VIP lounge, bottle service, hookah, celebrity-style entertainment, and private event experience.",
 };
 
-const heroPhotos = [
-  "redroom-crowd-happy",
-  "redroom-afrobeats-dance",
-  "redroom-vip-bottles",
-  "redroom-dj-booth",
-  "redroom-hookah-lounge",
-  "redroom-celebration",
-];
-
 const galleryRows = [
   ["champagne parade", "afrobeats crowd", "birthday booth", "dj spotlight", "vip toast", "late night smiles"],
   ["hookah moment", "red light lounge", "celebrity arrival", "friends meetup", "dance floor joy", "private event"],
@@ -35,12 +26,11 @@ const eventTypes = ["Birthdays", "VIP Tables", "Private Buyouts", "Artist Nights
 
 function SlidingPhotoRow({ labels, reverse = false }: { labels: string[]; reverse?: boolean }) {
   const doubled = [...labels, ...labels];
-
   return (
     <div className="overflow-hidden">
       <div className={reverse ? "redroom-slide-right gap-4 py-2" : "redroom-slide-left gap-4 py-2"}>
         {doubled.map((label, index) => (
-          <div key={`${label}-${index}`} className="relative h-52 w-40 shrink-0 overflow-hidden rounded-[8px] border border-white/10 bg-white/10 sm:h-72 sm:w-56">
+          <div key={`${label}-${index}`} className="relative h-52 w-40 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-white/5 sm:h-72 sm:w-56">
             <Image
               src={`https://picsum.photos/seed/${label.replaceAll(" ", "-")}/600/800`}
               alt={label}
@@ -48,8 +38,8 @@ function SlidingPhotoRow({ labels, reverse = false }: { labels: string[]; revers
               sizes="224px"
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
-            <p className="absolute bottom-3 left-3 max-w-[80%] text-[10px] font-black uppercase tracking-[0.16em] text-white sm:text-xs">{label}</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+            <p className="absolute bottom-3 left-3 max-w-[80%] text-[10px] font-bold uppercase tracking-[0.16em] text-white sm:text-xs">{label}</p>
           </div>
         ))}
       </div>
@@ -59,92 +49,117 @@ function SlidingPhotoRow({ labels, reverse = false }: { labels: string[]; revers
 
 export default function RedRoomPage() {
   return (
-    <main className="overflow-hidden bg-black text-white">
-      <section className="relative isolate min-h-screen overflow-hidden px-4 pt-28 sm:px-8">
-        <div className="absolute inset-0">
-          <Image
-            src="https://picsum.photos/seed/redroom-hero-celebrity-night/1800/1100"
-            alt="RedRoom VIP lounge"
-            fill
-            priority
-            sizes="100vw"
-            className="float-image-bg object-cover opacity-50"
+    <main className="overflow-hidden bg-[#080008] text-white">
+      {/* HERO */}
+      <section className="relative isolate min-h-screen overflow-hidden">
+        <Image
+          src="/images/afrobeats-crowd.webp"
+          alt="RedRoom nightlife"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.85) 100%)" }} />
+        <div className="absolute inset-0" style={{ background: "radial-gradient(circle at 60% 20%, rgba(180,0,30,0.45), transparent 40%)" }} />
+
+        <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-5 pb-20 pt-32 sm:px-8">
+          {/* Real RedRoom logo */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/redroom-logo.png"
+            alt="RedRoom Lounge by Mr Soul"
+            className="mb-10"
+            style={{ width: "min(220px, 48vw)", height: "auto" }}
           />
-        </div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_62%_20%,rgba(200,16,46,0.6),transparent_34%),radial-gradient(circle_at_16%_78%,rgba(212,175,55,0.18),transparent_26%),linear-gradient(180deg,rgba(0,0,0,0.25),#000_86%)]" />
-        <div className="absolute bottom-10 left-0 right-0 hidden rotate-[-5deg] opacity-55 md:block">
-          <SlidingPhotoRow labels={heroPhotos} />
-        </div>
-
-        <div className="relative z-10 mx-auto grid min-h-[calc(100svh-7rem)] max-w-7xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="max-w-4xl">
-            <p className="text-xs font-black uppercase tracking-[0.38em] text-[#D4AF37]">RedRoom By Mr Soul</p>
-            <h1 className="neon-flicker mt-5 text-balance text-5xl font-black uppercase leading-[0.86] sm:text-7xl lg:text-8xl">
-              Afrobeats. VIP. Celebrity Energy.
-            </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-white/78 sm:text-xl">
-              A nightlife destination for fun adults, meetups, birthdays, private events, hookah, bottle service, and unforgettable Atlanta nights.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="#book">Book VIP Table</ButtonLink>
-              <ButtonLink href="#gallery" variant="secondary">See The Vibe</ButtonLink>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 pb-10 lg:pb-0">
-            {heroPhotos.slice(0, 4).map((photo, index) => (
-              <div
-                key={photo}
-                className={`float-frame relative overflow-hidden rounded-[8px] border border-white/10 bg-white/10 ${
-                  index % 2 === 0 ? "aspect-[0.82]" : "mt-10 aspect-[0.82]"
-                }`}
-              >
-                <Image src={`https://picsum.photos/seed/${photo}/700/900`} alt="" fill sizes="(min-width:1024px) 260px, 45vw" className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-              </div>
-            ))}
+          <p className="text-xs font-bold uppercase tracking-[0.38em]" style={{ color: "#D4AF37" }}>RedRoom By Mr Soul</p>
+          <h1
+            className="mt-5 font-display font-bold italic leading-[0.88]"
+            style={{ fontSize: "clamp(52px, 9vw, 140px)" }}
+          >
+            Afrobeats.<br />VIP.<br />Celebrity Energy.
+          </h1>
+          <p className="mt-7 max-w-xl text-lg leading-8" style={{ color: "rgba(255,255,255,0.72)" }}>
+            A nightlife destination for fun adults — meetups, birthdays, private events,
+            hookah, bottle service, and unforgettable Atlanta nights.
+          </p>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <ButtonLink href="#book">Book VIP Table</ButtonLink>
+            <ButtonLink href="#gallery" variant="secondary">See The Vibe</ButtonLink>
           </div>
         </div>
       </section>
 
-      <section className="border-y border-white/10 bg-[#140204] py-4">
-        <div className="redroom-slide-left gap-8 text-nowrap text-4xl font-black uppercase leading-none text-white/12 sm:text-6xl">
+      {/* TICKER */}
+      <section className="border-y border-white/8 bg-[#0A0010] py-4">
+        <div className="redroom-slide-left gap-8 text-nowrap text-4xl font-black uppercase leading-none text-white/8 sm:text-6xl">
           {[...eventTypes, ...eventTypes, ...eventTypes].map((item, index) => (
-            <span key={`${item}-${index}`}>{item} <span className="text-[#C8102E]">/</span></span>
+            <span key={`${item}-${index}`}>{item} <span className="text-[#C41E3A]">/</span></span>
           ))}
         </div>
       </section>
 
-      <section className="bg-black px-5 py-20 sm:px-8">
+      {/* ABOUT */}
+      <section className="bg-[#070010] px-5 py-20 sm:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.35em] text-[#D4AF37]">Own Website Energy</p>
-              <h2 className="mt-4 text-balance text-4xl font-black uppercase leading-none sm:text-6xl">
-                Not a back room. A whole destination.
+              <p className="text-xs font-bold uppercase tracking-[0.35em]" style={{ color: "#D4AF37" }}>Own Website Energy</p>
+              <h2
+                className="font-display mt-4 font-bold italic leading-none"
+                style={{ fontSize: "clamp(36px, 5.5vw, 80px)" }}
+              >
+                Not a back room.<br />A whole destination.
               </h2>
             </div>
-            <p className="max-w-2xl text-lg leading-8 text-white/68">
-              RedRoom is where food, lounge culture, music, and nightlife meet. Guests come to celebrate, link up, dance, reserve premium tables, and feel like the night was designed around them.
+            <p className="max-w-2xl text-lg leading-8" style={{ color: "rgba(255,255,255,0.62)" }}>
+              RedRoom is where food, lounge culture, music, and nightlife meet. Guests come to
+              celebrate, link up, dance, reserve premium tables, and feel like the night was
+              designed around them.
             </p>
           </div>
 
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {moments.map(([title, text]) => (
-              <article key={title} className="rounded-[8px] border border-white/10 bg-white/[0.045] p-6">
-                <p className="text-2xl font-black uppercase">{title}</p>
-                <p className="mt-4 leading-7 text-white/62">{text}</p>
+              <article
+                key={title}
+                className="rounded-2xl border border-white/10 p-6 transition hover:-translate-y-1"
+                style={{ background: "rgba(255,255,255,0.04)" }}
+              >
+                <p className="text-xl font-bold italic text-white">{title}</p>
+                <p className="mt-4 text-sm leading-7" style={{ color: "rgba(255,255,255,0.58)" }}>{text}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="gallery" className="bg-[#130305] py-16 text-white">
+      {/* SPLIT — VIP image + hookah image */}
+      <section className="grid grid-cols-1 md:grid-cols-2" style={{ minHeight: "70vh" }}>
+        <div className="relative" style={{ minHeight: "50vw" }}>
+          <Image src="/images/vip-lounge.webp" alt="VIP lounge" fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover" />
+          <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.45)" }} />
+          <div className="absolute bottom-0 left-0 right-0 p-8">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.38em]" style={{ color: "#D4AF37" }}>The Room</p>
+            <h3 className="font-display font-bold italic text-white" style={{ fontSize: "clamp(24px, 3vw, 48px)" }}>Bottle service. Premium tables.</h3>
+          </div>
+        </div>
+        <div className="relative" style={{ minHeight: "50vw" }}>
+          <Image src="/images/hookah-luxury.webp" alt="Premium hookah" fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover" />
+          <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.45)" }} />
+          <div className="absolute bottom-0 left-0 right-0 p-8">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.38em]" style={{ color: "#D4AF37" }}>The Experience</p>
+            <h3 className="font-display font-bold italic text-white" style={{ fontSize: "clamp(24px, 3vw, 48px)" }}>Premium hookah. VIP only.</h3>
+          </div>
+        </div>
+      </section>
+
+      {/* GALLERY */}
+      <section id="gallery" className="bg-[#050008] py-16">
         <div className="px-5 sm:px-8">
           <div className="mx-auto mb-10 max-w-7xl">
-            <p className="text-xs font-black uppercase tracking-[0.35em] text-[#D4AF37]">Sliding Photo Wall</p>
-            <h2 className="mt-4 text-balance text-4xl font-black uppercase leading-none sm:text-6xl">Fun, movement, happiness.</h2>
+            <p className="text-xs font-bold uppercase tracking-[0.35em]" style={{ color: "#D4AF37" }}>Sliding Photo Wall</p>
+            <h2 className="font-display mt-4 font-bold italic leading-none" style={{ fontSize: "clamp(36px, 5.5vw, 80px)" }}>Fun, movement, happiness.</h2>
           </div>
         </div>
         <div className="space-y-4">
@@ -153,62 +168,89 @@ export default function RedRoomPage() {
         </div>
       </section>
 
-      <section className="bg-black px-5 py-20 text-white sm:px-8">
+      {/* FEATURES */}
+      <section className="bg-[#060010] px-5 py-20 sm:px-8">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 lg:grid-cols-4">
           {redroomFeatures.slice(0, 4).map((feature) => {
             const Icon = feature.icon;
             return (
-              <article key={feature.title} className="group h-full rounded-[8px] border border-white/10 bg-white/[0.04] p-6 transition hover:-translate-y-1 hover:border-[#D4AF37]/45 hover:bg-[#C8102E]/10">
-                <Icon className="text-[#D4AF37]" size={34} />
-                <h2 className="mt-6 text-2xl font-black uppercase">{feature.title}</h2>
-                <p className="mt-4 leading-7 text-white/65">{feature.text}</p>
+              <article
+                key={feature.title}
+                className="group h-full rounded-2xl border border-white/10 p-6 transition hover:-translate-y-1 hover:border-[#D4AF37]/40"
+                style={{ background: "rgba(255,255,255,0.04)" }}
+              >
+                <Icon style={{ color: "#D4AF37" }} size={32} />
+                <h2 className="mt-6 text-xl font-bold italic" style={{ fontFamily: "var(--font-display)" }}>{feature.title}</h2>
+                <p className="mt-4 text-sm leading-7" style={{ color: "rgba(255,255,255,0.58)" }}>{feature.text}</p>
               </article>
             );
           })}
         </div>
       </section>
 
-      <section className="relative isolate overflow-hidden bg-[#160207] px-5 py-20 sm:px-8">
-        <div className="absolute inset-x-0 top-10 opacity-20">
-          <SlidingPhotoRow labels={["luxury table", "bottle girls", "redroom dance", "hookah smiles", "atlanta nightlife", "afrobeats dj"]} />
-        </div>
-        <div className="relative z-10 mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.35em] text-[#D4AF37]">Private Events</p>
-            <h2 className="mt-4 text-balance text-4xl font-black uppercase leading-none sm:text-6xl">
-              Bring your people. We bring the movie.
-            </h2>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-white/68">
-              Birthdays, artist nights, brand launches, group meetups, VIP tables, and full private buyouts can all live here.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              {eventTypes.slice(0, 6).map((item) => (
-                <span key={item} className="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white/75">
-                  {item}
-                </span>
+      {/* PRIVATE EVENTS */}
+      <section className="relative isolate overflow-hidden bg-[#080012] px-5 py-20 sm:px-8">
+        <div className="relative z-10 mx-auto max-w-7xl">
+          <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.35em]" style={{ color: "#D4AF37" }}>Private Events</p>
+              <h2
+                className="font-display mt-4 font-bold italic leading-none"
+                style={{ fontSize: "clamp(36px, 5.5vw, 80px)" }}
+              >
+                Bring your people.<br />We bring the movie.
+              </h2>
+              <p className="mt-6 max-w-2xl text-lg leading-8" style={{ color: "rgba(255,255,255,0.62)" }}>
+                Birthdays, artist nights, brand launches, group meetups, VIP tables, and full
+                private buyouts can all live here.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                {eventTypes.slice(0, 6).map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-white/12 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em]"
+                    style={{ background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.7)" }}
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {["/images/afrobeats-crowd.webp", "/images/vip-lounge.webp"].map((src, index) => (
+                <div
+                  key={src}
+                  className={`relative overflow-hidden rounded-2xl border border-white/10 ${index === 1 ? "mt-14" : ""}`}
+                  style={{ aspectRatio: "0.82" }}
+                >
+                  <Image src={src} alt="" fill sizes="(min-width:1024px) 300px, 45vw" className="object-cover" />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }} />
+                </div>
               ))}
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            {["redroom-smiles", "redroom-vip-table"].map((photo, index) => (
-              <div key={photo} className={`float-frame relative overflow-hidden rounded-[8px] border border-white/10 ${index === 1 ? "mt-14 aspect-[0.82]" : "aspect-[0.82]"}`}>
-                <Image src={`https://picsum.photos/seed/${photo}/700/900`} alt="" fill sizes="(min-width:1024px) 300px, 45vw" className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-              </div>
-            ))}
           </div>
         </div>
       </section>
 
-      <section id="book" className="bg-[#FAFAFA] px-5 py-20 text-black sm:px-8">
+      {/* BOOKING */}
+      <section id="book" className="px-5 py-20 sm:px-8" style={{ background: "#0A0010" }}>
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.35em] text-[#C8102E]">VIP Reservations</p>
-            <h2 className="mt-4 text-4xl font-black uppercase leading-none sm:text-6xl">Own the room tonight</h2>
-            <p className="mt-6 text-lg leading-8 text-black/65">
-              Choose bottle service, hookah, general admission, birthday setup, private celebration, or a full buyout. RedRoom is 21+ after 9 PM.
+            <p className="text-xs font-bold uppercase tracking-[0.35em]" style={{ color: "#D4AF37" }}>VIP Reservations</p>
+            <h2
+              className="font-display mt-4 font-bold italic leading-none text-white"
+              style={{ fontSize: "clamp(36px, 5vw, 72px)" }}
+            >
+              Own the room tonight
+            </h2>
+            <p className="mt-6 text-base leading-8" style={{ color: "rgba(255,255,255,0.58)" }}>
+              Choose bottle service, hookah, general admission, birthday setup, private
+              celebration, or a full buyout. RedRoom is 21+ after 9 PM.
             </p>
-            <Link href="/menu" className="mt-6 inline-flex min-h-12 items-center rounded-full border border-black/10 px-6 text-sm font-black uppercase tracking-[0.16em]">
+            <Link
+              href="/menu"
+              className="mt-6 inline-flex min-h-12 items-center rounded-full border border-white/15 px-6 text-sm font-bold uppercase tracking-[0.16em] text-white transition hover:border-[#D4AF37]/50"
+            >
               View Mr Soul Menu
             </Link>
           </div>
