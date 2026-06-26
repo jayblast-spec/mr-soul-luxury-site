@@ -24,6 +24,20 @@ const moments = [
 
 const eventTypes = ["Birthdays", "VIP Tables", "Private Buyouts", "Artist Nights", "Afrobeats Parties", "Meetups", "After Dark Dining", "Hookah Lounge"];
 
+const newsTicker = [
+  "4.2★ on Google · 327 Reviews",
+  "Open Mon – Sat · 4:30PM to 2:30AM",
+  "Afrobeats Every Friday & Saturday",
+  "15+ Years Serving Atlanta",
+  "Free On-Site Parking · Buford Hwy NE",
+  "Hookah Available Until 2AM",
+  "RedRoom VIP · 21+ After 9PM",
+  "Book a Table · +1 404-458-5714",
+  "Atlanta's Premier Nigerian Restaurant",
+  "Now Accepting Private Event Bookings",
+  "Western & African Cuisine · FastFood & Grills",
+];
+
 function SlidingPhotoRow({ labels, reverse = false }: { labels: string[]; reverse?: boolean }) {
   const doubled = [...labels, ...labels];
   return (
@@ -97,7 +111,7 @@ export default function RedRoomPage() {
       {/* TICKER */}
       <section className="border-y border-white/8 bg-[#0A0010] py-4">
         <div className="redroom-slide-left gap-8 text-nowrap text-4xl font-black uppercase leading-none text-white/8 sm:text-6xl">
-          {[...eventTypes, ...eventTypes, ...eventTypes].map((item, index) => (
+          {[...newsTicker, ...newsTicker, ...newsTicker].map((item, index) => (
             <span key={`${item}-${index}`}>{item} <span className="text-[#C41E3A]">/</span></span>
           ))}
         </div>
@@ -264,3 +278,4 @@ export default function RedRoomPage() {
     </main>
   );
 }
+
