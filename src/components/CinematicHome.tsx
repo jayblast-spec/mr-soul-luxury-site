@@ -46,30 +46,38 @@ export function CinematicHome() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.7 }}
-            className="mb-6 text-xs font-bold uppercase tracking-[0.52em]"
+            className="mb-5 text-xs font-bold uppercase tracking-[0.52em]"
             style={{ color: "#F2C85A" }}
           >
             Atlanta · Lagos · RedRoom
           </motion.p>
 
+          {/* GIF frame — tighter on mobile, natural on desktop */}
           <motion.div
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.9, ease: "easeOut" }}
+            className="w-[62vw] max-w-[460px] sm:w-[72vw] sm:max-w-[500px] md:w-[44vw] md:max-w-[540px]"
             style={{
-              width: "min(540px, 88vw)",
-              borderRadius: "14px",
+              borderRadius: "12px",
               overflow: "hidden",
               border: "1.5px solid rgba(212,175,55,0.55)",
               boxShadow:
-                "0 0 0 1px rgba(212,175,55,0.12), 0 0 60px rgba(212,175,55,0.12), 0 20px 80px rgba(0,0,0,0.7)",
+                "0 0 0 1px rgba(212,175,55,0.12), 0 0 48px rgba(212,175,55,0.10), 0 16px 60px rgba(0,0,0,0.7)",
+              willChange: "transform",
+              transform: "translateZ(0)",
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/hero-bg.gif"
               alt="Mr Soul Bistro & Cafe"
-              style={{ width: "100%", display: "block" }}
+              decoding="async"
+              style={{
+                width: "100%",
+                display: "block",
+                transform: "translateZ(0)",
+              }}
             />
           </motion.div>
 
@@ -79,8 +87,8 @@ export function CinematicHome() {
             transition={{ delay: 0.9, duration: 0.8 }}
             style={{
               height: 1,
-              width: 160,
-              margin: "1.75rem auto",
+              width: 120,
+              margin: "1.5rem auto",
               background:
                 "linear-gradient(to right, transparent, rgba(212,175,55,0.7), transparent)",
               transformOrigin: "center",
@@ -91,22 +99,22 @@ export function CinematicHome() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.05, duration: 0.7 }}
-            className="flex flex-col items-center gap-4 sm:flex-row"
+            className="flex flex-col items-center gap-3 sm:flex-row"
           >
             <Link href="/menu" className="btn-gold">View Our Menu</Link>
             <Link href="/redroom" className="btn-glass-red">Book RedRoom VIP</Link>
           </motion.div>
         </motion.div>
 
-        <div className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2">
+        <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2">
           <motion.div
-            animate={{ y: [0, 14, 0] }}
+            animate={{ y: [0, 12, 0] }}
             transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
           >
             <div
               style={{
                 width: 1,
-                height: 56,
+                height: 48,
                 margin: "0 auto",
                 background: "linear-gradient(to bottom, rgba(212,175,55,0.85), rgba(212,175,55,0))",
               }}
