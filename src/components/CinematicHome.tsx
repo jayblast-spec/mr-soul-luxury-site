@@ -1,17 +1,14 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { HlsBackground } from "./HlsBackground";
-import { LoadingScreen } from "./LoadingScreen";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const roles = ["Dining Room", "RedRoom", "Lagos Night", "VIP Table"];
 
 const bento = [
   {
@@ -44,11 +41,11 @@ const bento = [
   },
 ];
 
-const journal = [
-  ["Why RedRoom Works", "Bottle service meets cultural gravity.", "3 min", "VIP"],
-  ["The Jollof Standard", "Smoke, pepper, party rice, memory.", "2 min", "Menu"],
-  ["Atlanta x Lagos", "A positioning line with real nightlife teeth.", "4 min", "Brand"],
-  ["Private Buyouts", "Turning celebration nights into premium revenue.", "3 min", "Events"],
+const reviews = [
+  ["Best Nigerian vibe in Atlanta", "Closest you can get to Lagos.", "5 stars", "Dining"],
+  ["The jollof is unmatched", "The atmosphere is incredible.", "5 stars", "Menu"],
+  ["RedRoom is the spot", "Amazing food and the DJ had the whole room moving.", "5 stars", "Nightlife"],
+  ["Great vibes", "Authentic food and amazing staff. 10/10.", "5 stars", "Guest"],
 ];
 
 const gallery = [
@@ -84,16 +81,9 @@ function SectionHeader({ eyebrow, title, italic, text }: { eyebrow: string; titl
 }
 
 export function CinematicHome() {
-  const [loading, setLoading] = useState(true);
-  const [roleIndex, setRoleIndex] = useState(0);
   const marqueeRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
   const centerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => setRoleIndex((value) => (value + 1) % roles.length), 2000);
-    return () => window.clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -140,29 +130,27 @@ export function CinematicHome() {
 
   return (
     <>
-      <AnimatePresence>{loading ? <LoadingScreen onComplete={() => setLoading(false)} /> : null}</AnimatePresence>
-
       <section className="relative isolate grid min-h-screen place-items-center overflow-hidden bg-bg px-5 text-center">
         <HlsBackground />
-        <div className="absolute inset-0 bg-black/35" />
+        <div className="absolute inset-0 bg-black/60" />
         <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-bg to-transparent" />
         <div className="relative z-10 mx-auto max-w-5xl pt-16">
-          <p className="blur-in mb-8 text-xs uppercase tracking-[0.3em] text-muted">COLLECTION &apos;26</p>
-          <h1 className="name-reveal font-display text-balance text-6xl italic leading-[0.86] tracking-normal text-text-primary md:text-8xl lg:text-9xl">
-            Mr Soul Bistro
+          <p className="blur-in mb-8 text-xs uppercase tracking-[0.3em] text-[#D4AF37]">Where Atlanta Meets Lagos</p>
+          <h1 className="name-reveal text-balance text-5xl font-black uppercase leading-[0.86] tracking-normal text-text-primary md:text-8xl lg:text-9xl">
+            Mr Soul Bistro & Cafe
           </h1>
-          <p className="blur-in mt-6 text-lg text-text-primary/80 md:text-2xl">
-            A <span key={roleIndex} className="font-display inline-block italic text-text-primary animate-role-fade-in">{roles[roleIndex]}</span> lives in Atlanta.
+          <p className="blur-in mx-auto mt-6 max-w-3xl text-lg font-semibold leading-8 text-text-primary/85 md:text-2xl">
+            Authentic Nigerian cuisine and Atlanta&apos;s ultimate celebrity playground.
           </p>
           <p className="blur-in mx-auto mt-5 max-w-md text-sm leading-7 text-muted md:text-base">
-            Nigerian fine dining, RedRoom VIP, Afrobeats nights, and the closest you can get to Lagos without a passport.
+            Legendary jollof, peppered goat stew, hookah, bottle service, Afrobeats, and the RedRoom VIP experience.
           </p>
           <div className="blur-in mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link href="/redroom" className="luxury-border relative rounded-full bg-text-primary text-sm font-semibold text-bg transition hover:scale-105">
-              <span className="block rounded-full bg-text-primary px-7 py-3.5">Book RedRoom</span>
+            <Link href="/menu" className="luxury-border relative rounded-full bg-text-primary text-sm font-semibold text-bg transition hover:scale-105">
+              <span className="block rounded-full bg-text-primary px-7 py-3.5">View Our Menu</span>
             </Link>
-            <Link href="/menu" className="luxury-border relative rounded-full border border-stroke bg-bg text-sm font-semibold text-text-primary transition hover:scale-105">
-              <span className="block rounded-full bg-bg px-7 py-3.5">View Menu</span>
+            <Link href="/redroom" className="luxury-border relative rounded-full border border-stroke bg-bg text-sm font-semibold text-text-primary transition hover:scale-105">
+              <span className="block rounded-full bg-bg px-7 py-3.5">Book RedRoom VIP</span>
             </Link>
           </div>
         </div>
@@ -178,9 +166,9 @@ export function CinematicHome() {
         <div className="mx-auto max-w-[1200px]">
           <SectionHeader
             eyebrow="Signature Experiences"
-            title="Featured"
-            italic="moments"
-            text="A premium restaurant homepage should sell the room, the plate, and the night before the guest taps reserve."
+            title="Food, music,"
+            italic="and the room"
+            text="From authentic Nigerian mains to RedRoom bottle service, every section is built around what guests actually come for."
           />
           <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6">
             {bento.map((item) => (
@@ -217,13 +205,13 @@ export function CinematicHome() {
       <section className="bg-bg px-6 py-16 md:px-10 md:py-24 lg:px-16">
         <div className="mx-auto max-w-[1200px]">
           <SectionHeader
-            eyebrow="Owner Notes"
-            title="Luxury"
-            italic="strategy"
-            text="This is the commercial layer: turn taste, culture, and table demand into premium bookings."
+            eyebrow="Guest Reviews"
+            title="Real"
+            italic="vibes"
+            text="Clear social proof for food, atmosphere, staff, and the RedRoom nightlife pull."
           />
           <div className="space-y-4">
-            {journal.map(([title, text, time, tag], index) => (
+            {reviews.map(([title, text, rating, tag], index) => (
               <motion.article
                 key={title}
                 className="group flex flex-col gap-4 rounded-[40px] border border-stroke bg-surface/30 p-4 transition hover:bg-surface sm:flex-row sm:items-center sm:rounded-full"
@@ -240,7 +228,7 @@ export function CinematicHome() {
                   <p className="mt-1 text-sm text-muted">{text}</p>
                 </div>
                 <div className="flex items-center gap-3 text-xs uppercase tracking-[0.18em] text-muted">
-                  <span>{time}</span>
+                  <span>{rating}</span>
                   <span className="h-px w-8 bg-stroke" />
                   <span>{tag}</span>
                 </div>
@@ -255,10 +243,10 @@ export function CinematicHome() {
           <div className="mx-auto max-w-2xl">
             <p className="mb-5 text-xs uppercase tracking-[0.3em] text-muted">Explorations</p>
             <h2 className="text-balance text-5xl font-semibold leading-none md:text-7xl">
-              Visual <span className="font-display italic">playground</span>
+              Taste the <span className="font-display italic">night</span>
             </h2>
             <p className="mx-auto mt-6 max-w-md text-sm leading-7 text-muted">
-              Scroll-driven gallery moments for food, lounge, cocktails, crowd energy, and private tables.
+              Food, cocktails, lounge seating, RedRoom lights, and private table energy in one scroll.
             </p>
           </div>
         </div>
