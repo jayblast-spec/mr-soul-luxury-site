@@ -5,9 +5,12 @@ import { useEffect, useState } from "react";
 
 const links = [
   { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
   { href: "/menu", label: "Menu" },
+  { href: "/faqs", label: "FAQs" },
   { href: "/redroom", label: "RedRoom" },
-  { href: "/services", label: "Events" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Navbar() {
@@ -23,6 +26,7 @@ export function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-4 md:pt-6">
       <nav
+        id="primary-navigation"
         className={`inline-flex max-w-[calc(100vw-1.5rem)] items-center rounded-full border border-white/10 bg-surface/88 px-2 py-2 text-text-primary backdrop-blur-md transition ${
           scrolled ? "shadow-2xl shadow-black/30" : ""
         }`}
@@ -36,7 +40,7 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-full px-3 py-2 text-xs font-semibold text-muted transition hover:bg-stroke/60 hover:text-text-primary sm:px-4 sm:text-sm"
+              className="rounded-full px-2.5 py-2 text-xs font-semibold text-muted transition hover:bg-stroke/60 hover:text-text-primary sm:px-3 sm:text-sm"
             >
               {link.label}
             </Link>
