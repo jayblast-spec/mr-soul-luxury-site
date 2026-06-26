@@ -52,13 +52,13 @@ export function CinematicHome() {
             Atlanta · Lagos · RedRoom
           </motion.p>
 
-          {/* GIF frame — tighter on mobile, natural on desktop */}
+          {/* GIF frame — clamp enforces size at every screen width */}
           <motion.div
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.9, ease: "easeOut" }}
-            className="w-[62vw] max-w-[460px] sm:w-[72vw] sm:max-w-[500px] md:w-[44vw] md:max-w-[540px]"
             style={{
+              width: "clamp(200px, 52vw, 480px)",
               borderRadius: "12px",
               overflow: "hidden",
               border: "1.5px solid rgba(212,175,55,0.55)",
@@ -87,8 +87,8 @@ export function CinematicHome() {
             transition={{ delay: 0.9, duration: 0.8 }}
             style={{
               height: 1,
-              width: 120,
-              margin: "1.5rem auto",
+              width: 100,
+              margin: "1.25rem auto",
               background:
                 "linear-gradient(to right, transparent, rgba(212,175,55,0.7), transparent)",
               transformOrigin: "center",
