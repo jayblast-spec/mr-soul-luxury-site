@@ -47,8 +47,8 @@ export function CinematicHome() {
         </div>
 
         <motion.div className="relative z-10 flex w-full flex-col items-center px-5" style={{ opacity: heroOpacity }}>
-          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.7 }} className="mb-5 text-xs font-bold uppercase tracking-[0.52em]" style={{ color: "#F2C85A" }}>
-            Western & African Cuisine · FastFood & Grills
+          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.7 }} className="mb-5 text-[10px] font-bold uppercase tracking-[0.55em]" style={{ color: "rgba(242,200,90,0.7)" }}>
+            Mr Soul Bistro &amp; Cafe · Atlanta, GA
           </motion.p>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, duration: 0.9, ease: "easeOut" }}
@@ -57,7 +57,15 @@ export function CinematicHome() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/hero-bg.gif" alt="Mr Soul Bistro & Cafe" decoding="async" style={{ width: "100%", display: "block", transform: "translateZ(0)" }} />
           </motion.div>
-          <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.9, duration: 0.8 }} style={{ height: 1, width: 110, margin: "1.4rem auto", background: "linear-gradient(to right, transparent, rgba(212,175,55,0.8), transparent)", transformOrigin: "center" }} />
+          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.82, duration: 0.85, ease: "easeOut" }} className="mt-6 text-center">
+            <h1 className="font-display font-bold italic leading-[1.05] text-white" style={{ fontSize: "clamp(30px, 5.5vw, 82px)", textShadow: "0 2px 32px rgba(0,0,0,0.7)" }}>
+              Western &amp; African Cuisine
+            </h1>
+            <p className="mt-1 font-display font-bold italic" style={{ fontSize: "clamp(18px, 3vw, 48px)", color: "#F2C85A", textShadow: "0 2px 18px rgba(0,0,0,0.5)" }}>
+              FastFood &amp; Grills
+            </p>
+          </motion.div>
+          <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 1.1, duration: 0.8 }} style={{ height: 1, width: 140, margin: "1.6rem auto", background: "linear-gradient(to right, transparent, rgba(212,175,55,0.8), transparent)", transformOrigin: "center" }} />
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.05, duration: 0.7 }} className="flex flex-col items-center gap-3 sm:flex-row">
             <Link href="/menu" className="btn-gold">View Our Menu</Link>
             <Link href="/redroom" className="btn-glass-red">Book RedRoom VIP</Link>
