@@ -88,7 +88,8 @@ ${knowledge}`,
       });
 
       return Response.json({ reply: result.text.trim() || fallbackReply(latest) });
-    } catch {
+    } catch (error) {
+      console.error("SoulBot AI generation failed", error);
       return Response.json({ reply: fallbackReply(latest), fallback: true });
     }
   } catch {
