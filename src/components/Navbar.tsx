@@ -17,6 +17,9 @@ const links = [
 
 const PHONE = "tel:+14044585714";
 
+// Warm cream backing so black Mr text is visible, white text stays on its own circle elements
+const logoBg = "rgba(245, 238, 225, 0.97)";
+
 export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -32,17 +35,17 @@ export function Navbar() {
   const logoStyle: React.CSSProperties = {
     height: "40px",
     width: "auto",
-    background: "rgba(255,255,255,0.95)",
+    background: logoBg,
     borderRadius: "8px",
-    padding: "4px 8px",
+    padding: "4px 10px",
   };
 
   const logoStyleMobile: React.CSSProperties = {
     height: "34px",
     width: "auto",
-    background: "rgba(255,255,255,0.95)",
+    background: logoBg,
     borderRadius: "6px",
-    padding: "3px 6px",
+    padding: "3px 7px",
   };
 
   return (
