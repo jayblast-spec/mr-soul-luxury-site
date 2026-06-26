@@ -132,7 +132,7 @@ export function CinematicHome() {
     <>
       <section className="relative isolate grid min-h-screen place-items-center overflow-hidden bg-bg px-5 text-center">
         <HlsBackground />
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-[#170207]/68" />
         <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-bg to-transparent" />
         <div className="relative z-10 mx-auto max-w-5xl pt-16">
           <p className="blur-in mb-8 text-xs uppercase tracking-[0.3em] text-[#D4AF37]">Where Atlanta Meets Lagos</p>
@@ -182,8 +182,8 @@ export function CinematicHome() {
               >
                 <Image src={item.image} alt={item.title} fill sizes="(min-width: 768px) 55vw, 100vw" className="object-cover transition duration-700 group-hover:scale-105" />
                 <div className="halftone absolute inset-0 opacity-20 mix-blend-soft-light" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="absolute left-5 top-5 rounded-full border border-white/10 bg-black/35 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white/75 backdrop-blur">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#170207]/88 via-[#4d0715]/24 to-transparent" />
+                <div className="absolute left-5 top-5 rounded-full border border-white/10 bg-[#170207]/45 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white/75 backdrop-blur">
                   {item.label}
                 </div>
                 <div className="absolute inset-0 grid place-items-center bg-bg/70 opacity-0 backdrop-blur-lg transition duration-300 group-hover:opacity-100">
@@ -285,7 +285,7 @@ export function CinematicHome() {
 
       <section className="relative isolate overflow-hidden bg-bg px-6 pb-10 pt-20 text-center md:pt-28">
         <HlsBackground flipped />
-        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-[#170207]/78" />
         <div className="relative z-10">
           <div className="flex whitespace-nowrap text-[18vw] font-semibold leading-none text-white/10" ref={marqueeRef}>
             <span>WHERE ATLANTA MEETS LAGOS - REDROOM VIP - </span>
