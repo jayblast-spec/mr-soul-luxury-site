@@ -1,39 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280" width="280" height="280">
-  <defs>
-    <clipPath id="left-clip">
-      <rect x="0" y="0" width="140" height="280"/>
-    </clipPath>
-    <clipPath id="right-clip">
-      <rect x="140" y="0" width="140" height="280"/>
-    </clipPath>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 200">
+  <!-- Mr — large white bold serif, left side -->
+  <text x="4" y="162"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="148"
+    font-weight="900"
+    fill="#FFFFFF">Mr</text>
 
-  <!-- Outer gold ring -->
-  <circle cx="140" cy="140" r="136" fill="none" stroke="#D4AF37" stroke-width="2"/>
+  <!-- Red circle -->
+  <circle cx="268" cy="104" r="90" fill="#C41E3A"/>
 
-  <!-- Black circle (left half) -->
-  <circle cx="140" cy="140" r="133" fill="#0A0208" clip-path="url(#left-clip)"/>
-  <!-- Red circle (right half) -->
-  <circle cx="140" cy="140" r="133" fill="#C41E3A" clip-path="url(#right-clip)"/>
+  <!-- Dark circle overlapping right (with subtle border so it shows on dark bg) -->
+  <circle cx="360" cy="104" r="90" fill="#0A0208"/>
+  <circle cx="360" cy="104" r="90" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
 
-  <!-- Overlap zone: dark crimson blend in center -->
-  <ellipse cx="140" cy="140" rx="36" ry="133" fill="#5C0E1A" opacity="0.55"/>
+  <!-- SOUL spanning both circles -->
+  <text x="305" y="121"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="82"
+    font-weight="700"
+    fill="#FFFFFF"
+    text-anchor="middle">SOUL</text>
 
-  <!-- "Mr" — left side, large serif -->
-  <text x="72" y="128" font-family="Georgia, 'Times New Roman', serif" font-size="54" font-weight="700" fill="white" text-anchor="middle" dominant-baseline="auto">Mr</text>
-
-  <!-- Divider line in center -->
-  <line x1="140" y1="80" x2="140" y2="200" stroke="rgba(212,175,55,0.35)" stroke-width="1"/>
-
-  <!-- "SOUL" — right side, large serif -->
-  <text x="208" y="128" font-family="Georgia, 'Times New Roman', serif" font-size="44" font-weight="700" fill="white" text-anchor="middle" dominant-baseline="auto" letter-spacing="2">SOUL</text>
-
-  <!-- "Bistro" — left side, small -->
-  <text x="72" y="164" font-family="Georgia, 'Times New Roman', serif" font-size="14" fill="rgba(255,255,255,0.72)" text-anchor="middle" letter-spacing="1.5">BISTRO</text>
-
-  <!-- "&amp; Cafe" — left side, small -->
-  <text x="72" y="181" font-family="Georgia, 'Times New Roman', serif" font-size="14" fill="rgba(255,255,255,0.72)" text-anchor="middle" letter-spacing="1.5">&amp; CAFE</text>
-
-  <!-- Bottom gold arc text placeholder -->
-  <path id="bottom-arc" d="M 30 180 A 120 120 0 0 0 250 180" fill="none"/>
+  <!-- Bistro &amp; cafe — italic on dark circle -->
+  <text x="378" y="166"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="21"
+    font-weight="400"
+    font-style="italic"
+    fill="rgba(255,255,255,0.88)"
+    text-anchor="middle">Bistro &amp; cafe</text>
 </svg>

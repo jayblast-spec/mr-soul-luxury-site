@@ -35,7 +35,6 @@ const eventTypes = ["Birthdays", "VIP Tables", "Private Buyouts", "Artist Nights
 
 function SlidingPhotoRow({ labels, reverse = false }: { labels: string[]; reverse?: boolean }) {
   const doubled = [...labels, ...labels];
-
   return (
     <div className="overflow-hidden">
       <div className={reverse ? "redroom-slide-right gap-4 py-2" : "redroom-slide-left gap-4 py-2"}>
@@ -60,6 +59,7 @@ function SlidingPhotoRow({ labels, reverse = false }: { labels: string[]; revers
 export default function RedRoomPage() {
   return (
     <main className="overflow-hidden bg-black text-white">
+      {/* ─── HERO ─────────────────────────────────── */}
       <section className="relative isolate min-h-screen overflow-hidden px-4 pt-28 sm:px-8">
         <div className="absolute inset-0">
           <Image
@@ -68,21 +68,30 @@ export default function RedRoomPage() {
             fill
             priority
             sizes="100vw"
-            className="float-image-bg object-cover opacity-50"
+            className="object-cover opacity-45"
           />
         </div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_62%_20%,rgba(200,16,46,0.6),transparent_34%),radial-gradient(circle_at_16%_78%,rgba(212,175,55,0.18),transparent_26%),linear-gradient(180deg,rgba(0,0,0,0.25),#000_86%)]" />
-        <div className="absolute bottom-10 left-0 right-0 hidden rotate-[-5deg] opacity-55 md:block">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_62%_20%,rgba(200,16,46,0.55),transparent_34%),radial-gradient(circle_at_16%_78%,rgba(212,175,55,0.14),transparent_26%),linear-gradient(180deg,rgba(0,0,0,0.3),#000_88%)]" />
+        <div className="absolute bottom-10 left-0 right-0 hidden rotate-[-5deg] opacity-50 md:block">
           <SlidingPhotoRow labels={heroPhotos} />
         </div>
 
         <div className="relative z-10 mx-auto grid min-h-[calc(100svh-7rem)] max-w-7xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="max-w-4xl">
+            {/* RedRoom Logo */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/redroom-logo.svg"
+              alt="RedRoom Lounge by Mr Soul"
+              className="mb-8"
+              style={{ width: "min(180px, 46vw)", height: "auto" }}
+            />
+
             <p className="text-xs font-black uppercase tracking-[0.38em] text-[#D4AF37]">RedRoom By Mr Soul</p>
-            <h1 className="neon-flicker mt-5 text-balance text-5xl font-black uppercase leading-[0.86] sm:text-7xl lg:text-8xl">
+            <h1 className="mt-5 text-balance text-5xl font-black uppercase leading-[0.86] sm:text-7xl lg:text-8xl">
               Afrobeats. VIP. Celebrity Energy.
             </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-white/78 sm:text-xl">
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-white/75 sm:text-xl">
               A nightlife destination for fun adults, meetups, birthdays, private events, hookah, bottle service, and unforgettable Atlanta nights.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -107,14 +116,16 @@ export default function RedRoomPage() {
         </div>
       </section>
 
-      <section className="border-y border-white/10 bg-[#140204] py-4">
-        <div className="redroom-slide-left gap-8 text-nowrap text-4xl font-black uppercase leading-none text-white/12 sm:text-6xl">
+      {/* ─── TICKER ───────────────────────────────── */}
+      <section className="border-y border-white/10 bg-[#100206] py-4">
+        <div className="redroom-slide-left gap-8 text-nowrap text-4xl font-black uppercase leading-none text-white/10 sm:text-6xl">
           {[...eventTypes, ...eventTypes, ...eventTypes].map((item, index) => (
             <span key={`${item}-${index}`}>{item} <span className="text-[#C8102E]">/</span></span>
           ))}
         </div>
       </section>
 
+      {/* ─── ABOUT ────────────────────────────────── */}
       <section className="bg-black px-5 py-20 sm:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
@@ -124,23 +135,24 @@ export default function RedRoomPage() {
                 Not a back room. A whole destination.
               </h2>
             </div>
-            <p className="max-w-2xl text-lg leading-8 text-white/68">
+            <p className="max-w-2xl text-lg leading-8 text-white/65">
               RedRoom is where food, lounge culture, music, and nightlife meet. Guests come to celebrate, link up, dance, reserve premium tables, and feel like the night was designed around them.
             </p>
           </div>
 
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {moments.map(([title, text]) => (
-              <article key={title} className="rounded-[8px] border border-white/10 bg-white/[0.045] p-6">
+              <article key={title} className="rounded-[8px] border border-white/10 bg-white/[0.04] p-6">
                 <p className="text-2xl font-black uppercase">{title}</p>
-                <p className="mt-4 leading-7 text-white/62">{text}</p>
+                <p className="mt-4 leading-7 text-white/60">{text}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="gallery" className="bg-[#130305] py-16 text-white">
+      {/* ─── GALLERY ──────────────────────────────── */}
+      <section id="gallery" className="bg-[#0E0305] py-16 text-white">
         <div className="px-5 sm:px-8">
           <div className="mx-auto mb-10 max-w-7xl">
             <p className="text-xs font-black uppercase tracking-[0.35em] text-[#D4AF37]">Sliding Photo Wall</p>
@@ -153,23 +165,25 @@ export default function RedRoomPage() {
         </div>
       </section>
 
+      {/* ─── FEATURES ─────────────────────────────── */}
       <section className="bg-black px-5 py-20 text-white sm:px-8">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 lg:grid-cols-4">
           {redroomFeatures.slice(0, 4).map((feature) => {
             const Icon = feature.icon;
             return (
-              <article key={feature.title} className="group h-full rounded-[8px] border border-white/10 bg-white/[0.04] p-6 transition hover:-translate-y-1 hover:border-[#D4AF37]/45 hover:bg-[#C8102E]/10">
+              <article key={feature.title} className="group h-full rounded-[8px] border border-white/10 bg-white/[0.04] p-6 transition hover:-translate-y-1 hover:border-[#D4AF37]/40 hover:bg-[#C8102E]/10">
                 <Icon className="text-[#D4AF37]" size={34} />
                 <h2 className="mt-6 text-2xl font-black uppercase">{feature.title}</h2>
-                <p className="mt-4 leading-7 text-white/65">{feature.text}</p>
+                <p className="mt-4 leading-7 text-white/62">{feature.text}</p>
               </article>
             );
           })}
         </div>
       </section>
 
-      <section className="relative isolate overflow-hidden bg-[#160207] px-5 py-20 sm:px-8">
-        <div className="absolute inset-x-0 top-10 opacity-20">
+      {/* ─── PRIVATE EVENTS ───────────────────────── */}
+      <section className="relative isolate overflow-hidden bg-[#120208] px-5 py-20 sm:px-8">
+        <div className="absolute inset-x-0 top-10 opacity-15">
           <SlidingPhotoRow labels={["luxury table", "bottle girls", "redroom dance", "hookah smiles", "atlanta nightlife", "afrobeats dj"]} />
         </div>
         <div className="relative z-10 mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -178,12 +192,12 @@ export default function RedRoomPage() {
             <h2 className="mt-4 text-balance text-4xl font-black uppercase leading-none sm:text-6xl">
               Bring your people. We bring the movie.
             </h2>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-white/68">
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-white/65">
               Birthdays, artist nights, brand launches, group meetups, VIP tables, and full private buyouts can all live here.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               {eventTypes.slice(0, 6).map((item) => (
-                <span key={item} className="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white/75">
+                <span key={item} className="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white/72">
                   {item}
                 </span>
               ))}
@@ -200,12 +214,13 @@ export default function RedRoomPage() {
         </div>
       </section>
 
+      {/* ─── BOOKING ──────────────────────────────── */}
       <section id="book" className="bg-[#FAFAFA] px-5 py-20 text-black sm:px-8">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.35em] text-[#C8102E]">VIP Reservations</p>
             <h2 className="mt-4 text-4xl font-black uppercase leading-none sm:text-6xl">Own the room tonight</h2>
-            <p className="mt-6 text-lg leading-8 text-black/65">
+            <p className="mt-6 text-lg leading-8 text-black/62">
               Choose bottle service, hookah, general admission, birthday setup, private celebration, or a full buyout. RedRoom is 21+ after 9 PM.
             </p>
             <Link href="/menu" className="mt-6 inline-flex min-h-12 items-center rounded-full border border-black/10 px-6 text-sm font-black uppercase tracking-[0.16em]">

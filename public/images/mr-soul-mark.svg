@@ -1,28 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <defs>
-    <clipPath id="lc">
-      <rect x="0" y="0" width="50" height="100"/>
-    </clipPath>
-    <clipPath id="rc">
-      <rect x="50" y="0" width="50" height="100"/>
-    </clipPath>
+    <clipPath id="msm-left"><rect x="0" y="0" width="50" height="100"/></clipPath>
+    <clipPath id="msm-right"><rect x="50" y="0" width="50" height="100"/></clipPath>
   </defs>
 
-  <!-- Gold ring -->
-  <circle cx="50" cy="50" r="48" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+  <!-- Gold outer ring -->
+  <circle cx="50" cy="50" r="49" fill="none" stroke="#D4AF37" stroke-width="1.8"/>
 
-  <!-- Black left half -->
-  <circle cx="50" cy="50" r="46" fill="#0A0208" clip-path="url(#lc)"/>
-  <!-- Red right half -->
-  <circle cx="50" cy="50" r="46" fill="#C41E3A" clip-path="url(#rc)"/>
+  <!-- Red left half -->
+  <circle cx="50" cy="50" r="47" fill="#C41E3A" clip-path="url(#msm-left)"/>
 
-  <!-- Center blend -->
-  <ellipse cx="50" cy="50" rx="12" ry="46" fill="#5C0E1A" opacity="0.5"/>
+  <!-- Dark right half -->
+  <circle cx="50" cy="50" r="47" fill="#0A0208" clip-path="url(#msm-right)"/>
 
-  <!-- Mr -->
-  <text x="26" y="47" font-family="Georgia, serif" font-size="18" font-weight="700" fill="white" text-anchor="middle">Mr</text>
-  <!-- SOUL -->
-  <text x="74" y="47" font-family="Georgia, serif" font-size="14" font-weight="700" fill="white" text-anchor="middle" letter-spacing="1">SOUL</text>
-  <!-- Bistro & Cafe -->
-  <text x="26" y="60" font-family="Georgia, serif" font-size="5.5" fill="rgba(255,255,255,0.65)" text-anchor="middle" letter-spacing="0.5">BISTRO &amp; CAFE</text>
+  <!-- Subtle center blend -->
+  <ellipse cx="50" cy="50" rx="13" ry="47" fill="#5C0E1A" opacity="0.45"/>
+
+  <!-- Mr — left side -->
+  <text x="26" y="50"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="20"
+    font-weight="900"
+    fill="#FFFFFF"
+    text-anchor="middle"
+    dominant-baseline="middle">Mr</text>
+
+  <!-- SOUL — right side -->
+  <text x="73" y="48"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="14"
+    font-weight="700"
+    fill="#FFFFFF"
+    text-anchor="middle"
+    dominant-baseline="middle">SOUL</text>
+
+  <!-- Bistro &amp; cafe — tiny, right side -->
+  <text x="73" y="62"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="5.5"
+    fill="rgba(255,255,255,0.62)"
+    text-anchor="middle"
+    dominant-baseline="middle">BISTRO &amp; CAFE</text>
 </svg>
