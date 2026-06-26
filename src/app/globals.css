@@ -1,35 +1,36 @@
 @import "tailwindcss";
 
-/* ─── LIQUID RUBY PALETTE ─────────────────── */
+/* ─── BLOOD RED PALETTE ──────────────────── */
 :root {
-  --red-base:   #8A1C2C;
-  --red-deep:   #5C0E1A;
+  --red-blood:  #8B0000;
+  --red-deep:   #6B0000;
+  --red-mid:    #9B0000;
   --red-bright: #C41E3A;
-  --highlight:  #FF4D6D;
+  --highlight:  #FF2244;
   --gold:       #D4AF37;
   --gold-dark:  #996515;
   --gold-light: #F2C85A;
   --ink:        #FFFFFF;
-  --ink-muted:  #E8D5C4;
-  --bg-base:    #080108;
+  --ink-muted:  #FFD6C8;
+  --bg-base:    #8B0000;
 }
 
 @theme inline {
-  --color-red-base:      var(--red-base);
-  --color-red-deep:      var(--red-deep);
-  --color-red-bright:    var(--red-bright);
-  --color-highlight:     var(--highlight);
-  --color-gold:          var(--gold);
-  --color-gold-dark:     var(--gold-dark);
-  --color-gold-light:    var(--gold-light);
+  --color-red-base:      #8B0000;
+  --color-red-deep:      #6B0000;
+  --color-red-bright:    #C41E3A;
+  --color-highlight:     #FF2244;
+  --color-gold:          #D4AF37;
+  --color-gold-dark:     #996515;
+  --color-gold-light:    #F2C85A;
   --color-primary:       #C41E3A;
   --color-accent:        #D4AF37;
-  /* legacy aliases so unedited pages still compile */
-  --color-bg:            #080108;
-  --color-surface:       #120308;
+  /* legacy aliases */
+  --color-bg:            #8B0000;
+  --color-surface:       #750000;
   --color-text-primary:  #FFFFFF;
-  --color-muted:         #E8D5C4;
-  --color-stroke:        rgba(212, 175, 55, 0.22);
+  --color-muted:         #FFD6C8;
+  --color-stroke:        rgba(212, 175, 55, 0.28);
   --font-sans:    "Outfit", "Outfit Fallback", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Playfair Display", "Playfair Display Fallback", Georgia, serif;
 }
@@ -38,7 +39,7 @@
 
 html {
   scroll-behavior: auto;
-  background: #080108;
+  background: #6B0000;
 }
 
 body {
@@ -46,11 +47,11 @@ body {
   overflow-x: hidden;
   color: #FFFFFF;
   font-family: var(--font-sans);
-  background: #080108;
+  background: #8B0000;
   min-height: 100dvh;
 }
 
-/* Ambient glow layer */
+/* Ambient depth layer */
 body::before {
   content: "";
   position: fixed;
@@ -58,8 +59,9 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(circle at 70% 8%, rgba(196, 30, 58, 0.18), transparent 35rem),
-    radial-gradient(circle at 15% 75%, rgba(138, 28, 44, 0.09), transparent 28rem);
+    radial-gradient(circle at 65% 5%,  rgba(255,80,0,0.18),   transparent 32rem),
+    radial-gradient(circle at 12% 70%, rgba(212,175,55,0.10),  transparent 26rem),
+    radial-gradient(circle at 50% 50%, rgba(0,0,0,0.12),       transparent 60rem);
   mix-blend-mode: screen;
 }
 
@@ -70,25 +72,19 @@ body::after {
   inset: 0;
   pointer-events: none;
   z-index: 997;
-  opacity: 0.035;
+  opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 180px 180px;
 }
 
-::selection {
-  background: #C41E3A;
-  color: #fff;
-}
+::selection { background: #FFD6C8; color: #6B0000; }
 
-/* ─── TYPOGRAPHY ────────────────────── */
-.font-display {
-  font-family: var(--font-display);
-}
+/* ─── TYPOGRAPHY ──────────────────────── */
+.font-display { font-family: var(--font-display); }
 
-/* Metallic hero title */
 .hero-title {
-  background: linear-gradient(96deg, #ffffff 0%, #fff8e8 28%, #D4AF37 58%, #F2C85A 80%, #ffffff 100%);
+  background: linear-gradient(96deg, #ffffff 0%, #fff4e0 28%, #F2C85A 58%, #D4AF37 80%, #ffffff 100%);
   background-size: 220% 220%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -96,7 +92,6 @@ body::after {
   animation: hero-shimmer 9s ease-in-out infinite;
 }
 
-/* Metallic gold text */
 .text-gold-metallic {
   background: linear-gradient(96deg, #F2C85A 0%, #D4AF37 40%, #996515 76%, #F2C85A 100%);
   background-size: 220% 220%;
@@ -106,25 +101,21 @@ body::after {
   animation: gold-shimmer 7s ease-in-out infinite;
 }
 
-/* Neon red glow text */
 .text-neon-red {
-  color: #FF4D6D;
-  text-shadow:
-    0 0 10px rgba(196, 30, 58, 0.9),
-    0 0 30px rgba(196, 30, 58, 0.6),
-    0 0 64px rgba(212, 175, 55, 0.3);
+  color: #FF2244;
+  text-shadow: 0 0 10px rgba(255,34,68,0.9), 0 0 30px rgba(255,34,68,0.6), 0 0 64px rgba(212,175,55,0.3);
 }
 
-/* ─── GLASS CARD ──────────────────────── */
+/* ─── GLASS CARD — dark ruby on blood red ─────── */
 .glass-card {
   position: relative;
-  background: rgba(20, 4, 10, 0.70);
-  backdrop-filter: blur(40px) saturate(180%);
-  -webkit-backdrop-filter: blur(40px) saturate(180%);
-  border: 1px solid rgba(212, 175, 55, 0.2);
+  background: rgba(40, 0, 0, 0.55);
+  backdrop-filter: blur(40px) saturate(160%);
+  -webkit-backdrop-filter: blur(40px) saturate(160%);
+  border: 1px solid rgba(212, 175, 55, 0.28);
   box-shadow:
-    inset 0 0 0 0.5px rgba(255, 77, 109, 0.22),
-    0 8px 40px rgba(0, 0, 0, 0.65);
+    inset 0 0 0 0.5px rgba(255,100,100,0.18),
+    0 8px 40px rgba(0, 0, 0, 0.45);
   overflow: hidden;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -138,21 +129,21 @@ body::after {
   pointer-events: none;
   background: linear-gradient(
     155deg,
-    rgba(255, 255, 255, 0.25) 0%,
-    rgba(255, 77, 109, 0.08) 30%,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 100, 100, 0.06) 30%,
     transparent 65%
   );
 }
 
 .glass-card:hover {
-  border-color: rgba(212, 175, 55, 0.42);
+  border-color: rgba(212, 175, 55, 0.5);
   box-shadow:
-    inset 0 0 0 0.5px rgba(255, 77, 109, 0.4),
+    inset 0 0 0 0.5px rgba(255, 150, 150, 0.3),
     0 0 0 1px rgba(212, 175, 55, 0.22),
-    0 16px 56px rgba(0, 0, 0, 0.72);
+    0 16px 56px rgba(0, 0, 0, 0.5);
 }
 
-/* ─── BUTTONS ────────────────────────── */
+/* ─── BUTTONS ──────────────────────────── */
 .btn-gold {
   display: inline-flex;
   align-items: center;
@@ -163,11 +154,9 @@ body::after {
   font-size: 0.85rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: #080108;
+  color: #5A0000;
   background: linear-gradient(160deg, #F2C85A 0%, #D4AF37 50%, #B8860B 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.5),
-    0 4px 24px rgba(212, 175, 55, 0.45);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 24px rgba(212,175,55,0.5);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
   text-decoration: none;
@@ -175,9 +164,7 @@ body::after {
 
 .btn-gold:hover {
   transform: scale(1.03) translateY(-2px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    0 8px 36px rgba(212, 175, 55, 0.65);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 8px 36px rgba(212,175,55,0.7);
 }
 
 .btn-glass-red {
@@ -191,11 +178,9 @@ body::after {
   letter-spacing: 0.07em;
   text-transform: uppercase;
   color: #FFFFFF;
-  background: rgba(20, 4, 10, 0.72);
-  border: 1px solid rgba(196, 30, 58, 0.65);
-  box-shadow:
-    inset 0 0 0 0.5px rgba(255, 77, 109, 0.25),
-    0 4px 24px rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: inset 0 0 0 0.5px rgba(255,255,255,0.15), 0 4px 20px rgba(0,0,0,0.3);
   backdrop-filter: blur(10px);
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
@@ -204,19 +189,12 @@ body::after {
 
 .btn-glass-red:hover {
   transform: scale(1.03) translateY(-2px);
-  border-color: #FF4D6D;
-  box-shadow:
-    inset 0 0 0 0.5px rgba(255, 77, 109, 0.5),
-    0 0 28px rgba(196, 30, 58, 0.5),
-    0 8px 36px rgba(0, 0, 0, 0.55);
+  border-color: rgba(255,255,255,0.7);
+  box-shadow: inset 0 0 0 0.5px rgba(255,255,255,0.3), 0 8px 32px rgba(0,0,0,0.4);
 }
 
-/* ─── SCROLL REVEAL (legacy, kept for unedited pages) */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.75s ease, transform 0.75s ease;
-}
+/* ─── LEGACY / UTILITY ────────────────────── */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.75s ease, transform 0.75s ease; }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
 .stagger .reveal:nth-child(1) { transition-delay: 0s; }
 .stagger .reveal:nth-child(2) { transition-delay: 0.1s; }
@@ -225,130 +203,66 @@ body::after {
 .stagger .reveal:nth-child(5) { transition-delay: 0.4s; }
 .stagger .reveal:nth-child(6) { transition-delay: 0.5s; }
 
-/* ─── 3D TILT ────────────────────────────── */
 .tilt-parent { perspective: 800px; }
 .tilt-child  { transition: transform 0.3s ease; }
 .tilt-parent:hover .tilt-child { transform: rotateX(3deg) rotateY(-3deg) scale(1.02); }
 
-/* ─── SPECULAR SWEEP ────────────────────── */
 .specular-sweep { position: relative; overflow: hidden; }
 .specular-sweep::after {
   content: "";
-  position: absolute;
-  top: 0;
-  left: -80%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.07) 38%,
-    rgba(255, 215, 100, 0.09) 50%,
-    transparent 100%
-  );
+  position: absolute; top: 0; left: -80%; width: 60%; height: 100%;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.06) 38%, rgba(255,215,100,0.08) 50%, transparent 100%);
   animation: specular-sweep 7s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 2;
+  pointer-events: none; z-index: 2;
 }
 
-/* ─── RED VIGNETTE ──────────────────────── */
 .red-vignette::after {
   content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 50%, transparent 28%, rgba(8, 1, 8, 0.85) 100%);
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, transparent 28%, rgba(50,0,0,0.75) 100%);
   pointer-events: none;
 }
 
-/* ─── LEGACY ALIASES ─────────────────────── */
-.accent-gradient {
-  background: linear-gradient(90deg, #C41E3A 0%, #D4AF37 52%, #F2C85A 100%);
-}
+.accent-gradient { background: linear-gradient(90deg, #C41E3A 0%, #D4AF37 52%, #F2C85A 100%); }
 .luxury-border { position: relative; }
 .luxury-border::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  z-index: -1;
-  border-radius: inherit;
+  content: ""; position: absolute; inset: -1px; z-index: -1; border-radius: inherit;
   background: linear-gradient(120deg, rgba(196,30,58,0.9), rgba(212,175,55,0.9), rgba(255,255,255,0.3));
-  opacity: 0;
-  transition: opacity 300ms ease;
+  opacity: 0; transition: opacity 300ms ease;
 }
 .luxury-border:hover::before { opacity: 1; }
-.halftone {
-  background-image: radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px);
-  background-size: 4px 4px;
-}
+.halftone { background-image: radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px); background-size: 4px 4px; }
 .float-frame { transform: translateZ(0); }
 .float-image-bg { transition: transform 12s ease; }
 
-/* ─── KEYFRAMES ────────────────────────── */
-@keyframes hero-shimmer {
-  0%, 100% { background-position: 0% 50%; }
-  50%       { background-position: 100% 50%; }
-}
-@keyframes gold-shimmer {
-  0%, 100% { background-position: 0% 50%; }
-  50%       { background-position: 100% 50%; }
-}
-@keyframes specular-sweep {
-  0%   { left: -80%; }
-  55%  { left: 130%; }
-  100% { left: 130%; }
-}
-@keyframes marquee-left {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
+/* ─── KEYFRAMES ─────────────────────────── */
+@keyframes hero-shimmer  { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+@keyframes gold-shimmer  { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+@keyframes specular-sweep { 0%{left:-80%} 55%{left:130%} 100%{left:130%} }
+@keyframes marquee-left { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 @keyframes neon-pulse {
-  0%, 100% {
-    text-shadow:
-      0 0 10px rgba(196,30,58,0.9),
-      0 0 30px rgba(196,30,58,0.6),
-      0 0 64px rgba(212,175,55,0.3);
-  }
-  50% {
-    text-shadow:
-      0 0 6px rgba(196,30,58,0.5),
-      0 0 16px rgba(196,30,58,0.35),
-      0 0 32px rgba(212,175,55,0.18);
-  }
+  0%,100% { text-shadow: 0 0 10px rgba(255,34,68,0.9), 0 0 30px rgba(255,34,68,0.6), 0 0 64px rgba(212,175,55,0.3); }
+  50%      { text-shadow: 0 0 6px rgba(255,34,68,0.5), 0 0 16px rgba(255,34,68,0.3), 0 0 32px rgba(212,175,55,0.18); }
 }
-@keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+@keyframes fade-in-up { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 
-/* ─── ANIMATION UTILITIES ────────────────── */
-.animate-marquee-left {
-  animation: marquee-left 50s linear infinite;
-  display: flex;
-  width: max-content;
-  will-change: transform;
-}
-.animate-neon-pulse { animation: neon-pulse 3.5s ease-in-out infinite; }
-.animate-fade-in-up { animation: fade-in-up 0.85s ease forwards; }
+/* ─── ANIMATION UTILITIES ──────────────────── */
+.animate-marquee-left { animation: marquee-left 50s linear infinite; display: flex; width: max-content; will-change: transform; }
+.animate-neon-pulse   { animation: neon-pulse 3.5s ease-in-out infinite; }
+.animate-fade-in-up   { animation: fade-in-up 0.85s ease forwards; }
 .hero-text-1 { animation: fade-in-up 0.85s ease 0.10s both; }
 .hero-text-2 { animation: fade-in-up 0.85s ease 0.25s both; }
 .hero-text-3 { animation: fade-in-up 0.85s ease 0.45s both; }
 .hero-text-4 { animation: fade-in-up 0.85s ease 0.65s both; }
 .hero-text-5 { animation: fade-in-up 0.85s ease 0.85s both; }
 
-/* RedRoom sliding rows */
-.redroom-slide-left  { display: flex; animation: marquee-left 32s linear infinite; width: max-content; }
-.redroom-slide-right { display: flex; animation: marquee-left 36s linear infinite reverse; width: max-content; }
+.redroom-slide-left  { display:flex; animation:marquee-left 32s linear infinite; width:max-content; }
+.redroom-slide-right { display:flex; animation:marquee-left 36s linear infinite reverse; width:max-content; }
 
-/* ─── ACCESSIBILITY ────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee-left,
-  .redroom-slide-left,
-  .redroom-slide-right,
-  .animate-neon-pulse,
-  .hero-title,
-  .text-gold-metallic,
-  .specular-sweep::after { animation: none; }
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .animate-marquee-left, .redroom-slide-left, .redroom-slide-right,
+  .animate-neon-pulse, .hero-title, .text-gold-metallic, .specular-sweep::after { animation: none; }
+  .reveal { opacity:1; transform:none; transition:none; }
 }
 
 .text-balance { text-wrap: balance; }
