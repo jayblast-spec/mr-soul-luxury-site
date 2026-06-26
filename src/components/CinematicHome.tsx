@@ -1,576 +1,378 @@
 "use client";
 
+import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { HlsBackground } from "./HlsBackground";
 
-const reviews = [
-  { text: "Best Nigerian vibe in Atlanta.", author: "Dining Guest", stars: 5 },
-  { text: "The jollof is unmatched. Period.", author: "Menu Review", stars: 5 },
-  { text: "RedRoom had the whole place moving.", author: "VIP Night", stars: 5 },
-  { text: "Authentic. Elevated. Unforgettable.", author: "Event Guest", stars: 5 },
+gsap.registerPlugin(ScrollTrigger);
+
+const bento = [
+  {
+    title: "Nigerian Fine Dining",
+    label: "Dinner",
+    image: "https://picsum.photos/seed/luxury-jollof/1200/900",
+    span: "md:col-span-7",
+    ratio: "aspect-[1.18]",
+  },
+  {
+    title: "RedRoom Bottle Service",
+    label: "VIP",
+    image: "https://picsum.photos/seed/red-bottle-service/900/1100",
+    span: "md:col-span-5",
+    ratio: "aspect-[0.9]",
+  },
+  {
+    title: "Private Celebrations",
+    label: "Events",
+    image: "https://picsum.photos/seed/private-lounge-event/900/1100",
+    span: "md:col-span-5",
+    ratio: "aspect-[0.9]",
+  },
+  {
+    title: "Afrobeats After Dark",
+    label: "Nightlife",
+    image: "https://picsum.photos/seed/afrobeats-after-dark/1200/900",
+    span: "md:col-span-7",
+    ratio: "aspect-[1.18]",
+  },
 ];
 
-const spring = { type: "spring" as const, stiffness: 80, damping: 20 };
+const reviews = [
+  ["Best Nigerian vibe in Atlanta", "Closest you can get to Lagos.", "5 stars", "Dining"],
+  ["The jollof is unmatched", "The atmosphere is incredible.", "5 stars", "Menu"],
+  ["RedRoom is the spot", "Amazing food and the DJ had the whole room moving.", "5 stars", "Nightlife"],
+  ["Great vibes", "Authentic food and amazing staff. 10/10.", "5 stars", "Guest"],
+];
+
+const flavorPillars = [
+  ["Irresistible Flavors", "Embark on a journey through Nigeria with authentic dishes, rich stews, mouthwatering grills, and soulful sides."],
+  ["Vibrant Atmosphere", "More than a meal, cold drinks, and good music - enjoy the lively vibe that creates special memories."],
+  ["Community Celebration", "Join a community passionate about food, Afrobeats, cultural connection, and togetherness."],
+  ["Afrobeats Bliss", "Feel the rhythm of Afrobeats and sounds from the motherland, from curated playlists to live performances."],
+];
+
+const gallery = [
+  "https://picsum.photos/seed/soul-gallery-1/700/700",
+  "https://picsum.photos/seed/soul-gallery-2/700/700",
+  "https://picsum.photos/seed/soul-gallery-3/700/700",
+  "https://picsum.photos/seed/soul-gallery-4/700/700",
+  "https://picsum.photos/seed/soul-gallery-5/700/700",
+  "https://picsum.photos/seed/soul-gallery-6/700/700",
+];
+
+function SectionHeader({ eyebrow, title, italic, text }: { eyebrow: string; title: string; italic: string; text: string }) {
+  return (
+    <motion.div
+      className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
+    >
+      <div>
+        <div className="mb-5 flex items-center gap-4">
+          <span className="h-px w-8 bg-stroke" />
+          <p className="text-xs uppercase tracking-[0.3em] text-muted">{eyebrow}</p>
+        </div>
+        <h2 className="text-balance text-4xl font-semibold leading-none text-text-primary md:text-6xl">
+          {title} <span className="font-display italic">{italic}</span>
+        </h2>
+      </div>
+      <p className="max-w-sm text-sm leading-7 text-muted md:text-base">{text}</p>
+    </motion.div>
+  );
+}
 
 export function CinematicHome() {
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const centerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.timeline({ defaults: { ease: "power3.out" } })
+        .fromTo(".name-reveal", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1.2, delay: 0.1 })
+        .fromTo(".blur-in", { opacity: 0, filter: "blur(10px)", y: 20 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: 1, stagger: 0.1 }, 0.25);
+
+      if (centerRef.current && galleryRef.current) {
+        ScrollTrigger.create({
+          trigger: galleryRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          pin: centerRef.current,
+          pinSpacing: false,
+        });
+
+        gsap.utils.toArray<HTMLElement>(".gallery-card").forEach((card, index) => {
+          gsap.to(card, {
+            y: index % 2 === 0 ? -130 : 130,
+            rotate: index % 2 === 0 ? -4 : 4,
+            ease: "none",
+            scrollTrigger: {
+              trigger: galleryRef.current,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+        });
+      }
+
+      if (marqueeRef.current) {
+        gsap.to(marqueeRef.current, {
+          xPercent: -50,
+          duration: 40,
+          ease: "none",
+          repeat: -1,
+        });
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <div>
-      {/* ─── HERO ─────────────────────────────────────── */}
-      <section
-        ref={heroRef}
-        className="relative isolate flex h-screen min-h-[600px] items-center justify-center overflow-hidden text-center"
-      >
-        <motion.div className="absolute inset-0" style={{ y: heroY }}>
-          <Image
-            src="/images/hero-restaurant.webp"
-            alt="Mr Soul restaurant interior"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to bottom, rgba(80,0,0,0.25) 0%, rgba(80,0,0,0.70) 100%)",
-            }}
-          />
-        </motion.div>
-
-        <motion.div
-          className="relative z-10 flex flex-col items-center px-5"
-          style={{ opacity: heroOpacity }}
-        >
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35, duration: 0.7 }}
-            className="mb-8 text-xs font-bold uppercase tracking-[0.52em]"
-            style={{ color: "#F2C85A" }}
-          >
-            Atlanta · Lagos · RedRoom
-          </motion.p>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 70 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 68, damping: 18, delay: 0.5 }}
-            className="hero-title font-display font-bold italic leading-[0.85]"
-            style={{ fontSize: "clamp(88px, 16vw, 240px)" }}
-          >
-            Mr Soul
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.95, duration: 0.8 }}
-            className="font-display italic text-white/60"
-            style={{ fontSize: "clamp(22px, 3.5vw, 52px)", marginTop: "-0.05em" }}
-          >
-            Bistro & Cafe
-          </motion.p>
-
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ delay: 1.1, duration: 0.9 }}
-            style={{
-              height: 1,
-              width: 200,
-              margin: "2rem auto",
-              background:
-                "linear-gradient(to right, transparent, rgba(212,175,55,0.7), transparent)",
-              transformOrigin: "center",
-            }}
-          />
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.25, duration: 0.7 }}
-            className="flex flex-col items-center gap-4 sm:flex-row"
-          >
-            <Link href="/menu" className="btn-gold">
-              View Our Menu
-            </Link>
-            <Link href="/redroom" className="btn-glass-red">
-              Book RedRoom VIP
-            </Link>
-          </motion.div>
-        </motion.div>
-
-        {/* Scroll line */}
-        <div className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2">
-          <motion.div
-            animate={{ y: [0, 14, 0] }}
-            transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
-          >
-            <div
-              style={{
-                width: 1,
-                height: 64,
-                margin: "0 auto",
-                background:
-                  "linear-gradient(to bottom, rgba(212,175,55,0.85), rgba(212,175,55,0))",
-              }}
-            />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ─── EDITORIAL QUOTE ──────────────────────────── */}
-      <section className="px-6 py-28 text-center md:py-40" style={{ background: "#8B0000" }}>
-        <motion.blockquote
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={spring}
-          className="mx-auto max-w-5xl"
-        >
-          <p
-            className="font-display font-bold italic leading-[1.08] text-white"
-            style={{ fontSize: "clamp(30px, 5vw, 78px)" }}
-          >
-            Where Nigerian flavor meets Atlanta energy.
-            <em className="text-gold-metallic not-italic">
-              {" "}Where tradition becomes unforgettable.
-            </em>
+    <>
+      <section className="relative isolate grid min-h-screen place-items-center overflow-hidden bg-bg px-5 text-center">
+        <HlsBackground source="/videos/mr-soul-landing-hero.mp4" />
+        <div className="absolute inset-0 bg-[#170207]/58" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_22%,rgba(200,16,46,0.22),transparent_34%),linear-gradient(180deg,rgba(23,2,7,0.28),rgba(23,2,7,0.9))]" />
+        <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-bg to-transparent" />
+        <div className="relative z-10 mx-auto max-w-5xl pt-16">
+          <div className="blur-in mx-auto mb-7 h-24 w-[min(78vw,430px)] rounded-full border border-white/10 bg-black/24 p-3 shadow-2xl shadow-[#C8102E]/18 backdrop-blur-sm">
+            <Image src="/images/mr-soul-logo.png" alt="Mr Soul Bistro & Cafe logo" width={720} height={300} priority className="h-full w-full object-contain" />
+          </div>
+          <p className="blur-in mb-8 text-xs uppercase tracking-[0.3em] text-[#D4AF37]">Where Atlanta Meets Lagos</p>
+          <div className="name-reveal relative mx-auto max-w-6xl">
+            <div className="absolute -inset-x-8 top-1/2 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/45 to-transparent" />
+            <div className="absolute left-1/2 top-1/2 h-40 w-[min(92vw,760px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#C8102E]/18 blur-3xl" />
+            <h1 className="soul-title-wrap soul-title text-balance text-5xl font-black uppercase leading-[0.86] tracking-normal md:text-8xl lg:text-9xl">
+              Mr Soul Bistro & Cafe
+            </h1>
+            <div className="mx-auto mt-5 flex max-w-lg items-center justify-center gap-3 text-[10px] font-black uppercase tracking-[0.24em] text-[#D4AF37]/85 sm:text-xs">
+              <span className="h-px flex-1 bg-gradient-to-r from-transparent to-[#D4AF37]/45" />
+              Lagos Flavor
+              <span className="size-1.5 rounded-full bg-[#C8102E]" />
+              Atlanta Nights
+              <span className="h-px flex-1 bg-gradient-to-l from-transparent to-[#D4AF37]/45" />
+            </div>
+          </div>
+          <p className="blur-in mx-auto mt-6 max-w-3xl text-lg font-semibold leading-8 text-text-primary/85 md:text-2xl">
+            Authentic Nigerian cuisine and Atlanta&apos;s ultimate celebrity playground.
           </p>
-          <footer
-            className="mt-10 text-xs font-bold uppercase tracking-[0.42em]"
-            style={{ color: "rgba(255,220,200,0.45)" }}
-          >
-            Est. Atlanta, GA
-          </footer>
-        </motion.blockquote>
-      </section>
-
-      {/* ─── THE FOOD ─────────────────────────────────── */}
-      <section
-        className="relative overflow-hidden"
-        style={{ background: "#700000", minHeight: "90vh" }}
-      >
-        <div className="grid min-h-[90vh] grid-cols-1 md:grid-cols-2">
-          {/* Image side */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.97 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ ...spring, delay: 0 }}
-            className="relative"
-            style={{ minHeight: "70vw" }}
-          >
-            <Image
-              src="/images/food-jollof.webp"
-              alt="Nigerian fine dining"
-              fill
-              sizes="(min-width:768px) 50vw, 100vw"
-              className="object-cover"
-            />
-            {/* Blend edge into bg */}
-            <div
-              className="absolute inset-0 hidden md:block"
-              style={{
-                background:
-                  "linear-gradient(to right, transparent 65%, #700000 100%)",
-              }}
-            />
-          </motion.div>
-
-          {/* Text side */}
-          <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ ...spring, delay: 0.12 }}
-            className="flex flex-col justify-center px-8 py-16 md:px-12 lg:px-16"
-          >
-            <span
-              className="mb-5 text-xs font-bold uppercase tracking-[0.44em]"
-              style={{ color: "#F2C85A" }}
-            >
-              The Food
-            </span>
-            <h2
-              className="font-display font-bold italic leading-[1.04] text-white"
-              style={{ fontSize: "clamp(36px, 4.5vw, 80px)" }}
-            >
-              Flavors that carry a whole culture.
-            </h2>
-            <p
-              className="mt-7 max-w-sm text-base leading-8"
-              style={{ color: "rgba(255,220,200,0.82)" }}
-            >
-              Legendary jollof, peppered goat stew, suya, egusi soup, and platter
-              spreads that turn a table into a ceremony. Every dish is
-              handcrafted from scratch.
-            </p>
-            <Link href="/menu" className="btn-gold mt-10 self-start">
-              Explore Menu
+          <p className="blur-in mx-auto mt-5 max-w-md text-sm leading-7 text-muted md:text-base">
+            Legendary jollof, peppered goat stew, hookah, bottle service, Afrobeats, and the RedRoom VIP experience.
+          </p>
+          <div className="blur-in mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link href="/menu" className="luxury-border relative rounded-full bg-text-primary text-sm font-semibold text-bg transition hover:scale-105">
+              <span className="block rounded-full bg-text-primary px-7 py-3.5">View Our Menu</span>
             </Link>
-          </motion.div>
+            <Link href="/redroom" className="luxury-border relative rounded-full border border-stroke bg-bg text-sm font-semibold text-text-primary transition hover:scale-105">
+              <span className="block rounded-full bg-bg px-7 py-3.5">Book RedRoom VIP</span>
+            </Link>
+          </div>
+        </div>
+        <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2">
+          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-muted">Scroll</p>
+          <div className="relative mx-auto h-10 w-px overflow-hidden bg-stroke">
+            <div className="animate-scroll-down absolute h-5 w-px bg-text-primary" />
+          </div>
         </div>
       </section>
 
-      {/* ─── THE ROOM — full bleed ────────────────────── */}
-      <section className="relative h-screen overflow-hidden">
-        <Image
-          src="/images/vip-lounge.webp"
-          alt="RedRoom VIP lounge"
-          fill
-          sizes="100vw"
-          className="object-cover"
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(50,0,0,0.92) 0%, rgba(50,0,0,0.22) 55%, transparent 100%)",
-          }}
-        />
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={spring}
-          className="absolute bottom-0 left-0 right-0 z-10 flex flex-col gap-8 px-8 pb-16 md:flex-row md:items-end md:justify-between md:px-20 md:pb-20"
-        >
+      <section className="bg-bg px-6 py-16 md:px-10 lg:px-16">
+        <div className="mx-auto mb-16 grid max-w-[1200px] gap-8 rounded-3xl border border-stroke bg-surface/35 p-6 md:grid-cols-[1fr_0.75fr] md:p-10">
           <div>
-            <p
-              className="mb-4 text-xs font-bold uppercase tracking-[0.44em]"
-              style={{ color: "#F2C85A" }}
-            >
-              The Room
-            </p>
-            <h2
-              className="font-display font-bold italic leading-[0.9] text-white"
-              style={{ fontSize: "clamp(48px, 7vw, 120px)" }}
-            >
-              RedRoom.
-              <br />
-              Atlanta&apos;s finest
-              <br />
-              VIP experience.
+            <p className="text-xs uppercase tracking-[0.3em] text-[#D4AF37]">About Mr Soul Bistro & Cafe</p>
+            <h2 className="mt-5 text-balance text-4xl font-semibold leading-none text-text-primary md:text-6xl">
+              Journey Into Nigerian Flavor Wonderland
             </h2>
-          </div>
-          <div className="flex max-w-xs flex-col gap-5 pb-2">
-            <p className="text-sm leading-7" style={{ color: "rgba(255,220,200,0.75)" }}>
-              Celebrity-style bottle service. Premium hookah. Afrobeats that
-              move the room. Private tables for birthdays, artist nights, and
-              buyouts.
+            <p className="mt-6 max-w-2xl text-base leading-8 text-muted">
+              At Mr Soul Bistro & Cafe, we&apos;re not just serving food; we&apos;re crafting experiences.
+              Step into a world where every bite tells a story of flavor and tradition.
             </p>
-            <Link href="/redroom" className="btn-gold self-start">
-              Book VIP Table
+            <p className="mt-5 max-w-2xl text-base leading-8 text-muted">
+              We&apos;re more than a restaurant; we&apos;re a celebration of taste, tradition, and community.
+              Join us for an experience that goes beyond the plate.
+            </p>
+          </div>
+          <div className="rounded-3xl border border-white/10 bg-[#170207]/70 p-6">
+            <p className="text-xs uppercase tracking-[0.3em] text-[#D4AF37]">Hours of Operation</p>
+            <div className="mt-6 space-y-5 text-sm leading-7 text-white/75">
+              <p><span className="font-bold text-white">Monday - Saturday</span><br />4:30 PM - 2:30 AM</p>
+              <p><span className="font-bold text-white">Tuesday and Sunday</span><br />Closed</p>
+            </div>
+            <Link href="/menu" className="mt-8 inline-flex rounded-full bg-white px-6 py-3 text-sm font-bold text-[#170207]">
+              Explore Our Flavor-Packed Menu
             </Link>
           </div>
-        </motion.div>
-      </section>
+        </div>
 
-      {/* ─── THE NIGHT — split ───────────────────────── */}
-      <section className="grid grid-cols-1 md:grid-cols-2" style={{ minHeight: "80vh" }}>
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.9 }}
-          className="relative"
-          style={{ minHeight: "60vw", background: "#5A0000" }}
-        >
-          <Image
-            src="/images/afrobeats-crowd.webp"
-            alt="Afrobeats nightlife"
-            fill
-            sizes="(min-width:768px) 50vw, 100vw"
-            className="object-cover"
-          />
-          <div
-            className="absolute inset-0"
-            style={{ background: "rgba(50,0,0,0.38)" }}
-          />
-          <div className="absolute bottom-0 left-0 right-0 z-10 p-8 md:p-10">
-            <p
-              className="mb-2 text-xs font-bold uppercase tracking-[0.38em]"
-              style={{ color: "#F2C85A" }}
-            >
-              The Night
-            </p>
-            <h3
-              className="font-display font-bold italic text-white"
-              style={{ fontSize: "clamp(26px, 3vw, 56px)" }}
-            >
-              Afrobeats. Every weekend.
-            </h3>
-          </div>
-        </motion.div>
+        <div className="mx-auto mb-20 grid max-w-[1200px] gap-5 md:grid-cols-4">
+          {flavorPillars.map(([title, text]) => (
+            <div key={title} className="rounded-3xl border border-stroke bg-surface/40 p-6">
+              <p className="text-xl font-semibold text-text-primary">{title}</p>
+              <p className="mt-4 text-sm leading-7 text-muted">{text}</p>
+            </div>
+          ))}
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.9, delay: 0.15 }}
-          className="relative"
-          style={{ minHeight: "60vw", background: "#6B0000" }}
-        >
-          <Image
-            src="/images/hookah-luxury.webp"
-            alt="Premium hookah"
-            fill
-            sizes="(min-width:768px) 50vw, 100vw"
-            className="object-cover"
+        <div className="mx-auto max-w-[1200px]">
+          <SectionHeader
+            eyebrow="Signature Experiences"
+            title="Food, music,"
+            italic="and the room"
+            text="From authentic Nigerian mains to RedRoom bottle service, every section is built around what guests actually come for."
           />
-          <div
-            className="absolute inset-0"
-            style={{ background: "rgba(50,0,0,0.38)" }}
-          />
-          <div className="absolute bottom-0 left-0 right-0 z-10 p-8 md:p-10">
-            <p
-              className="mb-2 text-xs font-bold uppercase tracking-[0.38em]"
-              style={{ color: "#F2C85A" }}
-            >
-              The Experience
-            </p>
-            <h3
-              className="font-display font-bold italic text-white"
-              style={{ fontSize: "clamp(26px, 3vw, 56px)" }}
-            >
-              Premium hookah. VIP only.
-            </h3>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ─── REVIEWS ─────────────────────────────────── */}
-      <section className="px-6 py-20 md:px-16 md:py-28" style={{ background: "#8B0000" }}>
-        <div className="mx-auto max-w-[1100px]">
-          <motion.div
-            initial={{ opacity: 0, y: 36 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={spring}
-            className="mb-14 flex items-end justify-between gap-8"
-          >
-            <h2
-              className="font-display font-bold italic leading-none text-white"
-              style={{ fontSize: "clamp(40px, 5.5vw, 88px)" }}
-            >
-              Real{" "}
-              <em className="text-gold-metallic not-italic">vibes.</em>
-            </h2>
-            <p
-              className="hidden text-xs font-bold uppercase tracking-[0.3em] md:block"
-              style={{ color: "rgba(255,220,200,0.4)", paddingBottom: "0.5rem" }}
-            >
-              Guest Reviews
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-40px" }}
-            variants={{
-              hidden: {},
-              visible: { transition: { staggerChildren: 0.09 } },
-            }}
-            className="grid gap-4 sm:grid-cols-2"
-          >
-            {reviews.map((r, i) => (
-              <motion.div
-                key={r.author}
-                variants={{
-                  hidden: { opacity: 0, y: 30 },
-                  visible: { opacity: 1, y: 0, transition: spring },
-                }}
-                className="glass-card rounded-3xl p-8"
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6">
+            {bento.map((item) => (
+              <motion.article
+                key={item.title}
+                className={`group relative overflow-hidden rounded-3xl border border-stroke bg-surface ${item.span} ${item.ratio}`}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.8 }}
               >
-                <p className="text-[#D4AF37] text-lg mb-4">
-                  {"★".repeat(r.stars)}
-                </p>
-                <p
-                  className="font-display italic text-white font-semibold leading-snug"
-                  style={{ fontSize: "clamp(18px, 2vw, 26px)" }}
-                >
-                  &ldquo;{r.text}&rdquo;
-                </p>
-                <p
-                  className="mt-4 text-xs font-bold uppercase tracking-[0.25em]"
-                  style={{ color: "rgba(255,220,200,0.5)" }}
-                >
-                  — {r.author}
-                </p>
-              </motion.div>
+                <div className="float-frame absolute inset-0">
+                  <Image src={item.image} alt={item.title} fill sizes="(min-width: 768px) 55vw, 100vw" className="object-cover transition duration-700 group-hover:scale-105" />
+                </div>
+                <div className="halftone absolute inset-0 opacity-20 mix-blend-soft-light" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#170207]/88 via-[#4d0715]/24 to-transparent" />
+                <div className="absolute left-5 top-5 rounded-full border border-white/10 bg-[#170207]/45 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white/75 backdrop-blur">
+                  {item.label}
+                </div>
+                <div className="absolute inset-0 grid place-items-center bg-bg/70 opacity-0 backdrop-blur-lg transition duration-300 group-hover:opacity-100">
+                  <div className="luxury-border rounded-full bg-white p-[1px]">
+                    <span className="block rounded-full bg-white px-5 py-3 text-sm font-semibold text-bg">
+                      View - <span className="font-display italic">{item.title}</span>
+                    </span>
+                  </div>
+                </div>
+                <h3 className="absolute bottom-5 left-5 max-w-[70%] text-2xl font-semibold leading-tight text-white md:text-4xl">
+                  {item.title}
+                </h3>
+              </motion.article>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* ─── STATS ───────────────────────────────────── */}
-      <section className="px-6 py-20 md:px-16 md:py-24" style={{ background: "#750000" }}>
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.15 } },
-          }}
-          className="mx-auto grid max-w-[1100px] grid-cols-3 overflow-hidden rounded-3xl"
-          style={{ border: "1px solid rgba(212,175,55,0.18)" }}
-        >
+      <section className="bg-bg px-6 py-16 md:px-10 md:py-24 lg:px-16">
+        <div className="mx-auto max-w-[1200px]">
+          <SectionHeader
+            eyebrow="Guest Reviews"
+            title="Real"
+            italic="vibes"
+            text="Clear social proof for food, atmosphere, staff, and the RedRoom nightlife pull."
+          />
+          <div className="space-y-4">
+            {reviews.map(([title, text, rating, tag], index) => (
+              <motion.article
+                key={title}
+                className="group flex flex-col gap-4 rounded-[40px] border border-stroke bg-surface/30 p-4 transition hover:bg-surface sm:flex-row sm:items-center sm:rounded-full"
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
+              >
+                <div className="float-frame relative size-20 shrink-0 overflow-hidden rounded-full">
+                  <Image src={`https://picsum.photos/seed/journal-${index}/220/220`} alt="" fill sizes="80px" className="object-cover" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xl font-semibold text-text-primary">{title}</p>
+                  <p className="mt-1 text-sm text-muted">{text}</p>
+                </div>
+                <div className="flex items-center gap-3 text-xs uppercase tracking-[0.18em] text-muted">
+                  <span>{rating}</span>
+                  <span className="h-px w-8 bg-stroke" />
+                  <span>{tag}</span>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section ref={galleryRef} className="relative min-h-[300vh] overflow-hidden bg-bg px-6">
+        <div ref={centerRef} className="z-10 flex h-screen items-center justify-center text-center">
+          <div className="mx-auto max-w-2xl">
+            <p className="mb-5 text-xs uppercase tracking-[0.3em] text-muted">Explorations</p>
+            <h2 className="text-balance text-5xl font-semibold leading-none md:text-7xl">
+              Taste the <span className="font-display italic">night</span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-md text-sm leading-7 text-muted">
+              Food, cocktails, lounge seating, RedRoom lights, and private table energy in one scroll.
+            </p>
+          </div>
+        </div>
+        <div className="absolute inset-x-0 top-48 z-20 mx-auto grid max-w-[1400px] grid-cols-2 gap-12 md:gap-40">
+          <div className="flex flex-col items-end gap-40 pt-24">
+            {gallery.slice(0, 3).map((src) => (
+              <div key={src} className="gallery-card float-frame relative aspect-square w-[42vw] max-w-[320px] overflow-hidden rounded-3xl border border-stroke bg-surface">
+                <Image src={src} alt="" fill sizes="320px" className="object-cover" />
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-col gap-40 pt-72">
+            {gallery.slice(3).map((src) => (
+              <div key={src} className="gallery-card float-frame relative aspect-square w-[42vw] max-w-[320px] overflow-hidden rounded-3xl border border-stroke bg-surface">
+                <Image src={src} alt="" fill sizes="320px" className="object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-bg px-6 py-16 md:px-10 md:py-24 lg:px-16">
+        <div className="mx-auto grid max-w-[1200px] gap-5 md:grid-cols-3">
           {[
             ["15+", "Years of Flavor"],
-            ["500+", "Dishes Daily"],
-            ["4.8★", "Average Rating"],
-          ].map(([value, label], i) => (
-            <motion.div
-              key={label}
-              variants={{
-                hidden: { opacity: 0, y: 24 },
-                visible: { opacity: 1, y: 0, transition: spring },
-              }}
-              className="glass-card border-0 px-6 py-10 text-center md:px-10 md:py-14"
-              style={{
-                borderRadius: 0,
-                borderRight: i < 2 ? "1px solid rgba(212,175,55,0.14)" : "none",
-              }}
-            >
-              <p
-                className="font-display font-bold italic text-gold-metallic"
-                style={{ fontSize: "clamp(40px, 6vw, 90px)" }}
-              >
-                {value}
-              </p>
-              <p
-                className="mt-3 text-xs font-bold uppercase tracking-[0.28em]"
-                style={{ color: "rgba(255,220,200,0.65)" }}
-              >
-                {label}
-              </p>
-            </motion.div>
+            ["500+", "Dishes Served Daily"],
+            ["4.8", "Average Rating"],
+          ].map(([value, label]) => (
+            <div key={label} className="rounded-3xl border border-stroke bg-surface/40 p-8 text-center">
+              <p className="font-display text-7xl italic text-text-primary">{value}</p>
+              <p className="mt-3 text-xs uppercase tracking-[0.24em] text-muted">{label}</p>
+            </div>
           ))}
-        </motion.div>
-      </section>
-
-      {/* ─── MARQUEE CTA ─────────────────────────────── */}
-      <section
-        className="relative isolate overflow-hidden pb-24 pt-28 text-center md:pt-36"
-        style={{ background: "#6B0000" }}
-      >
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse at 50% 0%, rgba(255,70,0,0.14) 0%, transparent 58%)",
-          }}
-        />
-
-        <div className="mb-8 overflow-hidden" aria-hidden>
-          <div
-            className="animate-marquee-left font-display whitespace-nowrap font-bold italic"
-            style={{
-              fontSize: "clamp(56px, 10vw, 150px)",
-              lineHeight: 1,
-              color: "rgba(255,255,255,0.05)",
-            }}
-          >
-            <span>MR SOUL · ATLANTA · REDROOM · AFROBEATS · LAGOS · FINE DINING · </span>
-            <span>MR SOUL · ATLANTA · REDROOM · AFROBEATS · LAGOS · FINE DINING · </span>
-          </div>
-        </div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.11 } },
-          }}
-          className="relative mx-auto max-w-3xl px-6"
-        >
-          <motion.p
-            variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
-            className="text-xs font-bold uppercase tracking-[0.4em]"
-            style={{ color: "rgba(242,200,90,0.55)" }}
-          >
-            Ready for the room?
-          </motion.p>
-          <motion.h2
-            variants={{
-              hidden: { opacity: 0, y: 60 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: { type: "spring", stiffness: 74, damping: 16 },
-              },
-            }}
-            className="font-display mt-5 font-bold italic leading-[0.95] text-white"
-            style={{ fontSize: "clamp(42px, 6vw, 100px)" }}
-          >
-            Discover the{" "}
-            <em
-              className="animate-neon-pulse not-italic"
-              style={{ color: "#FF4466" }}
-            >
-              Soulful
-            </em>{" "}
-            Experience.
-          </motion.h2>
-          <motion.p
-            variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
-            className="mx-auto mt-6 max-w-lg text-sm leading-8 md:text-base"
-            style={{ color: "rgba(255,220,200,0.7)" }}
-          >
-            Exquisite flavors, rhythmic beats, shared joy. Mr Soul is not just a
-            dining experience — it&apos;s a celebration of authentic taste and
-            vibrant togetherness.
-          </motion.p>
-          <motion.div
-            variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
-            className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
-          >
-            <Link href="/menu" className="btn-gold">
-              Explore Our Menu
-            </Link>
-            <Link href="/redroom" className="btn-glass-red">
-              Book RedRoom VIP
-            </Link>
-          </motion.div>
-        </motion.div>
-
-        <div
-          className="mx-auto mt-20 flex max-w-[1100px] flex-col items-center justify-between gap-4 border-t px-6 pt-6 text-xs uppercase tracking-[0.18em] md:flex-row"
-          style={{
-            borderColor: "rgba(212,175,55,0.14)",
-            color: "rgba(255,220,200,0.38)",
-          }}
-        >
-          <div className="flex gap-6">
-            <Link href="/menu" className="transition hover:text-[#F2C85A]">Menu</Link>
-            <Link href="/redroom" className="transition hover:text-[#F2C85A]">RedRoom</Link>
-            <Link href="/contact" className="transition hover:text-[#F2C85A]">Contact</Link>
-          </div>
-          <p>
-            <span
-              className="mr-2 inline-block h-2 w-2 animate-pulse rounded-full"
-              style={{ background: "#4ade80" }}
-            />
-            Available for private events
-          </p>
         </div>
       </section>
-    </div>
+
+      <section className="relative isolate overflow-hidden bg-bg px-6 pb-10 pt-20 text-center md:pt-28">
+        <HlsBackground flipped />
+        <div className="absolute inset-0 bg-[#170207]/78" />
+        <div className="relative z-10">
+          <div className="flex whitespace-nowrap text-[18vw] font-semibold leading-none text-white/10" ref={marqueeRef}>
+            <span>WHERE ATLANTA MEETS LAGOS - REDROOM VIP - </span>
+            <span>WHERE ATLANTA MEETS LAGOS - REDROOM VIP - </span>
+          </div>
+          <div className="mx-auto -mt-8 max-w-3xl md:-mt-16">
+            <p className="text-xs uppercase tracking-[0.3em] text-muted">Ready for the room?</p>
+            <h2 className="mt-5 text-balance text-5xl font-semibold leading-none md:text-7xl">
+              Discover the <span className="font-display italic">Soulful Experience</span>.
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-muted">
+              Immerse yourself in a world of exquisite flavors, rhythmic beats, and shared joy. Mr Soul Bistro & Cafe is not just a dining experience; it&apos;s a celebration of authentic tastes and vibrant togetherness.
+            </p>
+            <Link href="/menu" className="luxury-border relative mt-8 inline-flex rounded-full bg-text-primary text-sm font-semibold text-bg">
+              <span className="block rounded-full bg-text-primary px-8 py-4">Explore Our Menu</span>
+            </Link>
+          </div>
+          <div className="mx-auto mt-16 flex max-w-[1200px] flex-col items-center justify-between gap-4 border-t border-stroke pt-6 text-xs uppercase tracking-[0.18em] text-muted md:flex-row">
+            <div className="flex gap-5">
+              <Link href="/menu">Menu</Link>
+              <Link href="/redroom">RedRoom</Link>
+              <Link href="/contact">Contact</Link>
+            </div>
+            <p><span className="mr-2 inline-block size-2 animate-pulse rounded-full bg-emerald-400" />Available for private events</p>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
