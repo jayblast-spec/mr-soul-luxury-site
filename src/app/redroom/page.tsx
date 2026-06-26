@@ -84,7 +84,12 @@ export default function RedRoomPage() {
             hookah, bottle service, and unforgettable Atlanta nights.
           </p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <ButtonLink href="#book">Book VIP Table</ButtonLink>
+            <a
+              href="tel:+14044585714"
+              className="inline-flex min-h-12 items-center justify-center rounded-full px-6 text-sm font-black uppercase tracking-[0.18em] transition bg-[#C8102E] text-white shadow-[0_20px_60px_rgba(200,16,46,0.35)] hover:bg-[#a80d27]"
+            >
+              Order Online
+            </a>
             <ButtonLink href="#gallery" variant="secondary">See The Vibe</ButtonLink>
           </div>
         </div>
@@ -247,12 +252,15 @@ export default function RedRoomPage() {
               Choose bottle service, hookah, general admission, birthday setup, private
               celebration, or a full buyout. RedRoom is 21+ after 9 PM.
             </p>
-            <Link
-              href="/menu"
-              className="mt-6 inline-flex min-h-12 items-center rounded-full border border-white/15 px-6 text-sm font-bold uppercase tracking-[0.16em] text-white transition hover:border-[#D4AF37]/50"
+            <a
+              href="tel:+14044585714"
+              className="mt-6 inline-flex min-h-12 items-center rounded-full px-6 text-sm font-bold uppercase tracking-[0.16em] text-white transition"
+              style={{ border: "1px solid rgba(255,255,255,0.15)", background: "transparent" }}
+              onMouseOver={(e) => (e.currentTarget.style.borderColor = "rgba(212,175,55,0.5)")}
+              onMouseOut={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)")}
             >
-              View Mr Soul Menu
-            </Link>
+              Call to Reserve
+            </a>
           </div>
           <ContactForm redroom />
         </div>
