@@ -32,7 +32,7 @@ export function ParallaxSection({
     <section
       ref={sectionRef}
       className={`relative isolate min-h-[84svh] overflow-hidden ${
-        dark ? "bg-black" : "bg-[#0E0208]"
+        dark ? "bg-black" : "bg-[#6B0000]"
       }`}
     >
       <motion.div
@@ -51,12 +51,12 @@ export function ParallaxSection({
 
       <div
         className="absolute inset-0"
-        style={{ background: "linear-gradient(135deg, rgba(0,0,0,0.86), rgba(92,14,26,0.55), rgba(0,0,0,0.86))" }}
+        style={{ background: "linear-gradient(135deg, rgba(60,0,0,0.88), rgba(120,0,20,0.55), rgba(60,0,0,0.88))" }}
       />
       <div className="red-vignette absolute inset-0" />
       <div
         className="absolute inset-x-0 bottom-0 h-40"
-        style={{ background: "linear-gradient(to top, #120308, transparent)" }}
+        style={{ background: "linear-gradient(to top, #8B0000, transparent)" }}
       />
 
       <div className="relative z-10 mx-auto flex min-h-[84svh] w-full max-w-7xl flex-col justify-center px-5 py-28 text-white sm:px-8">
@@ -75,7 +75,8 @@ export function ParallaxSection({
           initial={{ opacity: 0, y: 56, skewY: 3 }}
           animate={{ opacity: 1, y: 0, skewY: 0 }}
           transition={{ type: "spring", stiffness: 80, damping: 18, delay: 0.35 }}
-          className="font-display max-w-5xl text-balance text-5xl font-bold uppercase leading-[0.9] tracking-tight sm:text-7xl lg:text-8xl"
+          className="font-display max-w-5xl text-balance font-bold italic leading-[0.9] tracking-tight"
+          style={{ fontSize: "clamp(48px, 7vw, 110px)" }}
         >
           {title}
         </motion.h1>
