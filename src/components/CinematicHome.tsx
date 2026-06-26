@@ -30,20 +30,27 @@ export function CinematicHome() {
         ref={heroRef}
         className="relative isolate flex h-screen min-h-[600px] items-center justify-center overflow-hidden text-center"
       >
+        {/* Animated GIF background — plain img to preserve animation */}
         <motion.div className="absolute inset-0" style={{ y: heroY }}>
-          <Image
-            src="/images/hero-restaurant.webp"
-            alt="Mr Soul restaurant interior"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/hero-bg.gif"
+            alt=""
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center",
+            }}
           />
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(80,0,0,0.25) 0%, rgba(80,0,0,0.70) 100%)",
+                "linear-gradient(to bottom, rgba(60,0,0,0.15) 0%, rgba(60,0,0,0.60) 100%)",
             }}
           />
         </motion.div>
