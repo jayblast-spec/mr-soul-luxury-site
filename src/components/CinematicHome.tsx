@@ -47,8 +47,8 @@ export function CinematicHome() {
         </div>
 
         <motion.div className="relative z-10 flex w-full flex-col items-center px-5" style={{ opacity: heroOpacity }}>
-          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.7 }} className="mb-5 text-[10px] font-bold uppercase tracking-[0.55em]" style={{ color: "rgba(242,200,90,0.7)" }}>
-            Mr Soul Bistro &amp; Cafe · Atlanta, GA
+          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.7 }} className="mb-6 text-xs font-black uppercase tracking-[0.38em]" style={{ color: "#F2C85A", textShadow: "0 1px 12px rgba(0,0,0,0.9), 0 0 24px rgba(0,0,0,0.7)", letterSpacing: "0.38em" }}>
+            Mr Soul Bistro &amp; Cafe &nbsp;·&nbsp; Atlanta, GA
           </motion.p>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, duration: 0.9, ease: "easeOut" }}
