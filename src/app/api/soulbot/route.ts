@@ -11,6 +11,11 @@ const menuByCategory = menuItems.reduce<Record<string, string[]>>((groups, item)
   return groups;
 }, {});
 
+const starDishes = menuItems
+  .filter((i) => i.popular)
+  .map((i) => `${i.name} ($${i.price}${i.spicy ? ", spicy" : ""})`)
+  .join(", ");
+
 const knowledge = `
 Restaurant: ${brand.name}
 Tagline: ${brand.tagline}
@@ -20,13 +25,17 @@ Phone: ${brand.phone}
 Mobile: ${brand.mobile}
 Emails: ${brand.email}, ${brand.secondaryEmail}
 
+STAR DISHES — always recommend from this list first when asked what's good:
+${starDishes}
+These are the crowd favourites. Vary your suggestions — never repeat the same dish twice in a conversation.
+
 Services: ${services.map((s) => `${s.title}: ${s.description}`).join(" | ")}
 RedRoom: ${redroomFeatures.map((f) => `${f.title}: ${f.text}`).join(" | ")}
 RedRoom policy: Strictly 21+ after 9 PM. Reservations essential for VIP tables.
 Parking: Free on-site parking.
 Music: Afrobeats, Caribbean, Amapiano, Hip-Hop, DJs.
 
-Menu:
+Full Menu:
 ${Object.entries(menuByCategory)
   .map(([cat, items]) => `${cat}: ${items.join("; ")}`)
   .join("\n")}
@@ -101,7 +110,7 @@ async function callGroq(systemPrompt: string, messages: { role: string; content:
       model: "llama-3.3-70b-versatile",
       messages: [{ role: "system", content: systemPrompt }, ...messages],
       max_tokens: 180,
-      temperature: 0.85,
+      temperature: 0.92,
     }),
   });
 
@@ -144,3 +153,4 @@ export async function POST(request: Request) {
     );
   }
 }
+
