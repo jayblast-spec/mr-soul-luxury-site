@@ -28,41 +28,39 @@ export function CinematicHome() {
       <section
         ref={heroRef}
         className="relative isolate flex h-screen min-h-[600px] items-center justify-center overflow-hidden text-center"
-        style={{ background: "#6B0000" }}
       >
-        {/* Base depth gradient */}
+        {/* Real DJ photo background */}
+        <Image
+          src="/images/hero-dj.jpg"
+          alt=""
+          aria-hidden="true"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+
+        {/* Overlay: darkens photo so GIF and text pop */}
         <div className="pointer-events-none absolute inset-0" style={{
-          background: "radial-gradient(ellipse at 50% 50%, rgba(180,0,0,0.6) 0%, rgba(30,0,0,0.95) 100%)",
+          background: "linear-gradient(to bottom, rgba(30,0,0,0.55) 0%, rgba(20,0,0,0.72) 100%)",
         }} />
 
-        {/* Central glow behind GIF */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div style={{
-            width: "clamp(280px, 72vw, 560px)",
-            height: "clamp(280px, 72vw, 560px)",
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(180,0,0,0.55) 0%, transparent 70%)",
-            filter: "blur(40px)",
-          }} />
-        </div>
-
-        {/* Outer decorative ring */}
+        {/* Decorative outer ring */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <div style={{
             width: "clamp(340px, 86vw, 680px)",
             height: "clamp(340px, 86vw, 680px)",
             borderRadius: "50%",
-            border: "1px solid rgba(212,175,55,0.09)",
+            border: "1px solid rgba(212,175,55,0.12)",
           }} />
         </div>
-
-        {/* Inner decorative ring */}
+        {/* Decorative inner ring */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <div style={{
             width: "clamp(290px, 74vw, 580px)",
             height: "clamp(290px, 74vw, 580px)",
             borderRadius: "50%",
-            border: "1px solid rgba(212,175,55,0.14)",
+            border: "1px solid rgba(212,175,55,0.18)",
           }} />
         </div>
 
@@ -81,7 +79,7 @@ export function CinematicHome() {
             Atlanta · Lagos · RedRoom
           </motion.p>
 
-          {/* GIF — balanced size with gold frame */}
+          {/* GIF — centered on photo background */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -90,12 +88,12 @@ export function CinematicHome() {
               width: "clamp(260px, 66vw, 480px)",
               borderRadius: "14px",
               overflow: "hidden",
-              border: "1.5px solid rgba(212,175,55,0.6)",
+              border: "1.5px solid rgba(212,175,55,0.65)",
               boxShadow: [
-                "0 0 0 1px rgba(212,175,55,0.1)",
-                "0 0 40px rgba(212,175,55,0.18)",
-                "0 0 80px rgba(180,0,0,0.4)",
-                "0 20px 60px rgba(0,0,0,0.7)",
+                "0 0 0 1px rgba(212,175,55,0.12)",
+                "0 0 40px rgba(212,175,55,0.22)",
+                "0 0 90px rgba(0,0,0,0.5)",
+                "0 24px 70px rgba(0,0,0,0.7)",
               ].join(", "),
               willChange: "transform",
               transform: "translateZ(0)",
@@ -119,7 +117,7 @@ export function CinematicHome() {
               height: 1,
               width: 110,
               margin: "1.4rem auto",
-              background: "linear-gradient(to right, transparent, rgba(212,175,55,0.75), transparent)",
+              background: "linear-gradient(to right, transparent, rgba(212,175,55,0.8), transparent)",
               transformOrigin: "center",
             }}
           />
