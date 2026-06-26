@@ -44,40 +44,38 @@ export function Navbar() {
             : "0 4px 24px rgba(0,0,0,0.5)",
         }}
       >
-        {/* Logo — compact mark on mobile, full logo on desktop */}
+        {/* Logo */}
         <Link
           href="/"
           className="shrink-0 transition-opacity hover:opacity-85"
           onClick={() => setOpen(false)}
           aria-label="Mr Soul home"
         >
-          {/* Mobile: circular mark */}
+          {/* Mobile: logo smaller */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/mr-soul-mark.svg"
+            src="/images/mr-soul-logo.png"
             alt="Mr Soul"
-            width={46}
-            height={46}
             className="block md:hidden"
-            style={{ borderRadius: "50%", boxShadow: "0 4px 16px rgba(196,30,58,0.45)" }}
+            style={{
+              height: "38px",
+              width: "auto",
+              filter: "drop-shadow(0 0 1px rgba(255,255,255,0.85))",
+            }}
           />
-          {/* Desktop: full horizontal logo */}
+          {/* Desktop: full logo */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/mr-soul-logo.svg"
+            src="/images/mr-soul-logo.png"
             alt="Mr Soul Bistro &amp; Cafe"
             className="hidden md:block"
-            style={{ height: "40px", width: "auto" }}
+            style={{
+              height: "46px",
+              width: "auto",
+              filter: "drop-shadow(0 0 1px rgba(255,255,255,0.85))",
+            }}
           />
         </Link>
-
-        {/* Mobile brand text (shown next to mark) */}
-        <div className="ml-3 min-w-0 flex-1 md:hidden">
-          <p className="truncate text-sm font-black uppercase tracking-[0.12em] text-white">Mr Soul</p>
-          <p className="truncate text-[11px] font-semibold" style={{ color: "#D4AF37" }}>
-            Bistro, Cafe &amp; RedRoom
-          </p>
-        </div>
 
         <span
           className="mx-4 hidden h-7 w-px md:block"
