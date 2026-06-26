@@ -36,6 +36,10 @@ export const metadata: Metadata = {
       "Where Atlanta Meets Lagos — authentic Nigerian cuisine and Atlanta's RedRoom VIP experience.",
     images: ["/images/hero-restaurant.webp"],
   },
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
