@@ -28,7 +28,7 @@ export function Navbar() {
         }`}
       >
         <Link href="/" className="accent-gradient group grid size-9 shrink-0 place-items-center rounded-full p-[1px] transition hover:scale-110">
-          <span className="font-display grid size-full place-items-center rounded-full bg-bg text-[13px] italic">MS</span>
+          <span className="grid size-full place-items-center rounded-full bg-bg text-[11px] font-black">SOUL</span>
         </Link>
         <span className="mx-2 hidden h-5 w-px bg-stroke sm:block" />
         <div className="flex min-w-0 items-center">
