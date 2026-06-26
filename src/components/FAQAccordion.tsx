@@ -8,7 +8,7 @@ export function FAQAccordion() {
   const [open, setOpen] = useState(0);
 
   return (
-    <div className="mx-auto max-w-4xl divide-y divide-black/10 rounded-[8px] bg-white shadow-xl shadow-black/5 ring-1 ring-black/5">
+    <div className="mx-auto max-w-4xl divide-y divide-white/10 rounded-[8px] bg-surface/55 text-white shadow-xl shadow-black/10 ring-1 ring-white/10">
       {faqs.map((item, index) => (
         <div key={item.q}>
           <button
@@ -19,7 +19,7 @@ export function FAQAccordion() {
             <span className="text-lg font-black uppercase">{item.q}</span>
             <ChevronDown className={`shrink-0 transition ${open === index ? "rotate-180 text-[#C8102E]" : ""}`} />
           </button>
-          {open === index ? <p className="px-5 pb-6 text-black/65 sm:px-6">{item.a}</p> : null}
+          {open === index ? <p className="px-5 pb-6 text-white/65 sm:px-6">{item.a}</p> : null}
         </div>
       ))}
     </div>
