@@ -256,7 +256,7 @@ body::after {
 .hero-text-4 { animation: fade-in-up 0.85s ease 0.65s both; }
 .hero-text-5 { animation: fade-in-up 0.85s ease 0.85s both; }
 
-.redroom-slide-left  { display:flex; animation:marquee-left 32s linear infinite; width:max-content; }
+.redroom-slide-left  { display:flex; animation:marquee-left 80s linear infinite; width:max-content; }
 .redroom-slide-right { display:flex; animation:marquee-left 36s linear infinite reverse; width:max-content; }
 
 @media (prefers-reduced-motion: reduce) {
