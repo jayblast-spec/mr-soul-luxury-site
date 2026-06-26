@@ -1,15 +1,16 @@
 "use client";
 
-import Image from "next/image";
 import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { menuItems } from "@/lib/content";
-import { TiltCard } from "./TiltCard";
 
 const categories = ["All", ...Array.from(new Set(menuItems.map((item) => item.category)))];
 
+const spring = { type: "spring" as const, stiffness: 80, damping: 20 };
+
 export function MenuExplorer() {
   const [category, setCategory] = useState("All");
-  const [selected, setSelected] = useState<(typeof menuItems)[number] | null>(null);
+
   const filtered = useMemo(
     () =>
       category === "All"
@@ -18,17 +19,28 @@ export function MenuExplorer() {
     [category]
   );
 
+  // Group by category for section headers
+  const grouped = useMemo(() => {
+    const map: Record<string, typeof menuItems> = {};
+    for (const item of filtered) {
+      if (!map[item.category]) map[item.category] = [];
+      map[item.category].push(item);
+    }
+    return map;
+  }, [filtered]);
+
   return (
     <>
+      {/* Category filter tabs */}
       <div className="flex gap-2 overflow-x-auto pb-4">
-        {categories.map((item) => (
+        {categories.map((cat) => (
           <button
-            key={item}
+            key={cat}
             type="button"
-            onClick={() => setCategory(item)}
-            className="min-h-11 rounded-full px-5 text-xs font-bold uppercase tracking-[0.16em] transition"
+            onClick={() => setCategory(cat)}
+            className="min-h-11 rounded-full px-5 text-xs font-bold uppercase tracking-[0.16em] transition whitespace-nowrap"
             style={
-              category === item
+              category === cat
                 ? {
                     background: "linear-gradient(160deg, #C41E3A, #8A1C2C)",
                     color: "#FFFFFF",
@@ -42,111 +54,95 @@ export function MenuExplorer() {
                   }
             }
           >
-            {item}
+            {cat}
           </button>
         ))}
       </div>
 
-      <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {filtered.map((item) => (
-          <TiltCard key={item.name}>
-            <button
-              type="button"
-              onClick={() => setSelected(item)}
-              className="group h-full w-full overflow-hidden rounded-2xl text-left text-white"
-              style={{
-                background: "rgba(40, 8, 16, 0.65)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)",
-                border: "1px solid rgba(212,175,55,0.2)",
-                boxShadow: "inset 0 0 0 0.5px rgba(255,77,109,0.18), 0 4px 20px rgba(0,0,0,0.5)",
-              }}
-            >
-              <div className="relative aspect-[1.15] overflow-hidden">
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  fill
-                  sizes="(min-width:1024px) 33vw, 50vw"
-                  className="object-cover transition duration-700 group-hover:scale-110"
-                />
-                <div className="absolute left-3 top-3 flex gap-2">
-                  {item.popular ? (
-                    <span
-                      className="rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em]"
-                      style={{ background: "#D4AF37", color: "#120308" }}
-                    >
-                      Popular
-                    </span>
-                  ) : null}
-                  {item.spicy ? (
-                    <span
-                      className="rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em]"
-                      style={{ background: "#C41E3A", color: "#ffffff" }}
-                    >
-                      Spicy
-                    </span>
-                  ) : null}
-                </div>
-              </div>
-              <div className="p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <h2 className="text-xl font-bold uppercase text-white">{item.name}</h2>
-                  <p className="font-black" style={{ color: "#D4AF37" }}>${item.price}</p>
-                </div>
-                <p className="mt-2 text-sm leading-6" style={{ color: "rgba(232,213,196,0.8)" }}>
-                  {item.description}
-                </p>
-              </div>
-            </button>
-          </TiltCard>
-        ))}
-      </div>
-
-      {selected ? (
-        <div
-          className="fixed inset-0 z-[60] grid place-items-center p-5"
-          style={{ background: "rgba(0,0,0,0.82)", backdropFilter: "blur(8px)" }}
-          onClick={() => setSelected(null)}
+      {/* Menu list */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={category}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={spring}
+          className="mt-8 space-y-12"
         >
-          <div
-            className="w-full max-w-xl overflow-hidden rounded-2xl"
-            style={{
-              background: "#1A0610",
-              border: "1px solid rgba(212,175,55,0.32)",
-              boxShadow: "0 16px 64px rgba(0,0,0,0.85)",
-            }}
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="relative aspect-video overflow-hidden">
-              <Image src={selected.image} alt={selected.name} fill sizes="576px" className="object-cover" />
-              <div
-                className="absolute inset-0"
-                style={{ background: "linear-gradient(to top, rgba(26,6,16,0.92), transparent)" }}
-              />
-            </div>
-            <div className="p-6">
-              <p
-                className="text-xs font-bold uppercase tracking-[0.25em]"
-                style={{ color: "#C41E3A" }}
-              >
-                {selected.category}
-              </p>
-              <h2 className="font-display mt-2 text-3xl font-bold text-white">{selected.name}</h2>
-              <p className="mt-3 text-sm leading-7" style={{ color: "#E8D5C4" }}>
-                {selected.description}
-              </p>
-              <button
-                className="btn-gold mt-6"
-                type="button"
-                onClick={() => setSelected(null)}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
+          {Object.entries(grouped).map(([cat, items]) => (
+            <section key={cat}>
+              {/* Section header */}
+              <div className="flex items-center gap-4 mb-6">
+                <h2
+                  className="font-display font-bold italic uppercase tracking-[0.12em]"
+                  style={{ color: "#D4AF37", fontSize: "clamp(13px, 1.4vw, 17px)" }}
+                >
+                  {cat}
+                </h2>
+                <div className="flex-1 h-px" style={{ background: "rgba(212,175,55,0.22)" }} />
+              </div>
+
+              {/* Items */}
+              <ul className="space-y-0">
+                {items.map((item, idx) => (
+                  <li key={item.name} className="group">
+                    <div className="flex items-baseline justify-between gap-4 py-4 transition-colors group-hover:bg-white/[0.03] px-2 -mx-2 rounded-lg">
+                      {/* Left: name + description */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span
+                            className="font-display font-semibold text-white leading-tight"
+                            style={{ fontSize: "clamp(14px, 1.5vw, 18px)" }}
+                          >
+                            {item.name}
+                          </span>
+                          {item.popular && (
+                            <span
+                              className="rounded-full px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.1em]"
+                              style={{ background: "rgba(212,175,55,0.18)", color: "#D4AF37", border: "1px solid rgba(212,175,55,0.35)" }}
+                            >
+                              Popular
+                            </span>
+                          )}
+                          {item.spicy && (
+                            <span
+                              className="rounded-full px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.1em]"
+                              style={{ background: "rgba(196,30,58,0.18)", color: "#FF6B6B", border: "1px solid rgba(196,30,58,0.35)" }}
+                            >
+                              Spicy
+                            </span>
+                          )}
+                        </div>
+                        {item.description && (
+                          <p
+                            className="mt-1 leading-relaxed"
+                            style={{ color: "rgba(232,213,196,0.55)", fontSize: "clamp(11px, 1.1vw, 13px)" }}
+                          >
+                            {item.description}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Right: price */}
+                      <div className="flex-shrink-0 flex items-center gap-2">
+                        <span
+                          className="font-display font-bold"
+                          style={{ color: "#D4AF37", fontSize: "clamp(14px, 1.5vw, 18px)", minWidth: "2.8rem", textAlign: "right" }}
+                        >
+                          ${item.price}
+                        </span>
+                      </div>
+                    </div>
+                    {idx < items.length - 1 && (
+                      <div className="h-px mx-2" style={{ background: "rgba(212,175,55,0.08)" }} />
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </motion.div>
+      </AnimatePresence>
     </>
   );
 }
