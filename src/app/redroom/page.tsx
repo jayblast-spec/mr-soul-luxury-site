@@ -109,10 +109,18 @@ export default function RedRoomPage() {
       </section>
 
       {/* TICKER */}
-      <section className="border-y border-white/8 bg-[#0A0010] py-4">
-        <div className="redroom-slide-left gap-8 text-nowrap text-4xl font-black uppercase leading-none text-white/8 sm:text-6xl">
+      <section className="border-y py-5" style={{ borderColor: "rgba(212,175,55,0.18)", background: "linear-gradient(to right, #0A0010, #0e0016, #0A0010)" }}>
+        <div className="redroom-slide-left gap-10 text-nowrap leading-none">
           {[...newsTicker, ...newsTicker, ...newsTicker].map((item, index) => (
-            <span key={`${item}-${index}`}>{item} <span className="text-[#C41E3A]">/</span></span>
+            <span key={`${item}-${index}`} className="inline-flex items-center gap-10">
+              <span
+                className="font-display font-bold italic"
+                style={{ fontSize: "clamp(16px, 2.2vw, 28px)", color: index % 3 === 0 ? "#D4AF37" : "rgba(255,255,255,0.72)" }}
+              >
+                {item}
+              </span>
+              <span style={{ color: "#C41E3A", fontSize: "clamp(14px, 1.8vw, 22px)", fontWeight: 300 }}>✦</span>
+            </span>
           ))}
         </div>
       </section>
