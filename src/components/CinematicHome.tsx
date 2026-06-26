@@ -62,30 +62,10 @@ export function CinematicHome() {
             Atlanta · Lagos · RedRoom
           </motion.p>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 70 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 68, damping: 18, delay: 0.5 }}
-            className="hero-title font-display font-bold italic leading-[0.85]"
-            style={{ fontSize: "clamp(88px, 16vw, 240px)" }}
-          >
-            Mr Soul
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.95, duration: 0.8 }}
-            className="font-display italic text-white/60"
-            style={{ fontSize: "clamp(22px, 3.5vw, 52px)", marginTop: "-0.05em" }}
-          >
-            Bistro & Cafe
-          </motion.p>
-
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{ delay: 1.1, duration: 0.9 }}
+            transition={{ delay: 0.6, duration: 0.9 }}
             style={{
               height: 1,
               width: 200,
@@ -99,7 +79,7 @@ export function CinematicHome() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.25, duration: 0.7 }}
+            transition={{ delay: 0.9, duration: 0.7 }}
             className="flex flex-col items-center gap-4 sm:flex-row"
           >
             <Link href="/menu" className="btn-gold">
@@ -163,7 +143,6 @@ export function CinematicHome() {
         style={{ background: "#700000", minHeight: "90vh" }}
       >
         <div className="grid min-h-[90vh] grid-cols-1 md:grid-cols-2">
-          {/* Image side */}
           <motion.div
             initial={{ opacity: 0, scale: 0.97 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -179,7 +158,6 @@ export function CinematicHome() {
               sizes="(min-width:768px) 50vw, 100vw"
               className="object-cover"
             />
-            {/* Blend edge into bg */}
             <div
               className="absolute inset-0 hidden md:block"
               style={{
@@ -189,7 +167,6 @@ export function CinematicHome() {
             />
           </motion.div>
 
-          {/* Text side */}
           <motion.div
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -386,7 +363,7 @@ export function CinematicHome() {
             }}
             className="grid gap-4 sm:grid-cols-2"
           >
-            {reviews.map((r, i) => (
+            {reviews.map((r) => (
               <motion.div
                 key={r.author}
                 variants={{
