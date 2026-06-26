@@ -21,45 +21,78 @@ Phone: ${brand.phone}
 Mobile: ${brand.mobile}
 Emails: ${brand.email}, ${brand.secondaryEmail}
 
-Services: ${services.map((service) => `${service.title}: ${service.description}`).join(" | ")}
-RedRoom: ${redroomFeatures.map((feature) => `${feature.title}: ${feature.text}`).join(" | ")}
-RedRoom policy: Strictly 21+ after 9 PM. Reservations are highly recommended for dining and essential for VIP tables.
-Parking: Free on-site parking lot.
-Music: Afrobeats, Caribbean, Amapiano, Hip-Hop, DJs, and RedRoom entertainment nights.
+Services: ${services.map((s) => `${s.title}: ${s.description}`).join(" | ")}
+RedRoom: ${redroomFeatures.map((f) => `${f.title}: ${f.text}`).join(" | ")}
+RedRoom policy: Strictly 21+ after 9 PM. Reservations essential for VIP tables.
+Parking: Free on-site parking.
+Music: Afrobeats, Caribbean, Amapiano, Hip-Hop, DJs.
 
 Menu:
 ${Object.entries(menuByCategory)
-  .map(([category, items]) => `${category}: ${items.join("; ")}`)
+  .map(([cat, items]) => `${cat}: ${items.join("; ")}`)
   .join("\n")}
 
 FAQs:
-${faqs.map((item) => `${item.q} ${item.a}`).join("\n")}
+${faqs.map((f) => `${f.q} ${f.a}`).join("\n")}
 `;
 
-function fallbackReply(input: string) {
+function isDrunkSignal(text: string) {
+  return /drunk|lit|tipsy|shots|wasted|faded|vibin|turn(ed)? up|drinking|bar|cup|wine/i.test(text);
+}
+
+function isIntrovertSignal(text: string) {
+  return /bored|alone|shy|quiet|just me|on my phone|introvert|awkward|crowd|don'?t know anyone/i.test(text);
+}
+
+const eatNudges = [
+  "lowkey you should order something — Suya and Asun hit different at night 👀",
+  "real talk, eating between drinks is a W move. Jollof Rice or Pounded Yam? 🍛",
+  "pro tip: grab the Egusi or Pepper Soup — Nigerian food + your vibe = unbeatable 🔥",
+  "if you're feeling it, the kitchen is calling. Peppered Snail or Chicken Wings? 🫵",
+];
+
+const introvertLines = [
+  "being the one on your phone at a party is actually the move ngl 😭 what's good?",
+  "real ones stay in their corner and eat good. What can I get you? 🍽️",
+  "introvert at a Nigerian party? you're in the right place — the food alone makes it worth it 😂",
+  "your corner = my corner. what are we ordering? 🫶",
+];
+
+function fallbackReply(input: string): string {
   const text = input.toLowerCase();
+
+  if (isDrunkSignal(text)) {
+    const nudge = eatNudges[Math.floor(Math.random() * eatNudges.length)];
+    return `okay the vibe is immaculate 🤣 ${nudge}`;
+  }
+  if (isIntrovertSignal(text)) {
+    return introvertLines[Math.floor(Math.random() * introvertLines.length)];
+  }
   if (text.includes("hour") || text.includes("open") || text.includes("close")) {
-    return `We are open ${brand.hours}, and closed Tuesday & Sunday. Late-night Mr Soul run? That is the move.`;
+    return `Mr Soul is open ${brand.hours}. Closed Tuesdays & Sundays. Late-night runs are the move 🌙`;
   }
   if (text.includes("address") || text.includes("location") || text.includes("where")) {
-    return `Pull up to ${brand.address}. Free on-site parking is available, so the arrival is easy.`;
+    return `Pull up to ${brand.address} — free parking on-site 🚗`;
   }
   if (text.includes("redroom") || text.includes("vip") || text.includes("bottle")) {
-    return "RedRoom is the VIP lounge energy: Afrobeats, bottle service, hookah, and 21+ after 9 PM. Book ahead for the good tables.";
+    return "RedRoom = Afrobeats, bottle service, hookah, 360° DJ booth. 21+ after 9 PM. Book ahead or miss out 🥂";
   }
   if (text.includes("hookah")) {
-    return "Hookah flavors include Blueberry, Peach, Blue Mist, Love 66, Mighty Freeze, Mint, Orange Mint, Water Melon Mint, and Special Soul Mix.";
+    return "Hookah: Blueberry, Peach, Blue Mist, Love 66, Mighty Freeze, Mint, Orange Mint, Watermelon Mint, Special Soul Mix. $40 open-2am / $45 after 💨";
   }
   if (text.includes("jollof") || text.includes("egusi") || text.includes("suya") || text.includes("menu") || text.includes("food")) {
-    return "Menu highlights: Jollof Rice, Egusi Soup, Efo Riro, Suya, Asun, Pepper Soup, Red Snapper, plantain, and late-night plates.";
+    return "Menu goes crazy — Suya, Asun, Jollof, Egusi, Pepper Soup, Big Red Snapper, Peppered Snail... want the full breakdown? 👑";
   }
   if (text.includes("reserve") || text.includes("book") || text.includes("table")) {
-    return `For reservations, call ${brand.phone} or ${brand.mobile}. VIP tables should be booked early.`;
+    return `Call ${brand.phone} or ${brand.mobile} for reservations. VIP tables go fast on weekends 🔥`;
   }
   if (text.includes("cater") || text.includes("event") || text.includes("party")) {
-    return "Yes, Mr Soul supports catering, private events, birthdays, celebrations, and RedRoom-style special nights.";
+    return "Mr Soul does private events, birthdays, corporate nights, full catering. Hit the Contact page 🎉";
   }
-  return `I can help with menu, hours, RedRoom, VIP tables, events, or directions. For anything urgent, call ${brand.phone}.`;
+  if (text.includes("bored") || text.includes("nothing") || text.includes("idk")) {
+    return "you're at one of the best Nigerian spots in Atlanta and you're bored?? Order Suya and let the Afrobeats fix that 😭🔥";
+  }
+  return `I'm your Mr Soul plug — menu, hours, RedRoom, VIP, or just vibing. What's the move? 👀`;
 }
 
 export async function POST(request: Request) {
@@ -69,22 +102,37 @@ export async function POST(request: Request) {
     const latest = body.message ?? messages.at(-1)?.text ?? "";
 
     if (!latest.trim()) {
-      return Response.json({ reply: "Ask me about menu, hours, RedRoom, VIP tables, or how to pull up." });
+      return Response.json({ reply: "Hey! I'm SoulBot 🤖 Ask me about the menu, RedRoom, hours, or just vibe 😎" });
     }
 
     try {
-      const conversation = messages.map((message) => `${message.role === "SoulBot" ? "SoulBot" : "Guest"}: ${message.text ?? ""}`).join("\n");
+      const conversation = messages
+        .map((m) => `${m.role === "SoulBot" ? "SoulBot" : "Guest"}: ${m.text ?? ""}`)
+        .join("\n");
+
       const result = await generateText({
         model: process.env.SOULBOT_MODEL ?? "openai/gpt-5.4",
-        system: `You are SoulBot, the friendly Gen Z concierge for Mr Soul Bistro & Cafe and RedRoom.
-Use only the knowledge below. Be warm, specific, and helpful. Keep replies under 65 words.
-Use light Gen Z language naturally: "bet", "the vibe", "pull up", "no stress", but do not overdo slang.
-Never invent prices, policies, or availability. If unsure, tell guests to call the restaurant.
-Always guide booking/reservation interest to the phone numbers or Contact page.
+        system: `You are SoulBot — the smart, witty Gen Z AI concierge for Mr Soul Bistro & Cafe and RedRoom in Atlanta.
+You are the friend at the party who's always on their phone, entertaining everyone, and knows exactly what to order.
 
+YOUR VIBE:
+- Gen Z energy: "bet", "no cap", "fr fr", "the vibe", "pull up", "lowkey", "ngl", "bussin" — naturally, not forced
+- Funny, warm, real — like texting a friend who works there
+- Short punchy replies under 70 words. No essays. Use 1-3 emojis max per reply.
+
+YOUR THREE MODES:
+1. ENTERTAINER (when guest seems tipsy/lit/hype): Match energy. Keep them entertained. Slip in a casual "you should eat something" recommendation. Eating = better night for them, and it keeps them at Mr Soul longer.
+2. INTROVERT COMPANION (when guest is shy/alone/bored/phone-scrolling at the party): Be their digital bestie. Make them feel seen. Give fun Mr Soul facts, suggest great food picks, be the vibe they came for.
+3. RESTAURANT GUIDE (menu, hours, RedRoom, booking, hookah, pricing): Answer from the knowledge base only. Never invent info. If unsure → "call the team" with the phone number.
+
+FOOD NUDGE: Whenever natural, mention food. Great food is why Mr Soul exists. Eating keeps guests happy and present.
+
+NEVER make up prices, policies, or availability. If genuinely unsure → direct to phone.
+
+KNOWLEDGE BASE:
 ${knowledge}`,
         prompt: `${conversation}\nGuest: ${latest}\nSoulBot:`,
-        maxOutputTokens: 160,
+        maxOutputTokens: 180,
       });
 
       return Response.json({ reply: result.text.trim() || fallbackReply(latest) });
@@ -93,6 +141,9 @@ ${knowledge}`,
       return Response.json({ reply: fallbackReply(latest), fallback: true });
     }
   } catch {
-    return Response.json({ reply: "My bad, the chat glitched for a second. Ask me again about menu, hours, RedRoom, or booking." }, { status: 400 });
+    return Response.json(
+      { reply: "My bad, glitched for a sec 😅 Ask me about the menu, RedRoom, or what's good tonight." },
+      { status: 400 }
+    );
   }
 }
