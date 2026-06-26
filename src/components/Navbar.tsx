@@ -110,11 +110,11 @@ export function Navbar() {
         />
 
         <Link
-          href="/contact"
+          href="/menu"
           className="btn-gold hidden md:inline-flex"
           style={{ borderRadius: "999px", padding: "0.6rem 1.25rem", fontSize: "0.78rem" }}
         >
-          Book VIP
+          Order Online
         </Link>
 
         {/* Mobile hamburger */}
@@ -159,12 +159,12 @@ export function Navbar() {
               </Link>
             ))}
             <Link
-              href="/contact"
+              href="/menu"
               className="btn-gold mt-2 block text-center"
               style={{ borderRadius: "16px", padding: "1rem" }}
               onClick={() => setOpen(false)}
             >
-              Book VIP
+              Order Online
             </Link>
           </div>
         ) : null}
