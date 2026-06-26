@@ -1,8 +1,7 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { useRef, type ReactNode } from "react";
+import { type ReactNode, useEffect, useRef } from "react";
 
 type ParallaxSectionProps = {
   image: string;
@@ -13,49 +12,82 @@ type ParallaxSectionProps = {
   dark?: boolean;
 };
 
-export function ParallaxSection({ image, eyebrow, title, children, priority = false, dark = false }: ParallaxSectionProps) {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+export function ParallaxSection({
+  image,
+  eyebrow,
+  title,
+  children,
+  priority = false,
+  dark = false,
+}: ParallaxSectionProps) {
+  const imgRef = useRef<HTMLDivElement>(null);
 
-  // The background moves less than the foreground and scales slightly.
-  // This creates depth without requiring a heavy WebGL scene.
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.12, 1.02]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["7%", "-7%"]);
-  const rotateX = useTransform(scrollYProgress, [0, 0.45, 1], [2, 0, -2]);
+  useEffect(() => {
+    const onScroll = () => {
+      const parent = imgRef.current?.parentElement;
+      if (!parent || !imgRef.current) return;
+      const rect = parent.getBoundingClientRect();
+      const pct = 1 - (rect.top + rect.height) / (window.innerHeight + rect.height);
+      imgRef.current.style.transform = `translateY(${pct * 10}%)`;
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <section ref={ref} className={`relative isolate min-h-[84svh] overflow-hidden ${dark ? "bg-black" : "bg-[#140506]"}`}>
-      <motion.div className="absolute inset-0" style={{ y: imageY, scale: imageScale }}>
+    <section
+      className={`relative isolate min-h-[84svh] overflow-hidden ${
+        dark ? "bg-black" : "bg-[#0E0208]"
+      }`}
+    >
+      <div
+        ref={imgRef}
+        className="absolute inset-0 will-change-transform"
+        style={{ transform: "translateY(0%)" }}
+      >
         <Image
           src={image}
           alt=""
           fill
           priority={priority}
           sizes="100vw"
-          className="float-image-bg object-cover"
+          className="object-cover scale-110"
         />
-      </motion.div>
-      <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-[#35070f]/70 to-black/85" />
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black to-transparent" />
-      <motion.div
-        className="relative z-10 mx-auto flex min-h-[84svh] w-full max-w-7xl flex-col justify-center px-5 py-28 text-white sm:px-8"
-        style={{ y: contentY, rotateX, transformPerspective: 800 }}
-      >
-        {eyebrow ? <p className="mb-5 text-xs font-black uppercase tracking-[0.38em] text-[#D4AF37]">{eyebrow}</p> : null}
-        <h1 className="max-w-5xl text-balance text-5xl font-black uppercase leading-[0.9] tracking-normal sm:text-7xl lg:text-8xl">
+      </div>
+
+      <div
+        className="absolute inset-0"
+        style={{ background: "linear-gradient(135deg, rgba(0,0,0,0.86), rgba(92,14,26,0.55), rgba(0,0,0,0.86))" }}
+      />
+      <div className="red-vignette absolute inset-0" />
+      <div
+        className="absolute inset-x-0 bottom-0 h-40"
+        style={{ background: "linear-gradient(to top, #120308, transparent)" }}
+      />
+
+      <div className="relative z-10 mx-auto flex min-h-[84svh] w-full max-w-7xl flex-col justify-center px-5 py-28 text-white sm:px-8">
+        {eyebrow ? (
+          <p
+            className="mb-5 text-xs font-bold uppercase tracking-[0.38em] animate-fade-in-up"
+            style={{ color: "#D4AF37" }}
+          >
+            {eyebrow}
+          </p>
+        ) : null}
+        <h1
+          className="font-display max-w-5xl text-balance text-5xl font-bold uppercase leading-[0.9] tracking-tight sm:text-7xl lg:text-8xl animate-fade-in-up"
+          style={{ animationDelay: "0.15s" }}
+        >
           {title}
         </h1>
-        <motion.div
-          className="mt-7 max-w-3xl"
-          initial={{ opacity: 0, y: 60, rotateX: 10 }}
-          whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+        <div
+          className="mt-7 max-w-3xl animate-fade-in-up"
+          style={{ animationDelay: "0.35s" }}
         >
           {children}
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

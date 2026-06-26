@@ -1,14 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { HlsBackground } from "./HlsBackground";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const bento = [
   {
@@ -42,15 +37,15 @@ const bento = [
 ];
 
 const reviews = [
-  ["Best Nigerian vibe in Atlanta", "Closest you can get to Lagos.", "5 stars", "Dining"],
-  ["The jollof is unmatched", "The atmosphere is incredible.", "5 stars", "Menu"],
-  ["RedRoom is the spot", "Amazing food and the DJ had the whole room moving.", "5 stars", "Nightlife"],
-  ["Great vibes", "Authentic food and amazing staff. 10/10.", "5 stars", "Guest"],
+  ["Best Nigerian vibe in Atlanta", "Closest you can get to Lagos.", "★★★★★", "Dining"],
+  ["The jollof is unmatched", "The atmosphere is incredible.", "★★★★★", "Menu"],
+  ["RedRoom is the spot", "Amazing food and the DJ had the whole room moving.", "★★★★★", "Nightlife"],
+  ["Great vibes", "Authentic food and amazing staff. 10/10.", "★★★★★", "Guest"],
 ];
 
 const flavorPillars = [
   ["Irresistible Flavors", "Embark on a journey through Nigeria with authentic dishes, rich stews, mouthwatering grills, and soulful sides."],
-  ["Vibrant Atmosphere", "More than a meal, cold drinks, and good music - enjoy the lively vibe that creates special memories."],
+  ["Vibrant Atmosphere", "More than a meal, cold drinks, and good music — enjoy the lively vibe that creates special memories."],
   ["Community Celebration", "Join a community passionate about food, Afrobeats, cultural connection, and togetherness."],
   ["Afrobeats Bliss", "Feel the rhythm of Afrobeats and sounds from the motherland, from curated playlists to live performances."],
 ];
@@ -64,159 +59,163 @@ const gallery = [
   "https://picsum.photos/seed/soul-gallery-6/700/700",
 ];
 
-function SectionHeader({ eyebrow, title, italic, text }: { eyebrow: string; title: string; italic: string; text: string }) {
+function SectionHeader({
+  eyebrow,
+  title,
+  italic,
+  text,
+}: {
+  eyebrow: string;
+  title: string;
+  italic: string;
+  text: string;
+}) {
   return (
-    <motion.div
-      className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
-    >
+    <div className="reveal mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between">
       <div>
         <div className="mb-5 flex items-center gap-4">
-          <span className="h-px w-8 bg-stroke" />
-          <p className="text-xs uppercase tracking-[0.3em] text-muted">{eyebrow}</p>
+          <span className="h-px w-8" style={{ background: "rgba(212,175,55,0.4)" }} />
+          <p className="text-xs font-bold uppercase tracking-[0.3em]" style={{ color: "#E8D5C4" }}>
+            {eyebrow}
+          </p>
         </div>
-        <h2 className="text-balance text-4xl font-semibold leading-none text-text-primary md:text-6xl">
-          {title} <span className="font-display italic">{italic}</span>
+        <h2 className="text-balance text-4xl font-bold leading-none text-white md:text-6xl">
+          {title}{" "}
+          <em className="font-display not-italic text-gold-metallic">{italic}</em>
         </h2>
       </div>
-      <p className="max-w-sm text-sm leading-7 text-muted md:text-base">{text}</p>
-    </motion.div>
+      <p className="max-w-sm text-sm leading-7 md:text-base" style={{ color: "#E8D5C4" }}>
+        {text}
+      </p>
+    </div>
   );
 }
 
 export function CinematicHome() {
-  const marqueeRef = useRef<HTMLDivElement>(null);
-  const galleryRef = useRef<HTMLDivElement>(null);
-  const centerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.timeline({ defaults: { ease: "power3.out" } })
-        .fromTo(".name-reveal", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1.2, delay: 0.1 })
-        .fromTo(".blur-in", { opacity: 0, filter: "blur(10px)", y: 20 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: 1, stagger: 0.1 }, 0.25);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.08, rootMargin: "-40px 0px" }
+    );
 
-      if (centerRef.current && galleryRef.current) {
-        ScrollTrigger.create({
-          trigger: galleryRef.current,
-          start: "top top",
-          end: "bottom bottom",
-          pin: centerRef.current,
-          pinSpacing: false,
-        });
-
-        gsap.utils.toArray<HTMLElement>(".gallery-card").forEach((card, index) => {
-          gsap.to(card, {
-            y: index % 2 === 0 ? -130 : 130,
-            rotate: index % 2 === 0 ? -4 : 4,
-            ease: "none",
-            scrollTrigger: {
-              trigger: galleryRef.current,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: true,
-            },
-          });
-        });
-      }
-
-      if (marqueeRef.current) {
-        gsap.to(marqueeRef.current, {
-          xPercent: -50,
-          duration: 40,
-          ease: "none",
-          repeat: -1,
-        });
-      }
-    });
-
-    return () => ctx.revert();
+    const targets = containerRef.current?.querySelectorAll(".reveal");
+    targets?.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <>
-      <section className="relative isolate grid min-h-screen place-items-center overflow-hidden bg-bg px-5 text-center">
+    <div ref={containerRef}>
+      {/* ─── HERO ─────────────────────────────────── */}
+      <section
+        className="relative isolate grid min-h-screen place-items-center overflow-hidden px-5 text-center specular-sweep"
+        style={{ background: "radial-gradient(ellipse at 50% 0%, #3E0A15 0%, #1A0408 58%, #0E0208 100%)" }}
+      >
         <HlsBackground />
-        <div className="absolute inset-0 bg-[#170207]/68" />
-        <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-bg to-transparent" />
-        <div className="relative z-10 mx-auto max-w-5xl pt-16">
-          <p className="blur-in mb-8 text-xs uppercase tracking-[0.3em] text-[#D4AF37]">Where Atlanta Meets Lagos</p>
-          <div className="name-reveal relative mx-auto max-w-6xl">
-            <div className="absolute -inset-x-8 top-1/2 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/45 to-transparent" />
-            <div className="absolute left-1/2 top-1/2 h-40 w-[min(92vw,760px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#C8102E]/18 blur-3xl" />
-            <h1 className="soul-title-wrap soul-title text-balance text-5xl font-black uppercase leading-[0.86] tracking-normal md:text-8xl lg:text-9xl">
-              Mr Soul Bistro & Cafe
-            </h1>
-            <div className="mx-auto mt-5 flex max-w-lg items-center justify-center gap-3 text-[10px] font-black uppercase tracking-[0.24em] text-[#D4AF37]/85 sm:text-xs">
-              <span className="h-px flex-1 bg-gradient-to-r from-transparent to-[#D4AF37]/45" />
-              Lagos Flavor
-              <span className="size-1.5 rounded-full bg-[#C8102E]" />
-              Atlanta Nights
-              <span className="h-px flex-1 bg-gradient-to-l from-transparent to-[#D4AF37]/45" />
-            </div>
+        <div className="absolute inset-0" style={{ background: "rgba(18, 3, 8, 0.72)" }} />
+        <div
+          className="absolute inset-x-0 bottom-0 h-56"
+          style={{ background: "linear-gradient(to top, #120308, transparent)" }}
+        />
+
+        <div className="relative z-10 mx-auto max-w-5xl pt-20">
+          <p className="hero-text-1 mb-6 text-xs font-bold uppercase tracking-[0.38em]" style={{ color: "#D4AF37" }}>
+            Where Atlanta Meets Lagos
+          </p>
+
+          <h1 className="hero-text-2 hero-title font-display text-balance text-5xl font-bold uppercase leading-[0.88] tracking-tight md:text-8xl lg:text-9xl">
+            Mr Soul Bistro & Cafe
+          </h1>
+
+          <div
+            className="hero-text-3 mx-auto mt-5 flex max-w-lg items-center justify-center gap-3 text-[10px] font-bold uppercase tracking-[0.22em] sm:text-xs"
+            style={{ color: "rgba(212,175,55,0.8)" }}
+          >
+            <span className="h-px flex-1" style={{ background: "linear-gradient(to right, transparent, rgba(212,175,55,0.45))" }} />
+            Lagos Flavor
+            <span className="inline-block size-1.5 rounded-full" style={{ background: "#C41E3A" }} />
+            Atlanta Nights
+            <span className="h-px flex-1" style={{ background: "linear-gradient(to left, transparent, rgba(212,175,55,0.45))" }} />
           </div>
-          <p className="blur-in mx-auto mt-6 max-w-3xl text-lg font-semibold leading-8 text-text-primary/85 md:text-2xl">
+
+          <p className="hero-text-4 mx-auto mt-6 max-w-3xl text-lg font-semibold leading-8 text-white/90 md:text-2xl">
             Authentic Nigerian cuisine and Atlanta&apos;s ultimate celebrity playground.
           </p>
-          <p className="blur-in mx-auto mt-5 max-w-md text-sm leading-7 text-muted md:text-base">
+          <p
+            className="hero-text-4 mx-auto mt-4 max-w-md text-sm leading-7 md:text-base"
+            style={{ color: "#E8D5C4" }}
+          >
             Legendary jollof, peppered goat stew, hookah, bottle service, Afrobeats, and the RedRoom VIP experience.
           </p>
-          <div className="blur-in mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link href="/menu" className="luxury-border relative rounded-full bg-text-primary text-sm font-semibold text-bg transition hover:scale-105">
-              <span className="block rounded-full bg-text-primary px-7 py-3.5">View Our Menu</span>
-            </Link>
-            <Link href="/redroom" className="luxury-border relative rounded-full border border-stroke bg-bg text-sm font-semibold text-text-primary transition hover:scale-105">
-              <span className="block rounded-full bg-bg px-7 py-3.5">Book RedRoom VIP</span>
-            </Link>
+
+          <div className="hero-text-5 mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link href="/menu" className="btn-gold">View Our Menu</Link>
+            <Link href="/redroom" className="btn-glass-red">Book RedRoom VIP</Link>
           </div>
         </div>
-        <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2">
-          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-muted">Scroll</p>
-          <div className="relative mx-auto h-10 w-px overflow-hidden bg-stroke">
-            <div className="animate-scroll-down absolute h-5 w-px bg-text-primary" />
+
+        <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-center">
+          <p className="mb-3 text-xs uppercase tracking-[0.2em]" style={{ color: "rgba(232,213,196,0.5)" }}>Scroll</p>
+          <div
+            className="relative mx-auto h-10 w-px overflow-hidden"
+            style={{ background: "rgba(212,175,55,0.2)" }}
+          >
+            <div className="animate-scroll-indicator absolute h-5 w-px" style={{ background: "#D4AF37" }} />
           </div>
         </div>
       </section>
 
-      <section className="bg-bg px-6 py-16 md:px-10 lg:px-16">
-        <div className="mx-auto mb-16 grid max-w-[1200px] gap-8 rounded-3xl border border-stroke bg-surface/35 p-6 md:grid-cols-[1fr_0.75fr] md:p-10">
-          <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-[#D4AF37]">About Mr Soul Bistro & Cafe</p>
-            <h2 className="mt-5 text-balance text-4xl font-semibold leading-none text-text-primary md:text-6xl">
+      {/* ─── ABOUT + HOURS ────────────────────────── */}
+      <section className="px-6 py-16 md:px-10 lg:px-16" style={{ background: "#120308" }}>
+        <div className="mx-auto mb-16 grid max-w-[1200px] gap-6 md:grid-cols-[1fr_0.72fr]">
+          <div className="reveal glass-card rounded-3xl p-8 md:p-10">
+            <p className="text-xs font-bold uppercase tracking-[0.3em]" style={{ color: "#D4AF37" }}>
+              About Mr Soul Bistro & Cafe
+            </p>
+            <h2 className="font-display mt-5 text-balance text-4xl font-bold leading-none text-white md:text-5xl">
               Journey Into Nigerian Flavor Wonderland
             </h2>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-muted">
+            <p className="mt-6 max-w-2xl text-base leading-8" style={{ color: "#E8D5C4" }}>
               At Mr Soul Bistro & Cafe, we&apos;re not just serving food; we&apos;re crafting experiences.
               Step into a world where every bite tells a story of flavor and tradition.
             </p>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-muted">
+            <p className="mt-5 max-w-2xl text-base leading-8" style={{ color: "#E8D5C4" }}>
               We&apos;re more than a restaurant; we&apos;re a celebration of taste, tradition, and community.
               Join us for an experience that goes beyond the plate.
             </p>
           </div>
-          <div className="rounded-3xl border border-white/10 bg-[#170207]/70 p-6">
-            <p className="text-xs uppercase tracking-[0.3em] text-[#D4AF37]">Hours of Operation</p>
-            <div className="mt-6 space-y-5 text-sm leading-7 text-white/75">
-              <p><span className="font-bold text-white">Monday - Saturday</span><br />4:30 PM - 2:30 AM</p>
-              <p><span className="font-bold text-white">Tuesday and Sunday</span><br />Closed</p>
+
+          <div className="reveal glass-card rounded-3xl p-8">
+            <p className="text-xs font-bold uppercase tracking-[0.3em]" style={{ color: "#D4AF37" }}>Hours of Operation</p>
+            <div className="mt-6 space-y-5 text-sm leading-7" style={{ color: "#E8D5C4" }}>
+              <p><span className="font-bold text-white">Monday – Saturday</span><br />4:30 PM – 2:30 AM</p>
+              <p><span className="font-bold text-white">Tuesday & Sunday</span><br />Closed</p>
             </div>
-            <Link href="/menu" className="mt-8 inline-flex rounded-full bg-white px-6 py-3 text-sm font-bold text-[#170207]">
+            <Link href="/menu" className="btn-gold mt-8 block w-full text-center">
               Explore Our Flavor-Packed Menu
             </Link>
           </div>
         </div>
 
-        <div className="mx-auto mb-20 grid max-w-[1200px] gap-5 md:grid-cols-4">
+        {/* Flavor Pillars */}
+        <div className="stagger mx-auto mb-20 grid max-w-[1200px] gap-5 md:grid-cols-4">
           {flavorPillars.map(([title, text]) => (
-            <div key={title} className="rounded-3xl border border-stroke bg-surface/40 p-6">
-              <p className="text-xl font-semibold text-text-primary">{title}</p>
-              <p className="mt-4 text-sm leading-7 text-muted">{text}</p>
+            <div key={title} className="reveal glass-card rounded-3xl p-6">
+              <p className="text-lg font-bold text-white">{title}</p>
+              <p className="mt-4 text-sm leading-7" style={{ color: "#E8D5C4" }}>{text}</p>
             </div>
           ))}
         </div>
 
+        {/* Bento Grid */}
         <div className="mx-auto max-w-[1200px]">
           <SectionHeader
             eyebrow="Signature Experiences"
@@ -224,41 +223,44 @@ export function CinematicHome() {
             italic="and the room"
             text="From authentic Nigerian mains to RedRoom bottle service, every section is built around what guests actually come for."
           />
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6">
+          <div className="stagger grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6">
             {bento.map((item) => (
-              <motion.article
+              <article
                 key={item.title}
-                className={`group relative overflow-hidden rounded-3xl border border-stroke bg-surface ${item.span} ${item.ratio}`}
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.8 }}
+                className={`reveal group relative overflow-hidden rounded-3xl ${item.span} ${item.ratio}`}
+                style={{ border: "1px solid rgba(212,175,55,0.18)", background: "#1E0610" }}
               >
-                <div className="float-frame absolute inset-0">
-                  <Image src={item.image} alt={item.title} fill sizes="(min-width: 768px) 55vw, 100vw" className="object-cover transition duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    sizes="(min-width: 768px) 55vw, 100vw"
+                    className="object-cover transition duration-700 group-hover:scale-105"
+                  />
+                  <div className="halftone absolute inset-0 opacity-20 mix-blend-soft-light" />
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: "linear-gradient(to top, rgba(18,3,8,0.92) 0%, rgba(92,14,26,0.2) 50%, transparent 100%)" }}
+                  />
                 </div>
-                <div className="halftone absolute inset-0 opacity-20 mix-blend-soft-light" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#170207]/88 via-[#4d0715]/24 to-transparent" />
-                <div className="absolute left-5 top-5 rounded-full border border-white/10 bg-[#170207]/45 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white/75 backdrop-blur">
+                <div
+                  className="absolute left-5 top-5 rounded-full px-4 py-2 text-xs uppercase tracking-[0.18em] backdrop-blur"
+                  style={{ border: "1px solid rgba(212,175,55,0.28)", background: "rgba(18,3,8,0.6)", color: "#D4AF37" }}
+                >
                   {item.label}
                 </div>
-                <div className="absolute inset-0 grid place-items-center bg-bg/70 opacity-0 backdrop-blur-lg transition duration-300 group-hover:opacity-100">
-                  <div className="luxury-border rounded-full bg-white p-[1px]">
-                    <span className="block rounded-full bg-white px-5 py-3 text-sm font-semibold text-bg">
-                      View - <span className="font-display italic">{item.title}</span>
-                    </span>
-                  </div>
-                </div>
-                <h3 className="absolute bottom-5 left-5 max-w-[70%] text-2xl font-semibold leading-tight text-white md:text-4xl">
+                <h3 className="font-display absolute bottom-5 left-5 max-w-[70%] text-2xl font-bold leading-tight text-white md:text-4xl">
                   {item.title}
                 </h3>
-              </motion.article>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-bg px-6 py-16 md:px-10 md:py-24 lg:px-16">
+      {/* ─── REVIEWS ──────────────────────────────── */}
+      <section className="px-6 py-16 md:px-10 md:py-24 lg:px-16" style={{ background: "#120308" }}>
         <div className="mx-auto max-w-[1200px]">
           <SectionHeader
             eyebrow="Guest Reviews"
@@ -266,109 +268,151 @@ export function CinematicHome() {
             italic="vibes"
             text="Clear social proof for food, atmosphere, staff, and the RedRoom nightlife pull."
           />
-          <div className="space-y-4">
+          <div className="stagger space-y-4">
             {reviews.map(([title, text, rating, tag], index) => (
-              <motion.article
+              <div
                 key={title}
-                className="group flex flex-col gap-4 rounded-[40px] border border-stroke bg-surface/30 p-4 transition hover:bg-surface sm:flex-row sm:items-center sm:rounded-full"
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
+                className="reveal glass-card flex flex-col gap-4 rounded-[40px] p-4 sm:flex-row sm:items-center sm:rounded-full"
               >
-                <div className="float-frame relative size-20 shrink-0 overflow-hidden rounded-full">
-                  <Image src={`https://picsum.photos/seed/journal-${index}/220/220`} alt="" fill sizes="80px" className="object-cover" />
+                <div
+                  className="relative size-20 shrink-0 overflow-hidden rounded-full"
+                  style={{ boxShadow: "0 0 0 1px rgba(212,175,55,0.3)" }}
+                >
+                  <Image
+                    src={`https://picsum.photos/seed/journal-${index}/220/220`}
+                    alt=""
+                    fill
+                    sizes="80px"
+                    className="object-cover"
+                  />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-xl font-semibold text-text-primary">{title}</p>
-                  <p className="mt-1 text-sm text-muted">{text}</p>
+                  <p className="text-xl font-bold text-white">{title}</p>
+                  <p className="mt-1 text-sm" style={{ color: "#E8D5C4" }}>{text}</p>
                 </div>
-                <div className="flex items-center gap-3 text-xs uppercase tracking-[0.18em] text-muted">
+                <div className="flex items-center gap-3 text-xs uppercase tracking-[0.18em]" style={{ color: "#D4AF37" }}>
                   <span>{rating}</span>
-                  <span className="h-px w-8 bg-stroke" />
+                  <span className="h-px w-8" style={{ background: "rgba(212,175,55,0.35)" }} />
                   <span>{tag}</span>
                 </div>
-              </motion.article>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section ref={galleryRef} className="relative min-h-[300vh] overflow-hidden bg-bg px-6">
-        <div ref={centerRef} className="z-10 flex h-screen items-center justify-center text-center">
-          <div className="mx-auto max-w-2xl">
-            <p className="mb-5 text-xs uppercase tracking-[0.3em] text-muted">Explorations</p>
-            <h2 className="text-balance text-5xl font-semibold leading-none md:text-7xl">
-              Taste the <span className="font-display italic">night</span>
+      {/* ─── GALLERY ──────────────────────────────── */}
+      <section className="px-6 py-20 md:px-10 md:py-32" style={{ background: "#120308" }}>
+        <div className="mx-auto max-w-[1200px]">
+          <div className="reveal mb-16 text-center">
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em]" style={{ color: "#D4AF37" }}>
+              Explorations
+            </p>
+            <h2 className="font-display text-balance text-5xl font-bold leading-none text-white md:text-7xl">
+              Taste the <em className="text-gold-metallic">night</em>
             </h2>
-            <p className="mx-auto mt-6 max-w-md text-sm leading-7 text-muted">
-              Food, cocktails, lounge seating, RedRoom lights, and private table energy in one scroll.
+            <p className="mx-auto mt-6 max-w-md text-sm leading-7" style={{ color: "#E8D5C4" }}>
+              Food, cocktails, lounge seating, RedRoom lights, and private table energy.
             </p>
           </div>
-        </div>
-        <div className="absolute inset-x-0 top-48 z-20 mx-auto grid max-w-[1400px] grid-cols-2 gap-12 md:gap-40">
-          <div className="flex flex-col items-end gap-40 pt-24">
-            {gallery.slice(0, 3).map((src) => (
-              <div key={src} className="gallery-card float-frame relative aspect-square w-[42vw] max-w-[320px] overflow-hidden rounded-3xl border border-stroke bg-surface">
-                <Image src={src} alt="" fill sizes="320px" className="object-cover" />
-              </div>
-            ))}
-          </div>
-          <div className="flex flex-col gap-40 pt-72">
-            {gallery.slice(3).map((src) => (
-              <div key={src} className="gallery-card float-frame relative aspect-square w-[42vw] max-w-[320px] overflow-hidden rounded-3xl border border-stroke bg-surface">
-                <Image src={src} alt="" fill sizes="320px" className="object-cover" />
+          <div className="stagger grid grid-cols-2 gap-5 sm:grid-cols-3">
+            {gallery.map((src) => (
+              <div
+                key={src}
+                className="reveal group relative overflow-hidden rounded-3xl"
+                style={{ aspectRatio: "1", border: "1px solid rgba(212,175,55,0.18)", background: "#1E0610" }}
+              >
+                <Image
+                  src={src}
+                  alt=""
+                  fill
+                  sizes="(min-width: 640px) 33vw, 50vw"
+                  className="object-cover transition duration-700 group-hover:scale-105"
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{ background: "linear-gradient(to top, rgba(18,3,8,0.55), transparent)" }}
+                />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-bg px-6 py-16 md:px-10 md:py-24 lg:px-16">
-        <div className="mx-auto grid max-w-[1200px] gap-5 md:grid-cols-3">
+      {/* ─── STATS ────────────────────────────────── */}
+      <section className="px-6 py-16 md:px-10 md:py-20" style={{ background: "#120308" }}>
+        <div className="stagger mx-auto grid max-w-[1200px] gap-5 md:grid-cols-3">
           {[
             ["15+", "Years of Flavor"],
             ["500+", "Dishes Served Daily"],
-            ["4.8", "Average Rating"],
+            ["4.8★", "Average Rating"],
           ].map(([value, label]) => (
-            <div key={label} className="rounded-3xl border border-stroke bg-surface/40 p-8 text-center">
-              <p className="font-display text-7xl italic text-text-primary">{value}</p>
-              <p className="mt-3 text-xs uppercase tracking-[0.24em] text-muted">{label}</p>
+            <div key={label} className="reveal glass-card rounded-3xl p-8 text-center">
+              <p className="font-display text-7xl italic text-gold-metallic">{value}</p>
+              <p className="mt-3 text-xs font-bold uppercase tracking-[0.24em]" style={{ color: "#E8D5C4" }}>
+                {label}
+              </p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="relative isolate overflow-hidden bg-bg px-6 pb-10 pt-20 text-center md:pt-28">
+      {/* ─── MARQUEE CTA ──────────────────────────── */}
+      <section
+        className="relative isolate overflow-hidden pb-12 pt-20 text-center md:pt-28"
+        style={{ background: "radial-gradient(ellipse at 50% 0%, #3E0A15 0%, #120308 65%)" }}
+      >
         <HlsBackground flipped />
-        <div className="absolute inset-0 bg-[#170207]/78" />
+        <div className="absolute inset-0" style={{ background: "rgba(18,3,8,0.82)" }} />
         <div className="relative z-10">
-          <div className="flex whitespace-nowrap text-[18vw] font-semibold leading-none text-white/10" ref={marqueeRef}>
-            <span>WHERE ATLANTA MEETS LAGOS - REDROOM VIP - </span>
-            <span>WHERE ATLANTA MEETS LAGOS - REDROOM VIP - </span>
-          </div>
-          <div className="mx-auto -mt-8 max-w-3xl md:-mt-16">
-            <p className="text-xs uppercase tracking-[0.3em] text-muted">Ready for the room?</p>
-            <h2 className="mt-5 text-balance text-5xl font-semibold leading-none md:text-7xl">
-              Discover the <span className="font-display italic">Soulful Experience</span>.
-            </h2>
-            <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-muted">
-              Immerse yourself in a world of exquisite flavors, rhythmic beats, and shared joy. Mr Soul Bistro & Cafe is not just a dining experience; it&apos;s a celebration of authentic tastes and vibrant togetherness.
-            </p>
-            <Link href="/menu" className="luxury-border relative mt-8 inline-flex rounded-full bg-text-primary text-sm font-semibold text-bg">
-              <span className="block rounded-full bg-text-primary px-8 py-4">Explore Our Menu</span>
-            </Link>
-          </div>
-          <div className="mx-auto mt-16 flex max-w-[1200px] flex-col items-center justify-between gap-4 border-t border-stroke pt-6 text-xs uppercase tracking-[0.18em] text-muted md:flex-row">
-            <div className="flex gap-5">
-              <Link href="/menu">Menu</Link>
-              <Link href="/redroom">RedRoom</Link>
-              <Link href="/contact">Contact</Link>
+          <div className="overflow-hidden" aria-hidden="true">
+            <div
+              className="animate-marquee-left font-display whitespace-nowrap text-[18vw] font-bold leading-none"
+              style={{ color: "rgba(255,255,255,0.06)" }}
+            >
+              <span>WHERE ATLANTA MEETS LAGOS — REDROOM VIP — </span>
+              <span>WHERE ATLANTA MEETS LAGOS — REDROOM VIP — </span>
             </div>
-            <p><span className="mr-2 inline-block size-2 animate-pulse rounded-full bg-emerald-400" />Available for private events</p>
+          </div>
+
+          <div className="mx-auto -mt-10 max-w-3xl px-5 md:-mt-20">
+            <p
+              className="text-xs font-bold uppercase tracking-[0.3em]"
+              style={{ color: "rgba(232,213,196,0.55)" }}
+            >
+              Ready for the room?
+            </p>
+            <h2 className="font-display mt-5 text-balance text-5xl font-bold leading-none text-white md:text-7xl">
+              Discover the{" "}
+              <em className="animate-neon-pulse" style={{ color: "#FF4D6D" }}>Soulful Experience</em>.
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl text-sm leading-7" style={{ color: "#E8D5C4" }}>
+              Immerse yourself in a world of exquisite flavors, rhythmic beats, and shared joy.
+              Mr Soul Bistro & Cafe is not just a dining experience; it&apos;s a celebration of authentic
+              tastes and vibrant togetherness.
+            </p>
+            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Link href="/menu" className="btn-gold">Explore Our Menu</Link>
+              <Link href="/redroom" className="btn-glass-red">Book RedRoom VIP</Link>
+            </div>
+          </div>
+
+          <div
+            className="mx-auto mt-16 flex max-w-[1200px] flex-col items-center justify-between gap-4 border-t px-6 pt-6 text-xs uppercase tracking-[0.18em] md:flex-row"
+            style={{ borderColor: "rgba(212,175,55,0.18)", color: "rgba(232,213,196,0.55)" }}
+          >
+            <div className="flex gap-5">
+              <Link href="/menu" className="transition hover:text-[#D4AF37]">Menu</Link>
+              <Link href="/redroom" className="transition hover:text-[#D4AF37]">RedRoom</Link>
+              <Link href="/contact" className="transition hover:text-[#D4AF37]">Contact</Link>
+            </div>
+            <p>
+              <span className="mr-2 inline-block size-2 animate-pulse rounded-full bg-emerald-400" />
+              Available for private events
+            </p>
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

@@ -10,7 +10,13 @@ const categories = ["All", ...Array.from(new Set(menuItems.map((item) => item.ca
 export function MenuExplorer() {
   const [category, setCategory] = useState("All");
   const [selected, setSelected] = useState<(typeof menuItems)[number] | null>(null);
-  const filtered = useMemo(() => (category === "All" ? menuItems : menuItems.filter((item) => item.category === category)), [category]);
+  const filtered = useMemo(
+    () =>
+      category === "All"
+        ? menuItems
+        : menuItems.filter((item) => item.category === category),
+    [category]
+  );
 
   return (
     <>
@@ -20,55 +26,121 @@ export function MenuExplorer() {
             key={item}
             type="button"
             onClick={() => setCategory(item)}
-            className={`min-h-11 rounded-full px-5 text-xs font-black uppercase tracking-[0.16em] transition ${
-              category === item ? "bg-[#C8102E] text-white" : "border border-white/10 bg-white/10 text-white hover:border-[#D4AF37]"
-            }`}
+            className="min-h-11 rounded-full px-5 text-xs font-bold uppercase tracking-[0.16em] transition"
+            style={
+              category === item
+                ? {
+                    background: "linear-gradient(160deg, #C41E3A, #8A1C2C)",
+                    color: "#FFFFFF",
+                    boxShadow: "0 4px 16px rgba(196,30,58,0.4)",
+                    border: "1px solid rgba(255,77,109,0.4)",
+                  }
+                : {
+                    background: "rgba(255,255,255,0.07)",
+                    border: "1px solid rgba(212,175,55,0.2)",
+                    color: "rgba(255,255,255,0.78)",
+                  }
+            }
           >
             {item}
           </button>
         ))}
       </div>
+
       <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((item) => (
           <TiltCard key={item.name}>
             <button
               type="button"
               onClick={() => setSelected(item)}
-              className="group h-full overflow-hidden rounded-[8px] bg-white/10 text-left text-white shadow-xl shadow-black/10 ring-1 ring-white/10"
+              className="group h-full w-full overflow-hidden rounded-2xl text-left text-white"
+              style={{
+                background: "rgba(40, 8, 16, 0.65)",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)",
+                border: "1px solid rgba(212,175,55,0.2)",
+                boxShadow: "inset 0 0 0 0.5px rgba(255,77,109,0.18), 0 4px 20px rgba(0,0,0,0.5)",
+              }}
             >
               <div className="relative aspect-[1.15] overflow-hidden">
-                <div className="float-frame absolute inset-0">
-                <Image src={item.image} alt={item.name} fill sizes="(min-width:1024px) 33vw, 50vw" className="object-cover transition duration-700 group-hover:scale-110" />
-                </div>
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  fill
+                  sizes="(min-width:1024px) 33vw, 50vw"
+                  className="object-cover transition duration-700 group-hover:scale-110"
+                />
                 <div className="absolute left-3 top-3 flex gap-2">
-                  {item.popular ? <span className="rounded-full bg-[#D4AF37] px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-black">Popular</span> : null}
-                  {item.spicy ? <span className="rounded-full bg-[#C8102E] px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white">Spicy</span> : null}
+                  {item.popular ? (
+                    <span
+                      className="rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em]"
+                      style={{ background: "#D4AF37", color: "#120308" }}
+                    >
+                      Popular
+                    </span>
+                  ) : null}
+                  {item.spicy ? (
+                    <span
+                      className="rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em]"
+                      style={{ background: "#C41E3A", color: "#ffffff" }}
+                    >
+                      Spicy
+                    </span>
+                  ) : null}
                 </div>
               </div>
               <div className="p-5">
                 <div className="flex items-start justify-between gap-3">
-                  <h2 className="text-xl font-black uppercase">{item.name}</h2>
-                  <p className="font-black text-[#C8102E]">${item.price}</p>
+                  <h2 className="text-xl font-bold uppercase text-white">{item.name}</h2>
+                  <p className="font-black" style={{ color: "#D4AF37" }}>${item.price}</p>
                 </div>
-                  <p className="mt-2 text-sm leading-6 text-white/60">{item.description}</p>
+                <p className="mt-2 text-sm leading-6" style={{ color: "rgba(232,213,196,0.8)" }}>
+                  {item.description}
+                </p>
               </div>
             </button>
           </TiltCard>
         ))}
       </div>
+
       {selected ? (
-        <div className="fixed inset-0 z-[60] grid place-items-center bg-black/75 p-5 backdrop-blur" onClick={() => setSelected(null)}>
-          <div className="w-full max-w-xl overflow-hidden rounded-[8px] bg-white shadow-2xl" onClick={(event) => event.stopPropagation()}>
+        <div
+          className="fixed inset-0 z-[60] grid place-items-center p-5"
+          style={{ background: "rgba(0,0,0,0.82)", backdropFilter: "blur(8px)" }}
+          onClick={() => setSelected(null)}
+        >
+          <div
+            className="w-full max-w-xl overflow-hidden rounded-2xl"
+            style={{
+              background: "#1A0610",
+              border: "1px solid rgba(212,175,55,0.32)",
+              boxShadow: "0 16px 64px rgba(0,0,0,0.85)",
+            }}
+            onClick={(event) => event.stopPropagation()}
+          >
             <div className="relative aspect-video overflow-hidden">
-              <div className="float-frame absolute inset-0">
               <Image src={selected.image} alt={selected.name} fill sizes="576px" className="object-cover" />
-              </div>
+              <div
+                className="absolute inset-0"
+                style={{ background: "linear-gradient(to top, rgba(26,6,16,0.92), transparent)" }}
+              />
             </div>
             <div className="p-6">
-              <p className="text-xs font-black uppercase tracking-[0.25em] text-[#C8102E]">{selected.category}</p>
-              <h2 className="mt-2 text-3xl font-black uppercase">{selected.name}</h2>
-              <p className="mt-3 text-black/65">{selected.description}</p>
-              <button className="mt-6 min-h-12 rounded-full bg-black px-6 text-sm font-black uppercase tracking-[0.18em] text-white" type="button" onClick={() => setSelected(null)}>
+              <p
+                className="text-xs font-bold uppercase tracking-[0.25em]"
+                style={{ color: "#C41E3A" }}
+              >
+                {selected.category}
+              </p>
+              <h2 className="font-display mt-2 text-3xl font-bold text-white">{selected.name}</h2>
+              <p className="mt-3 text-sm leading-7" style={{ color: "#E8D5C4" }}>
+                {selected.description}
+              </p>
+              <button
+                className="btn-gold mt-6"
+                type="button"
+                onClick={() => setSelected(null)}
+              >
                 Close
               </button>
             </div>
