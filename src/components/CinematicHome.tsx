@@ -116,10 +116,10 @@ export function CinematicHome() {
 
       {/* ─── THE NIGHT ───────────────────────────────────── */}
       <section className="grid grid-cols-1 md:grid-cols-2" style={{ minHeight: "60vh" }}>
-        {/* Real fire performer photo */}
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.9 }} className="relative" style={{ minHeight: "50vw", background: "#0a0020" }}>
-          <Image src="/images/afrobeats-night.jpg" alt="RedRoom fire performer" fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover object-center" />
-          <div className="absolute inset-0" style={{ background: "rgba(10,0,30,0.25)" }} />
+        {/* Real DJ photo — red-lit club night */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.9 }} className="relative" style={{ minHeight: "50vw", background: "#1a0000" }}>
+          <Image src="/images/hero-dj.jpg" alt="Mr Soul DJ — Afrobeats night" fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover object-center" />
+          <div className="absolute inset-0" style={{ background: "rgba(10,0,0,0.2)" }} />
           <div className="absolute bottom-0 left-0 right-0 z-10 p-7 md:p-9">
             <p className="mb-2 text-xs font-bold uppercase tracking-[0.38em]" style={{ color: "#F2C85A" }}>The Night</p>
             <h3 className="font-display font-bold italic text-white" style={{ fontSize: "clamp(18px, 2vw, 30px)" }}>Afrobeats. Every weekend.</h3>
