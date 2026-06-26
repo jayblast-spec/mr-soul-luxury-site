@@ -64,12 +64,13 @@ export default function RedRoomPage() {
         <div className="absolute inset-0" style={{ background: "radial-gradient(circle at 60% 20%, rgba(180,0,30,0.45), transparent 40%)" }} />
 
         <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-5 pb-20 pt-32 sm:px-8">
+          {/* Real RedRoom logo */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/redroom-logo.svg"
+            src="/images/redroom-logo.png"
             alt="RedRoom Lounge by Mr Soul"
             className="mb-10"
-            style={{ width: "min(160px, 40vw)", height: "auto" }}
+            style={{ width: "min(220px, 48vw)", height: "auto" }}
           />
           <p className="text-xs font-bold uppercase tracking-[0.38em]" style={{ color: "#D4AF37" }}>RedRoom By Mr Soul</p>
           <h1
