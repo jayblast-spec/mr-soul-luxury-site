@@ -37,7 +37,9 @@ export function MenuExplorer() {
               className="group h-full overflow-hidden rounded-[8px] bg-white/10 text-left text-white shadow-xl shadow-black/10 ring-1 ring-white/10"
             >
               <div className="relative aspect-[1.15] overflow-hidden">
+                <div className="float-frame absolute inset-0">
                 <Image src={item.image} alt={item.name} fill sizes="(min-width:1024px) 33vw, 50vw" className="object-cover transition duration-700 group-hover:scale-110" />
+                </div>
                 <div className="absolute left-3 top-3 flex gap-2">
                   {item.popular ? <span className="rounded-full bg-[#D4AF37] px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-black">Popular</span> : null}
                   {item.spicy ? <span className="rounded-full bg-[#C8102E] px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white">Spicy</span> : null}
@@ -57,8 +59,10 @@ export function MenuExplorer() {
       {selected ? (
         <div className="fixed inset-0 z-[60] grid place-items-center bg-black/75 p-5 backdrop-blur" onClick={() => setSelected(null)}>
           <div className="w-full max-w-xl overflow-hidden rounded-[8px] bg-white shadow-2xl" onClick={(event) => event.stopPropagation()}>
-            <div className="relative aspect-video">
+            <div className="relative aspect-video overflow-hidden">
+              <div className="float-frame absolute inset-0">
               <Image src={selected.image} alt={selected.name} fill sizes="576px" className="object-cover" />
+              </div>
             </div>
             <div className="p-6">
               <p className="text-xs font-black uppercase tracking-[0.25em] text-[#C8102E]">{selected.category}</p>

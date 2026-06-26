@@ -121,6 +121,24 @@ body::before {
   }
 }
 
+@keyframes float-media {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) rotate(0.35deg);
+  }
+}
+
+@keyframes float-media-soft {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1.015);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0) scale(1.035);
+  }
+}
+
 .animate-scroll-down {
   animation: scroll-down 1.5s ease-in-out infinite;
 }
@@ -135,6 +153,36 @@ body::before {
 
 .neon-flicker {
   animation: neon-flicker 3.8s infinite alternate;
+}
+
+.float-frame {
+  animation: float-media 7.5s ease-in-out infinite;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.float-frame:nth-child(2n) {
+  animation-delay: -2.5s;
+  animation-duration: 8.6s;
+}
+
+.float-frame:nth-child(3n) {
+  animation-delay: -4s;
+  animation-duration: 9.4s;
+}
+
+.float-image-bg {
+  animation: float-media-soft 10s ease-in-out infinite;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-frame,
+  .float-image-bg {
+    animation: none;
+    transform: none;
+  }
 }
 
 .text-balance {

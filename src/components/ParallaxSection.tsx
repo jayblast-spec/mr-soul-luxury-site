@@ -33,7 +33,7 @@ export function ParallaxSection({ image, eyebrow, title, children, priority = fa
           fill
           priority={priority}
           sizes="100vw"
-          className="object-cover"
+          className="float-image-bg object-cover"
         />
       </motion.div>
       <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-[#35070f]/70 to-black/85" />

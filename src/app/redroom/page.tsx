@@ -20,7 +20,7 @@ export default function RedRoomPage() {
           fill
           priority
           sizes="100vw"
-          className="object-cover opacity-45"
+          className="float-image-bg object-cover opacity-45"
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(200,16,46,0.45),transparent_34%),linear-gradient(180deg,rgba(0,0,0,0.4),#000_88%)]" />
         <div className="relative z-10 mx-auto flex min-h-[calc(100svh-7rem)] max-w-7xl flex-col justify-center">
@@ -59,7 +59,7 @@ export default function RedRoomPage() {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {["lounge seating", "crowd energy", "cocktail service", "vip table"].map((label) => (
-              <div key={label} className="relative aspect-[0.8] overflow-hidden rounded-[8px]">
+              <div key={label} className="float-frame relative aspect-[0.8] overflow-hidden rounded-[8px]">
                 <Image src={`https://picsum.photos/seed/${label.replaceAll(" ", "-")}/700/900`} alt={label} fill sizes="(min-width:1024px) 25vw, 50vw" className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                 <p className="absolute bottom-4 left-4 text-sm font-black uppercase tracking-[0.16em]">{label}</p>

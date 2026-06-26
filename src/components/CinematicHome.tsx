@@ -223,7 +223,9 @@ export function CinematicHome() {
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.8 }}
               >
-                <Image src={item.image} alt={item.title} fill sizes="(min-width: 768px) 55vw, 100vw" className="object-cover transition duration-700 group-hover:scale-105" />
+                <div className="float-frame absolute inset-0">
+                  <Image src={item.image} alt={item.title} fill sizes="(min-width: 768px) 55vw, 100vw" className="object-cover transition duration-700 group-hover:scale-105" />
+                </div>
                 <div className="halftone absolute inset-0 opacity-20 mix-blend-soft-light" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#170207]/88 via-[#4d0715]/24 to-transparent" />
                 <div className="absolute left-5 top-5 rounded-full border border-white/10 bg-[#170207]/45 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white/75 backdrop-blur">
@@ -263,7 +265,7 @@ export function CinematicHome() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
               >
-                <div className="relative size-20 shrink-0 overflow-hidden rounded-full">
+                <div className="float-frame relative size-20 shrink-0 overflow-hidden rounded-full">
                   <Image src={`https://picsum.photos/seed/journal-${index}/220/220`} alt="" fill sizes="80px" className="object-cover" />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -296,14 +298,14 @@ export function CinematicHome() {
         <div className="absolute inset-x-0 top-48 z-20 mx-auto grid max-w-[1400px] grid-cols-2 gap-12 md:gap-40">
           <div className="flex flex-col items-end gap-40 pt-24">
             {gallery.slice(0, 3).map((src) => (
-              <div key={src} className="gallery-card relative aspect-square w-[42vw] max-w-[320px] overflow-hidden rounded-3xl border border-stroke bg-surface">
+              <div key={src} className="gallery-card float-frame relative aspect-square w-[42vw] max-w-[320px] overflow-hidden rounded-3xl border border-stroke bg-surface">
                 <Image src={src} alt="" fill sizes="320px" className="object-cover" />
               </div>
             ))}
           </div>
           <div className="flex flex-col gap-40 pt-72">
             {gallery.slice(3).map((src) => (
-              <div key={src} className="gallery-card relative aspect-square w-[42vw] max-w-[320px] overflow-hidden rounded-3xl border border-stroke bg-surface">
+              <div key={src} className="gallery-card float-frame relative aspect-square w-[42vw] max-w-[320px] overflow-hidden rounded-3xl border border-stroke bg-surface">
                 <Image src={src} alt="" fill sizes="320px" className="object-cover" />
               </div>
             ))}
