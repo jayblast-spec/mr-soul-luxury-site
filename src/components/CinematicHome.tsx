@@ -47,9 +47,14 @@ export function CinematicHome() {
         </div>
 
         <motion.div className="relative z-10 flex w-full flex-col items-center px-5" style={{ opacity: heroOpacity }}>
-          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.7 }} className="mb-6 text-xs font-black uppercase tracking-[0.38em]" style={{ color: "#F2C85A", textShadow: "0 1px 12px rgba(0,0,0,0.9), 0 0 24px rgba(0,0,0,0.7)", letterSpacing: "0.38em" }}>
-            Mr Soul Bistro &amp; Cafe &nbsp;·&nbsp; Atlanta, GA
-          </motion.p>
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.7 }} className="mb-6 flex flex-col items-center text-center">
+            <span className="font-black uppercase" style={{ fontSize: "clamp(13px, 2vw, 20px)", letterSpacing: "0.32em", color: "#F2C85A", textShadow: "0 1px 14px rgba(0,0,0,0.95), 0 0 28px rgba(0,0,0,0.8)" }}>
+              Mr Soul Bistro &amp; Cafe
+            </span>
+            <span className="font-black uppercase mt-1" style={{ fontSize: "clamp(13px, 2vw, 20px)", letterSpacing: "0.32em", color: "#F2C85A", textShadow: "0 1px 14px rgba(0,0,0,0.95), 0 0 28px rgba(0,0,0,0.8)" }}>
+              Atlanta, GA
+            </span>
+          </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, duration: 0.9, ease: "easeOut" }}
             style={{ width: "clamp(260px, 66vw, 480px)", borderRadius: "14px", overflow: "hidden", border: "1.5px solid rgba(212,175,55,0.65)", boxShadow: "0 0 0 1px rgba(212,175,55,0.12), 0 0 40px rgba(212,175,55,0.22), 0 0 90px rgba(0,0,0,0.5), 0 24px 70px rgba(0,0,0,0.7)", willChange: "transform", transform: "translateZ(0)" }}
