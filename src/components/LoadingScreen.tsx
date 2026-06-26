@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 const words = ["Lagos", "Atlanta", "RedRoom"];
@@ -7,7 +8,7 @@ const words = ["Lagos", "Atlanta", "RedRoom"];
 export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
   const [count, setCount] = useState(0);
   const [wordIndex, setWordIndex] = useState(0);
-  const [exiting, setExiting] = useState(false);
+  const [done, setDone] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -23,8 +24,8 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
       if (progress < 1) {
         frame = requestAnimationFrame(tick);
       } else {
-        setExiting(true);
-        window.setTimeout(onComplete, 700);
+        setDone(true);
+        window.setTimeout(onComplete, 850);
       }
     };
 
@@ -40,29 +41,38 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
   }, []);
 
   return (
-    <div
+    <motion.div
+      animate={done ? { opacity: 0, scale: 1.06 } : { opacity: 1, scale: 1 }}
+      transition={{ duration: 0.85, ease: [0.76, 0, 0.24, 1] }}
       className="fixed inset-0 z-[9999] flex flex-col"
       style={{
+        pointerEvents: done ? "none" : "auto",
         background: "radial-gradient(ellipse at 50% 0%, #3E0A15 0%, #120308 100%)",
-        opacity: exiting ? 0 : 1,
-        transition: "opacity 0.7s ease",
-        pointerEvents: exiting ? "none" : "auto",
       }}
     >
-      <p
-        className="absolute left-5 top-5 text-xs font-bold uppercase tracking-[0.3em] animate-fade-in-up md:left-8 md:top-8"
+      <motion.p
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.6 }}
+        className="absolute left-5 top-5 text-xs font-bold uppercase tracking-[0.3em] md:left-8 md:top-8"
         style={{ color: "#D4AF37" }}
       >
         Mr Soul
-      </p>
+      </motion.p>
 
       <div className="grid flex-1 place-items-center">
-        <p
-          key={wordIndex}
-          className="font-display text-5xl italic text-white/80 animate-fade-in-up md:text-7xl lg:text-8xl"
-        >
-          {words[wordIndex]}
-        </p>
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={wordIndex}
+            initial={{ opacity: 0, y: 48, skewY: 6 }}
+            animate={{ opacity: 1, y: 0, skewY: 0 }}
+            exit={{ opacity: 0, y: -48, skewY: -6 }}
+            transition={{ type: "spring", stiffness: 120, damping: 18 }}
+            className="font-display text-5xl italic text-white/80 md:text-7xl lg:text-8xl"
+          >
+            {words[wordIndex]}
+          </motion.p>
+        </AnimatePresence>
       </div>
 
       <p className="font-display absolute bottom-8 right-5 text-7xl tabular-nums text-white/25 md:right-8 md:text-9xl">
@@ -83,6 +93,6 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
           }}
         />
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { type ReactNode, useEffect, useRef } from "react";
+import { type ReactNode, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 type ParallaxSectionProps = {
   image: string;
@@ -20,31 +21,23 @@ export function ParallaxSection({
   priority = false,
   dark = false,
 }: ParallaxSectionProps) {
-  const imgRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const parent = imgRef.current?.parentElement;
-      if (!parent || !imgRef.current) return;
-      const rect = parent.getBoundingClientRect();
-      const pct = 1 - (rect.top + rect.height) / (window.innerHeight + rect.height);
-      imgRef.current.style.transform = `translateY(${pct * 10}%)`;
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
   return (
     <section
+      ref={sectionRef}
       className={`relative isolate min-h-[84svh] overflow-hidden ${
         dark ? "bg-black" : "bg-[#0E0208]"
       }`}
     >
-      <div
-        ref={imgRef}
+      <motion.div
         className="absolute inset-0 will-change-transform"
-        style={{ transform: "translateY(0%)" }}
+        style={{ y }}
       >
         <Image
           src={image}
@@ -52,9 +45,9 @@ export function ParallaxSection({
           fill
           priority={priority}
           sizes="100vw"
-          className="object-cover scale-110"
+          className="object-cover scale-[1.15]"
         />
-      </div>
+      </motion.div>
 
       <div
         className="absolute inset-0"
@@ -68,25 +61,32 @@ export function ParallaxSection({
 
       <div className="relative z-10 mx-auto flex min-h-[84svh] w-full max-w-7xl flex-col justify-center px-5 py-28 text-white sm:px-8">
         {eyebrow ? (
-          <p
-            className="mb-5 text-xs font-bold uppercase tracking-[0.38em] animate-fade-in-up"
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="mb-5 text-xs font-bold uppercase tracking-[0.38em]"
             style={{ color: "#D4AF37" }}
           >
             {eyebrow}
-          </p>
+          </motion.p>
         ) : null}
-        <h1
-          className="font-display max-w-5xl text-balance text-5xl font-bold uppercase leading-[0.9] tracking-tight sm:text-7xl lg:text-8xl animate-fade-in-up"
-          style={{ animationDelay: "0.15s" }}
+        <motion.h1
+          initial={{ opacity: 0, y: 56, skewY: 3 }}
+          animate={{ opacity: 1, y: 0, skewY: 0 }}
+          transition={{ type: "spring", stiffness: 80, damping: 18, delay: 0.35 }}
+          className="font-display max-w-5xl text-balance text-5xl font-bold uppercase leading-[0.9] tracking-tight sm:text-7xl lg:text-8xl"
         >
           {title}
-        </h1>
-        <div
-          className="mt-7 max-w-3xl animate-fade-in-up"
-          style={{ animationDelay: "0.35s" }}
+        </motion.h1>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.55, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="mt-7 max-w-3xl"
         >
           {children}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

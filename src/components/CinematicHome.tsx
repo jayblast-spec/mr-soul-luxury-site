@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { HlsBackground } from "./HlsBackground";
 
 const bento = [
@@ -59,6 +60,22 @@ const gallery = [
   "https://picsum.photos/seed/soul-gallery-6/700/700",
 ];
 
+const heroWords = ["Mr", "Soul", "Bistro", "&", "Cafe"];
+
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+
+const springItem = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring" as const, stiffness: 90, damping: 20 },
+  },
+};
+
 function SectionHeader({
   eyebrow,
   title,
@@ -71,8 +88,14 @@ function SectionHeader({
   text: string;
 }) {
   return (
-    <div className="reveal mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between">
-      <div>
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-80px" }}
+      variants={staggerContainer}
+      className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between"
+    >
+      <motion.div variants={springItem}>
         <div className="mb-5 flex items-center gap-4">
           <span className="h-px w-8" style={{ background: "rgba(212,175,55,0.4)" }} />
           <p className="text-xs font-bold uppercase tracking-[0.3em]" style={{ color: "#E8D5C4" }}>
@@ -83,60 +106,78 @@ function SectionHeader({
           {title}{" "}
           <em className="font-display not-italic text-gold-metallic">{italic}</em>
         </h2>
-      </div>
-      <p className="max-w-sm text-sm leading-7 md:text-base" style={{ color: "#E8D5C4" }}>
+      </motion.div>
+      <motion.p variants={springItem} className="max-w-sm text-sm leading-7 md:text-base" style={{ color: "#E8D5C4" }}>
         {text}
-      </p>
-    </div>
+      </motion.p>
+    </motion.div>
   );
 }
 
 export function CinematicHome() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        }
-      },
-      { threshold: 0.08, rootMargin: "-40px 0px" }
-    );
-
-    const targets = containerRef.current?.querySelectorAll(".reveal");
-    targets?.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
   return (
-    <div ref={containerRef}>
+    <div>
       {/* ─── HERO ─────────────────────────────────── */}
       <section
+        ref={heroRef}
         className="relative isolate grid min-h-screen place-items-center overflow-hidden px-5 text-center specular-sweep"
         style={{ background: "radial-gradient(ellipse at 50% 0%, #3E0A15 0%, #1A0408 58%, #0E0208 100%)" }}
       >
         <HlsBackground />
-        <div className="absolute inset-0" style={{ background: "rgba(18, 3, 8, 0.72)" }} />
+        <motion.div className="absolute inset-0" style={{ y: heroY }}>
+          <div className="absolute inset-0" style={{ background: "rgba(18, 3, 8, 0.72)" }} />
+        </motion.div>
         <div
           className="absolute inset-x-0 bottom-0 h-56"
           style={{ background: "linear-gradient(to top, #120308, transparent)" }}
         />
 
-        <div className="relative z-10 mx-auto max-w-5xl pt-20">
-          <p className="hero-text-1 mb-6 text-xs font-bold uppercase tracking-[0.38em]" style={{ color: "#D4AF37" }}>
+        <motion.div
+          className="relative z-10 mx-auto max-w-5xl pt-20"
+          style={{ opacity: heroOpacity }}
+        >
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="mb-6 text-xs font-bold uppercase tracking-[0.38em]"
+            style={{ color: "#D4AF37" }}
+          >
             Where Atlanta Meets Lagos
-          </p>
+          </motion.p>
 
-          <h1 className="hero-text-2 hero-title font-display text-balance text-5xl font-bold uppercase leading-[0.88] tracking-tight md:text-8xl lg:text-9xl">
-            Mr Soul Bistro & Cafe
+          <h1 className="hero-title font-display text-balance text-5xl font-bold uppercase leading-[0.88] tracking-tight md:text-8xl lg:text-9xl">
+            {heroWords.map((word, i) => (
+              <motion.span
+                key={word + i}
+                className="inline-block mr-[0.15em] last:mr-0"
+                initial={{ opacity: 0, y: 80, skewY: 6 }}
+                animate={{ opacity: 1, y: 0, skewY: 0 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 90,
+                  damping: 18,
+                  delay: 0.55 + i * 0.1,
+                }}
+              >
+                {word}
+              </motion.span>
+            ))}
           </h1>
 
-          <div
-            className="hero-text-3 mx-auto mt-5 flex max-w-lg items-center justify-center gap-3 text-[10px] font-bold uppercase tracking-[0.22em] sm:text-xs"
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0.5 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ delay: 1.1, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="mx-auto mt-5 flex max-w-lg items-center justify-center gap-3 text-[10px] font-bold uppercase tracking-[0.22em] sm:text-xs"
             style={{ color: "rgba(212,175,55,0.8)" }}
           >
             <span className="h-px flex-1" style={{ background: "linear-gradient(to right, transparent, rgba(212,175,55,0.45))" }} />
@@ -144,39 +185,60 @@ export function CinematicHome() {
             <span className="inline-block size-1.5 rounded-full" style={{ background: "#C41E3A" }} />
             Atlanta Nights
             <span className="h-px flex-1" style={{ background: "linear-gradient(to left, transparent, rgba(212,175,55,0.45))" }} />
-          </div>
+          </motion.div>
 
-          <p className="hero-text-4 mx-auto mt-6 max-w-3xl text-lg font-semibold leading-8 text-white/90 md:text-2xl">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.7 }}
+            className="mx-auto mt-6 max-w-3xl text-lg font-semibold leading-8 text-white/90 md:text-2xl"
+          >
             Authentic Nigerian cuisine and Atlanta&apos;s ultimate celebrity playground.
-          </p>
-          <p
-            className="hero-text-4 mx-auto mt-4 max-w-md text-sm leading-7 md:text-base"
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.35, duration: 0.7 }}
+            className="mx-auto mt-4 max-w-md text-sm leading-7 md:text-base"
             style={{ color: "#E8D5C4" }}
           >
             Legendary jollof, peppered goat stew, hookah, bottle service, Afrobeats, and the RedRoom VIP experience.
-          </p>
+          </motion.p>
 
-          <div className="hero-text-5 mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.5, duration: 0.7 }}
+            className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+          >
             <Link href="/menu" className="btn-gold">View Our Menu</Link>
             <Link href="/redroom" className="btn-glass-red">Book RedRoom VIP</Link>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-center">
           <p className="mb-3 text-xs uppercase tracking-[0.2em]" style={{ color: "rgba(232,213,196,0.5)" }}>Scroll</p>
-          <div
+          <motion.div
+            animate={{ y: [0, 14, 0] }}
+            transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
             className="relative mx-auto h-10 w-px overflow-hidden"
             style={{ background: "rgba(212,175,55,0.2)" }}
           >
-            <div className="animate-scroll-indicator absolute h-5 w-px" style={{ background: "#D4AF37" }} />
-          </div>
+            <div className="absolute h-5 w-px" style={{ background: "#D4AF37" }} />
+          </motion.div>
         </div>
       </section>
 
       {/* ─── ABOUT + HOURS ────────────────────────── */}
       <section className="px-6 py-16 md:px-10 lg:px-16" style={{ background: "#120308" }}>
         <div className="mx-auto mb-16 grid max-w-[1200px] gap-6 md:grid-cols-[1fr_0.72fr]">
-          <div className="reveal glass-card rounded-3xl p-8 md:p-10">
+          <motion.div
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ type: "spring", stiffness: 80, damping: 20 }}
+            className="glass-card rounded-3xl p-8 md:p-10"
+          >
             <p className="text-xs font-bold uppercase tracking-[0.3em]" style={{ color: "#D4AF37" }}>
               About Mr Soul Bistro & Cafe
             </p>
@@ -191,9 +253,15 @@ export function CinematicHome() {
               We&apos;re more than a restaurant; we&apos;re a celebration of taste, tradition, and community.
               Join us for an experience that goes beyond the plate.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="reveal glass-card rounded-3xl p-8">
+          <motion.div
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.1 }}
+            className="glass-card rounded-3xl p-8"
+          >
             <p className="text-xs font-bold uppercase tracking-[0.3em]" style={{ color: "#D4AF37" }}>Hours of Operation</p>
             <div className="mt-6 space-y-5 text-sm leading-7" style={{ color: "#E8D5C4" }}>
               <p><span className="font-bold text-white">Monday – Saturday</span><br />4:30 PM – 2:30 AM</p>
@@ -202,18 +270,32 @@ export function CinematicHome() {
             <Link href="/menu" className="btn-gold mt-8 block w-full text-center">
               Explore Our Flavor-Packed Menu
             </Link>
-          </div>
+          </motion.div>
         </div>
 
         {/* Flavor Pillars */}
-        <div className="stagger mx-auto mb-20 grid max-w-[1200px] gap-5 md:grid-cols-4">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
+          className="mx-auto mb-20 grid max-w-[1200px] gap-5 md:grid-cols-4"
+        >
           {flavorPillars.map(([title, text]) => (
-            <div key={title} className="reveal glass-card rounded-3xl p-6">
+            <motion.div
+              key={title}
+              variants={{
+                hidden: { opacity: 0, y: 40 },
+                visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 90, damping: 20 } },
+              }}
+              whileHover={{ y: -6, transition: { type: "spring", stiffness: 300, damping: 20 } }}
+              className="glass-card rounded-3xl p-6"
+            >
               <p className="text-lg font-bold text-white">{title}</p>
               <p className="mt-4 text-sm leading-7" style={{ color: "#E8D5C4" }}>{text}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Bento Grid */}
         <div className="mx-auto max-w-[1200px]">
@@ -223,11 +305,22 @@ export function CinematicHome() {
             italic="and the room"
             text="From authentic Nigerian mains to RedRoom bottle service, every section is built around what guests actually come for."
           />
-          <div className="stagger grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
+            className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6"
+          >
             {bento.map((item) => (
-              <article
+              <motion.article
                 key={item.title}
-                className={`reveal group relative overflow-hidden rounded-3xl ${item.span} ${item.ratio}`}
+                variants={{
+                  hidden: { opacity: 0, scale: 0.9, y: 30 },
+                  visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 20 } },
+                }}
+                whileHover={{ scale: 1.025, transition: { type: "spring", stiffness: 300 } }}
+                className={`group relative overflow-hidden rounded-3xl ${item.span} ${item.ratio}`}
                 style={{ border: "1px solid rgba(212,175,55,0.18)", background: "#1E0610" }}
               >
                 <div className="absolute inset-0">
@@ -253,9 +346,9 @@ export function CinematicHome() {
                 <h3 className="font-display absolute bottom-5 left-5 max-w-[70%] text-2xl font-bold leading-tight text-white md:text-4xl">
                   {item.title}
                 </h3>
-              </article>
+              </motion.article>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -268,11 +361,21 @@ export function CinematicHome() {
             italic="vibes"
             text="Clear social proof for food, atmosphere, staff, and the RedRoom nightlife pull."
           />
-          <div className="stagger space-y-4">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
+            className="space-y-4"
+          >
             {reviews.map(([title, text, rating, tag], index) => (
-              <div
+              <motion.div
                 key={title}
-                className="reveal glass-card flex flex-col gap-4 rounded-[40px] p-4 sm:flex-row sm:items-center sm:rounded-full"
+                variants={{
+                  hidden: { opacity: 0, x: index % 2 === 0 ? -60 : 60 },
+                  visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 80, damping: 20 } },
+                }}
+                className="glass-card flex flex-col gap-4 rounded-[40px] p-4 sm:flex-row sm:items-center sm:rounded-full"
               >
                 <div
                   className="relative size-20 shrink-0 overflow-hidden rounded-full"
@@ -295,31 +398,46 @@ export function CinematicHome() {
                   <span className="h-px w-8" style={{ background: "rgba(212,175,55,0.35)" }} />
                   <span>{tag}</span>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ─── GALLERY ──────────────────────────────── */}
       <section className="px-6 py-20 md:px-10 md:py-32" style={{ background: "#120308" }}>
         <div className="mx-auto max-w-[1200px]">
-          <div className="reveal mb-16 text-center">
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em]" style={{ color: "#D4AF37" }}>
-              Explorations
-            </p>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ type: "spring", stiffness: 80, damping: 20 }}
+            className="mb-16 text-center"
+          >
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em]" style={{ color: "#D4AF37" }}>Explorations</p>
             <h2 className="font-display text-balance text-5xl font-bold leading-none text-white md:text-7xl">
               Taste the <em className="text-gold-metallic">night</em>
             </h2>
             <p className="mx-auto mt-6 max-w-md text-sm leading-7" style={{ color: "#E8D5C4" }}>
               Food, cocktails, lounge seating, RedRoom lights, and private table energy.
             </p>
-          </div>
-          <div className="stagger grid grid-cols-2 gap-5 sm:grid-cols-3">
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
+            className="grid grid-cols-2 gap-5 sm:grid-cols-3"
+          >
             {gallery.map((src) => (
-              <div
+              <motion.div
                 key={src}
-                className="reveal group relative overflow-hidden rounded-3xl"
+                variants={{
+                  hidden: { opacity: 0, scale: 0.85 },
+                  visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 100, damping: 22 } },
+                }}
+                whileHover={{ scale: 1.04, transition: { type: "spring", stiffness: 300 } }}
+                className="group relative overflow-hidden rounded-3xl"
                 style={{ aspectRatio: "1", border: "1px solid rgba(212,175,55,0.18)", background: "#1E0610" }}
               >
                 <Image
@@ -333,28 +451,42 @@ export function CinematicHome() {
                   className="absolute inset-0"
                   style={{ background: "linear-gradient(to top, rgba(18,3,8,0.55), transparent)" }}
                 />
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ─── STATS ────────────────────────────────── */}
       <section className="px-6 py-16 md:px-10 md:py-20" style={{ background: "#120308" }}>
-        <div className="stagger mx-auto grid max-w-[1200px] gap-5 md:grid-cols-3">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.15 } } }}
+          className="mx-auto grid max-w-[1200px] gap-5 md:grid-cols-3"
+        >
           {[
             ["15+", "Years of Flavor"],
             ["500+", "Dishes Served Daily"],
             ["4.8★", "Average Rating"],
           ].map(([value, label]) => (
-            <div key={label} className="reveal glass-card rounded-3xl p-8 text-center">
+            <motion.div
+              key={label}
+              variants={{
+                hidden: { opacity: 0, y: 40, scale: 0.9 },
+                visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 90, damping: 18 } },
+              }}
+              whileHover={{ scale: 1.03, transition: { type: "spring", stiffness: 300 } }}
+              className="glass-card rounded-3xl p-8 text-center"
+            >
               <p className="font-display text-7xl italic text-gold-metallic">{value}</p>
               <p className="mt-3 text-xs font-bold uppercase tracking-[0.24em]" style={{ color: "#E8D5C4" }}>
                 {label}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* ─── MARQUEE CTA ──────────────────────────── */}
@@ -375,27 +507,47 @@ export function CinematicHome() {
             </div>
           </div>
 
-          <div className="mx-auto -mt-10 max-w-3xl px-5 md:-mt-20">
-            <p
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
+            className="mx-auto -mt-10 max-w-3xl px-5 md:-mt-20"
+          >
+            <motion.p
+              variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
               className="text-xs font-bold uppercase tracking-[0.3em]"
               style={{ color: "rgba(232,213,196,0.55)" }}
             >
               Ready for the room?
-            </p>
-            <h2 className="font-display mt-5 text-balance text-5xl font-bold leading-none text-white md:text-7xl">
+            </motion.p>
+            <motion.h2
+              variants={{
+                hidden: { opacity: 0, y: 60 },
+                visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 16 } },
+              }}
+              className="font-display mt-5 text-balance text-5xl font-bold leading-none text-white md:text-7xl"
+            >
               Discover the{" "}
               <em className="animate-neon-pulse" style={{ color: "#FF4D6D" }}>Soulful Experience</em>.
-            </h2>
-            <p className="mx-auto mt-5 max-w-xl text-sm leading-7" style={{ color: "#E8D5C4" }}>
+            </motion.h2>
+            <motion.p
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              className="mx-auto mt-5 max-w-xl text-sm leading-7"
+              style={{ color: "#E8D5C4" }}
+            >
               Immerse yourself in a world of exquisite flavors, rhythmic beats, and shared joy.
               Mr Soul Bistro & Cafe is not just a dining experience; it&apos;s a celebration of authentic
               tastes and vibrant togetherness.
-            </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            </motion.p>
+            <motion.div
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row"
+            >
               <Link href="/menu" className="btn-gold">Explore Our Menu</Link>
               <Link href="/redroom" className="btn-glass-red">Book RedRoom VIP</Link>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           <div
             className="mx-auto mt-16 flex max-w-[1200px] flex-col items-center justify-between gap-4 border-t px-6 pt-6 text-xs uppercase tracking-[0.18em] md:flex-row"
