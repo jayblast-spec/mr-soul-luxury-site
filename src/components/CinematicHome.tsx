@@ -29,8 +29,16 @@ export function CinematicHome() {
         ref={heroRef}
         className="relative isolate flex h-screen min-h-[600px] items-center justify-center overflow-hidden text-center"
       >
-        <Image src="/images/hero-dj.jpg" alt="" aria-hidden="true" fill priority sizes="100vw" className="object-cover object-center" />
-        <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(30,0,0,0.55) 0%, rgba(20,0,0,0.72) 100%)" }} />
+        {/* Food mosaic background — 4 tiles with deep red overlay for uniform look */}
+        <div className="absolute inset-0 grid grid-cols-2 grid-rows-2">
+          {["/images/food-spread.jpg","/images/food-suya.jpg","/images/food-rice.jpg","/images/food-pepper.jpg"].map((src, i) => (
+            <div key={i} className="relative overflow-hidden">
+              <Image src={src} alt="" aria-hidden fill sizes="50vw" className="object-cover object-center" priority={i < 2} />
+              <div className="absolute inset-0" style={{ background: "rgba(90,0,0,0.82)" }} />
+            </div>
+          ))}
+        </div>
+        <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(10,0,0,0.35) 0%, rgba(8,0,0,0.55) 100%)" }} />
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <div style={{ width: "clamp(340px, 86vw, 680px)", height: "clamp(340px, 86vw, 680px)", borderRadius: "50%", border: "1px solid rgba(212,175,55,0.12)" }} />
         </div>
@@ -194,3 +202,4 @@ export function CinematicHome() {
     </div>
   );
 }
+
