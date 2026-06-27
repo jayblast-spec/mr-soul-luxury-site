@@ -88,7 +88,7 @@ export default function RedRoomPage() {
       {/* HERO */}
       <section className="relative isolate min-h-screen overflow-hidden">
         <Image
-          src="/images/afrobeats-crowd.webp"
+          src="/images/gallery-packed-floor.jpg"
           alt="RedRoom nightlife"
           fill
           priority
