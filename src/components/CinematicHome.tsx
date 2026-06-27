@@ -189,7 +189,7 @@ export function CinematicHome() {
       <section className="relative isolate overflow-hidden pb-20 pt-24 text-center" style={{ background: "#6B0000" }}>
         <div className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(255,70,0,0.12) 0%, transparent 58%)" }} />
         <div className="mb-6 overflow-hidden" aria-hidden>
-          <div className="animate-marquee-left font-display whitespace-nowrap font-bold italic" style={{ fontSize: "clamp(40px, 7vw, 100px)", lineHeight: 1, color: "rgba(255,255,255,0.04)" }}>
+          <div className="animate-marquee-left font-display whitespace-nowrap font-bold italic" style={{ fontSize: "clamp(40px, 7vw, 100px)", lineHeight: 1, color: "rgba(212,175,55,0.14)", letterSpacing: "0.06em" }}>
             <span>MR SOUL · ATLANTA · REDROOM · AFROBEATS · LAGOS · FINE DINING · </span>
             <span>MR SOUL · ATLANTA · REDROOM · AFROBEATS · LAGOS · FINE DINING · </span>
           </div>
