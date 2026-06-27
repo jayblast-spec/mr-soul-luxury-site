@@ -20,7 +20,7 @@ export default function AboutPage() {
   return (
     <>
       <ParallaxSection
-        image="/images/hero-restaurant.webp"
+        image="/images/gallery-sparkler-food.jpg"
         eyebrow="About Mr Soul"
         title="Where Nigerian Flavors and Community Unite"
         priority
