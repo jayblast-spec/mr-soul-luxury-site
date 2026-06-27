@@ -11,7 +11,8 @@ export default function FAQsPage() {
   return (
     <>
       <ParallaxSection
-        image="/images/hookah-luxury.webp"
+        image="/images/redroom-interior.jpg"
+        imageClassName="object-top"
         eyebrow="FAQs"
         title="Answers to Your Questions"
         priority

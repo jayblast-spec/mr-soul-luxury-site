@@ -11,6 +11,7 @@ type ParallaxSectionProps = {
   children: ReactNode;
   priority?: boolean;
   dark?: boolean;
+  imageClassName?: string;
 };
 
 export function ParallaxSection({
@@ -20,6 +21,7 @@ export function ParallaxSection({
   children,
   priority = false,
   dark = false,
+  imageClassName,
 }: ParallaxSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -45,7 +47,7 @@ export function ParallaxSection({
           fill
           priority={priority}
           sizes="100vw"
-          className="object-cover scale-[1.15]"
+          className={`object-cover scale-[1.15] ${imageClassName ?? ""}`}
         />
       </motion.div>
 
