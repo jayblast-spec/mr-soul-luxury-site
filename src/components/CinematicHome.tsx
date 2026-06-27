@@ -27,7 +27,7 @@ export function CinematicHome() {
       {/* ─── HERO ─────────────────────────────────────── */}
       <section
         ref={heroRef}
-        className="relative isolate flex h-screen min-h-[600px] items-center justify-center overflow-hidden text-center"
+        className="relative isolate flex min-h-screen min-h-[600px] flex-col overflow-hidden text-center"
       >
         {/* Food mosaic background — 4 tiles with deep red overlay for uniform look */}
         <div className="absolute inset-0 grid grid-cols-2 grid-rows-2">
@@ -46,7 +46,7 @@ export function CinematicHome() {
           <div style={{ width: "clamp(290px, 74vw, 580px)", height: "clamp(290px, 74vw, 580px)", borderRadius: "50%", border: "1px solid rgba(212,175,55,0.18)" }} />
         </div>
 
-        <motion.div className="relative z-10 flex w-full flex-col items-center px-5" style={{ opacity: heroOpacity }}>
+        <motion.div className="relative z-10 flex w-full flex-grow flex-col items-center justify-center px-5 pt-20" style={{ opacity: heroOpacity }}>
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.7 }} className="mb-6 flex flex-col items-center text-center">
             <span className="font-black uppercase" style={{ fontSize: "clamp(13px, 2vw, 20px)", letterSpacing: "0.32em", color: "#ffffff", textShadow: "0 1px 14px rgba(0,0,0,0.95), 0 0 28px rgba(0,0,0,0.8)" }}>
               Mr Soul Bistro &amp; Cafe
