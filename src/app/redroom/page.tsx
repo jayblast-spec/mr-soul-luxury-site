@@ -10,9 +10,25 @@ export const metadata: Metadata = {
   description: "RedRoom by Mr Soul is an Atlanta Afrobeats nightlife, VIP lounge, bottle service, hookah, celebrity-style entertainment, and private event experience.",
 };
 
-const galleryRows = [
-  ["champagne parade", "afrobeats crowd", "birthday booth", "dj spotlight", "vip toast", "late night smiles"],
-  ["hookah moment", "red light lounge", "celebrity arrival", "friends meetup", "dance floor joy", "private event"],
+const galleryRows: [string, string][][] = [
+  [
+    ["/images/gallery-dj-red.jpg", "DJ at the decks"],
+    ["/images/gallery-led-robot.jpg", "LED robot on the dance floor"],
+    ["/images/gallery-sparkler-food.jpg", "Sparkler food parade"],
+    ["/images/gallery-led-cage.jpg", "Fire performer"],
+    ["/images/gallery-blue-floor.jpg", "Dance floor energy"],
+    ["/images/gallery-birthday-mc.jpg", "Birthday MC moment"],
+    ["/images/gallery-dj-pink.jpg", "DJ set"],
+  ],
+  [
+    ["/images/gallery-vip-hookah.jpg", "VIP hookah lounge"],
+    ["/images/gallery-ladies-dancing.jpg", "Ladies on the dance floor"],
+    ["/images/gallery-purple-crowd.jpg", "Crowd vibing"],
+    ["/images/gallery-mascot.jpg", "Mr Soul mascot"],
+    ["/images/gallery-vip-white-coat.jpg", "VIP table moment"],
+    ["/images/gallery-packed-floor.jpg", "Packed dance floor"],
+    ["/images/gallery-good-vibes.jpg", "Good vibes at the bar"],
+  ],
 ];
 
 const moments = [
@@ -38,22 +54,27 @@ const newsTicker = [
   "Western & African Cuisine · FastFood & Grills",
 ];
 
-function SlidingPhotoRow({ labels, reverse = false }: { labels: string[]; reverse?: boolean }) {
-  const doubled = [...labels, ...labels];
+const weeklyEvents = [
+  { src: "/images/flyer-afrovibez-thursdays.jpg", alt: "Afrovibez Thursdays", label: "Afrovibez Thursdays", day: "Every Thursday" },
+  { src: "/images/flyer-funication-fridays.jpg", alt: "Funication Fridays", label: "Funication Fridays", day: "Every Friday" },
+  { src: "/images/flyer-nigeria-independence.jpg", alt: "Nigeria Independence Weekend", label: "Nigeria Independence Weekend", day: "Special Events" },
+];
+
+function SlidingPhotoRow({ photos, reverse = false }: { photos: [string, string][]; reverse?: boolean }) {
+  const doubled = [...photos, ...photos];
   return (
     <div className="overflow-hidden">
       <div className={reverse ? "redroom-slide-right gap-4 py-2" : "redroom-slide-left gap-4 py-2"}>
-        {doubled.map((label, index) => (
-          <div key={`${label}-${index}`} className="relative h-52 w-40 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-white/5 sm:h-72 sm:w-56">
+        {doubled.map(([src, alt], index) => (
+          <div key={`${src}-${index}`} className="relative h-52 w-40 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-white/5 sm:h-72 sm:w-56">
             <Image
-              src={`https://picsum.photos/seed/${label.replaceAll(" ", "-")}/600/800`}
-              alt={label}
+              src={src}
+              alt={alt}
               fill
               sizes="224px"
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-            <p className="absolute bottom-3 left-3 max-w-[80%] text-[10px] font-bold uppercase tracking-[0.16em] text-white sm:text-xs">{label}</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           </div>
         ))}
       </div>
@@ -119,7 +140,7 @@ export default function RedRoomPage() {
               >
                 {item}
               </span>
-              <span style={{ color: "#C41E3A", fontSize: "clamp(14px, 1.8vw, 22px)", fontWeight: 300 }}>✦</span>
+              <span style={{ color: "#C41E3A", fontSize: "clamp(14px, 1.8vw, 22px)", fontWeight: 300 }}>✶</span>
             </span>
           ))}
         </div>
@@ -137,9 +158,9 @@ export default function RedRoomPage() {
               <h2 className="font-display font-bold italic leading-tight text-white" style={{ fontSize: "clamp(28px, 4vw, 56px)" }}>Women Control<br />Wednesdays</h2>
               <p className="text-sm leading-7" style={{ color: "rgba(255,220,200,0.75)" }}>Every Wednesday at RedRoom by Mr Soul. Group of 5 girls get a free bottle till midnight + free cocktails till 12. Hosted by Eminado, MC by Radiant Tie, sounds by DJ Poko &amp; DJ Lee Blaqk.</p>
               <ul className="space-y-2 text-sm font-bold" style={{ color: "#D4AF37" }}>
-                <li>✦ Free Entry &amp; Free Parking</li>
-                <li>✦ Free Bottle for Groups of 5 Girls (till 12)</li>
-                <li>✦ Food · Drinks · Music · Hookah &amp; Vibes</li>
+                <li>✶ Free Entry &amp; Free Parking</li>
+                <li>✶ Free Bottle for Groups of 5 Girls (till 12)</li>
+                <li>✶ Food · Drinks · Music · Hookah &amp; Vibes</li>
               </ul>
               <a href="tel:+14044585714" className="btn-gold self-start mt-2">Reserve Your Table</a>
             </div>
@@ -211,8 +232,28 @@ export default function RedRoomPage() {
           </div>
         </div>
         <div className="space-y-4">
-          <SlidingPhotoRow labels={galleryRows[0]} />
-          <SlidingPhotoRow labels={galleryRows[1]} reverse />
+          <SlidingPhotoRow photos={galleryRows[0]} />
+          <SlidingPhotoRow photos={galleryRows[1]} reverse />
+        </div>
+      </section>
+
+      {/* WEEKLY EVENTS */}
+      <section className="bg-[#060010] px-5 py-16 sm:px-8">
+        <div className="mx-auto max-w-7xl">
+          <p className="text-xs font-bold uppercase tracking-[0.35em]" style={{ color: "#D4AF37" }}>Every Week</p>
+          <h2 className="font-display mt-4 font-bold italic leading-none" style={{ fontSize: "clamp(36px, 5.5vw, 80px)" }}>Weekly events at RedRoom.</h2>
+          <div className="mt-10 grid gap-5 sm:grid-cols-3">
+            {weeklyEvents.map(({ src, alt, label, day }) => (
+              <div key={src} className="relative overflow-hidden rounded-2xl border border-white/10" style={{ aspectRatio: "0.75" }}>
+                <Image src={src} alt={alt} fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover" />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 35%, transparent)" }} />
+                <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: "#D4AF37" }}>{day}</p>
+                  <p className="mt-1 text-base font-bold italic text-white">{label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -265,7 +306,7 @@ export default function RedRoomPage() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              {["/images/afrobeats-crowd.webp", "/images/vip-lounge.webp"].map((src, index) => (
+              {["/images/gallery-sparkler-food.jpg", "/images/gallery-vip-hookah.jpg"].map((src, index) => (
                 <div
                   key={src}
                   className={`relative overflow-hidden rounded-2xl border border-white/10 ${index === 1 ? "mt-14" : ""}`}
@@ -308,4 +349,3 @@ export default function RedRoomPage() {
     </main>
   );
 }
-
