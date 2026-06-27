@@ -12,7 +12,7 @@ export default function ContactPage() {
   return (
     <>
       <ParallaxSection
-        image="/images/afrobeats-crowd.webp"
+        image="/images/gallery-vip-hookah.jpg"
         eyebrow="Contact"
         title="Reserve the Night"
         priority
