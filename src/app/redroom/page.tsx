@@ -125,6 +125,28 @@ export default function RedRoomPage() {
         </div>
       </section>
 
+      {/* EVENTS FLYER */}
+      <section className="bg-[#070010] px-5 py-16 sm:px-8">
+        <div className="mx-auto max-w-7xl">
+          <p className="mb-8 text-center text-xs font-black uppercase tracking-[0.38em]" style={{ color: "#D4AF37" }}>What&apos;s On</p>
+          <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:gap-10">
+            <div className="w-full max-w-sm shrink-0 overflow-hidden rounded-2xl shadow-2xl" style={{ border: "1px solid rgba(212,175,55,0.25)" }}>
+              <Image src="/images/redroom-flyer-women.jpg" alt="Women Control Wednesdays — Mr Soul RedRoom" width={600} height={900} className="w-full h-auto" style={{ display: "block" }} />
+            </div>
+            <div className="flex flex-col justify-center gap-5 py-4">
+              <h2 className="font-display font-bold italic leading-tight text-white" style={{ fontSize: "clamp(28px, 4vw, 56px)" }}>Women Control<br />Wednesdays</h2>
+              <p className="text-sm leading-7" style={{ color: "rgba(255,220,200,0.75)" }}>Every Wednesday at RedRoom by Mr Soul. Group of 5 girls get a free bottle till midnight + free cocktails till 12. Hosted by Eminado, MC by Radiant Tie, sounds by DJ Poko &amp; DJ Lee Blaqk.</p>
+              <ul className="space-y-2 text-sm font-bold" style={{ color: "#D4AF37" }}>
+                <li>✦ Free Entry &amp; Free Parking</li>
+                <li>✦ Free Bottle for Groups of 5 Girls (till 12)</li>
+                <li>✦ Food · Drinks · Music · Hookah &amp; Vibes</li>
+              </ul>
+              <a href="tel:+14044585714" className="btn-gold self-start mt-2">Reserve Your Table</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ABOUT */}
       <section className="bg-[#070010] px-5 py-20 sm:px-8">
         <div className="mx-auto max-w-7xl">
